@@ -1,0 +1,20 @@
+{
+  "name": "django-api",
+  "version": "1.0.1",
+  "description": "Open-source API Server",
+  "scripts": {},
+  "repository": {
+    "type": "git",
+    "url": "https://git.generalassemb.ly/astronauts-team/space-threads"
+  },
+  "bugs": {
+    "url": "https://git.generalassemb.ly/astronauts-team/space-threads/issues",
+    "email": "ali@ihaji.pro"
+  },
+  "author": "Astronauts Team <ali@ihaji.pro> (https://ihaji.pro)",
+  "engines": {
+    "node": ">=10.0.0"
+  },
+  "dependencies": {},
+  "devDependencies": {}
+}
