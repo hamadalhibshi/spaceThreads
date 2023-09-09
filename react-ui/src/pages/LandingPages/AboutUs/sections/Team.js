@@ -45,11 +45,10 @@ function Team() {
         <Grid container>
           <Grid item xs={12} md={8} sx={{ mb: 6 }}>
             <MKTypography variant="h3" color="white">
-              The Executive Team
+              SpaceThreads Team
             </MKTypography>
             <MKTypography variant="body2" color="white" opacity={0.8}>
-              There&apos;s nothing I really wanted to do in life that I wasn&apos;t able to get good
-              at. That&apos;s my skill.
+            Elevating the boundaries of possibility
             </MKTypography>
           </Grid>
         </Grid>
@@ -58,8 +57,8 @@ function Team() {
             <MKBox mb={1}>
               <HorizontalTeamCard
                 image={team1}
-                name="Emma Roberts"
-                position={{ color: "info", label: "UI Designer" }}
+                name="Ali Haji"
+                position={{ color: "info", label: "Front-End Developer" }}
                 description="Artist is a term applied to a person who engages in an activity deemed to be an art."
               />
             </MKBox>
@@ -68,8 +67,8 @@ function Team() {
             <MKBox mb={1}>
               <HorizontalTeamCard
                 image={team2}
-                name="William Pearce"
-                position={{ color: "info", label: "Boss" }}
+                name="Ahmed Almadhoob"
+                position={{ color: "info", label: "Back-End Developer" }}
                 description="Artist is a term applied to a person who engages in an activity deemed to be an art."
               />
             </MKBox>
@@ -78,8 +77,8 @@ function Team() {
             <MKBox mb={{ xs: 1, lg: 0 }}>
               <HorizontalTeamCard
                 image={team3}
-                name="Ivana Flow"
-                position={{ color: "info", label: "Athlete" }}
+                name="Hamad Alhibshi"
+                position={{ color: "info", label: "Front-End Developer" }}
                 description="Artist is a term applied to a person who engages in an activity deemed to be an art."
               />
             </MKBox>
@@ -88,8 +87,8 @@ function Team() {
             <MKBox mb={{ xs: 1, lg: 0 }}>
               <HorizontalTeamCard
                 image={team4}
-                name="Marquez Garcia"
-                position={{ color: "info", label: "JS Developer" }}
+                name="Qasim Alkuwaiti"
+                position={{ color: "info", label: "Back-End Developer" }}
                 description="Artist is a term applied to a person who engages in an activity deemed to be an art."
               />
             </MKBox>

@@ -16,6 +16,7 @@ Coded by www.creative-tim.com
 // @mui material components
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
+import Divider from "@mui/material/Divider";
 
 // Material Kit 2 React components
 import MKBox from "components/MKBox";
@@ -32,7 +33,7 @@ import bgBack from "assets/images/rotating-card-bg-back.jpeg";
 
 function Information() {
   return (
-    <MKBox component="section" py={6} my={6}>
+    <MKBox component="section">
       <Container>
         <Grid container item xs={11} spacing={3} alignItems="center" sx={{ mx: "auto" }}>
           <Grid item xs={12} lg={4} sx={{ mx: "auto" }}>
@@ -98,6 +99,7 @@ function Information() {
           </Grid>
         </Grid>
       </Container>
+      <Divider sx={{ my: 3 }} />
     </MKBox>
   );
 }
