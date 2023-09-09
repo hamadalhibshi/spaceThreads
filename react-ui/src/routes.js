@@ -41,6 +41,7 @@ import Icon from "@mui/material/Icon";
 
 // @mui icons
 import GitHubIcon from "@mui/icons-material/GitHub";
+import AutoStories from "@mui/icons-material/AutoStories";
 
 // Pages
 import AboutUs from "layouts/pages/landing-pages/about-us";
@@ -70,8 +71,21 @@ import Dropdowns from "layouts/sections/elements/dropdowns";
 import ProgressBars from "layouts/sections/elements/progress-bars";
 import Toggles from "layouts/sections/elements/toggles";
 import Typography from "layouts/sections/elements/typography";
+import Stories from "pages/LandingPages/Stories/Stories";
 
 const routes = [
+  {
+    name: "Stories",
+    icon: <AutoStories />,
+    route: "/stories",
+    component: <Stories />,
+  },
+  {
+    name: "Authors",
+    icon: <Icon>groups</Icon>,
+    route: "/authors",
+    component: <Stories />,
+  },
   {
     name: "pages",
     icon: <Icon>dashboard</Icon>,
@@ -107,26 +121,28 @@ const routes = [
           },
         ],
       },
-      {
-        name: "account",
-        collapse: [
-          {
-            name: "sign in",
-            route: "/pages/authentication/sign-in",
-            component: <SignIn />,
-          },
-          {
-            name: "sign up",
-            route: "/pages/authentication/sign-up",
-            component: <SignUp />,
-          },
-          {
-            name: "sign out",
-            route: "/pages/authentication/sign-out",
-            component: <SignOutPage />,
-          },
-        ],
-      },
+      //This section follows the original template
+      //And thus it will be preserved in
+      // {
+      //   name: "account",
+      //   collapse: [
+      //     {
+      //       name: "sign in",
+      //       route: "/pages/authentication/sign-in",
+      //       component: <SignIn />,
+      //     },
+      //     {
+      //       name: "sign up",
+      //       route: "/pages/authentication/sign-up",
+      //       component: <SignUp />,
+      //     },
+      //     {
+      //       name: "sign out",
+      //       route: "/pages/authentication/sign-out",
+      //       component: <SignOutPage />,
+      //     },
+      //   ],
+      // },
     ],
   },
   {
@@ -278,37 +294,37 @@ const routes = [
       },
     ],
   },
-  {
-    name: "docs",
-    icon: <Icon>article</Icon>,
-    collapse: [
-      {
-        name: "Support",
-        description: "Get LIVE assistance from experts",
-        href: "https://appseed.us/support/",
-      },
-      {
-        name: "foundation",
-        description: "See our colors, icons and typography",
-        href: "https://www.creative-tim.com/learning-lab/react/colors/material-kit/?AFFILIATE=128200",
-      },
-      {
-        name: "components",
-        description: "Explore our collection of fully designed components",
-        href: "https://www.creative-tim.com/learning-lab/react/alerts/material-kit/?AFFILIATE=128200",
-      },
-      {
-        name: "plugins",
-        description: "Check how you can integrate our plugins",
-        href: "https://www.creative-tim.com/learning-lab/react/datepicker/material-kit/?AFFILIATE=128200",
-      },
-    ],
-  },
-  {
-    name: "github",
-    icon: <GitHubIcon />,
-    href: "https://github.com/app-generator/react-material-kit",
-  },
+  // {
+  //   name: "docs",
+  //   icon: <Icon>article</Icon>,
+  //   collapse: [
+  //     {
+  //       name: "Support",
+  //       description: "Get LIVE assistance from experts",
+  //       href: "https://appseed.us/support/",
+  //     },
+  //     {
+  //       name: "foundation",
+  //       description: "See our colors, icons and typography",
+  //       href: "https://www.creative-tim.com/learning-lab/react/colors/material-kit/?AFFILIATE=128200",
+  //     },
+  //     {
+  //       name: "components",
+  //       description: "Explore our collection of fully designed components",
+  //       href: "https://www.creative-tim.com/learning-lab/react/alerts/material-kit/?AFFILIATE=128200",
+  //     },
+  //     {
+  //       name: "plugins",
+  //       description: "Check how you can integrate our plugins",
+  //       href: "https://www.creative-tim.com/learning-lab/react/datepicker/material-kit/?AFFILIATE=128200",
+  //     },
+  //   ],
+  // },
+  // {
+  //   name: "github",
+  //   icon: <GitHubIcon />,
+  //   href: "https://github.com/app-generator/react-material-kit",
+  // },
 ];
 
 export default routes;
