@@ -1,5 +1,5 @@
 {
-  "name": "fullstack-react-material-kit",
+  "name": "space-threads",
   "type": "fullstack",
   "dirs": "django-api, react-ui"
 }
