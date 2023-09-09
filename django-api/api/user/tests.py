@@ -7,7 +7,7 @@ class UserViewSetTest(APITestCase):
     base_edit_url = reverse("api:user-edit-list")
     base_url_login = reverse("api:login-list")
 
-    data_login = {"password": "12345678", "email": "teast@admin.com"}
+    data_login = {"password": "12345678", "email": "admin@example.com"}
 
     def test_edit(self):
 
@@ -24,7 +24,7 @@ class UserViewSetTest(APITestCase):
         # Edit user
 
         data = {
-            "email": "new@admin.com",
+            "email": "new@example.com",
             "userID": user_id,
         }
 

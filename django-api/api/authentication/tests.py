@@ -9,9 +9,9 @@ class AuthenticationTest(APITestCase):
     base_url_logout = reverse("api:logout-list")
     base_url_check_session = reverse("api:check-session-list")
 
-    data_register = {"username": "test", "password": "pass", "email": "test@appseed.us"}
+    data_register = {"username": "test", "password": "pass", "email": "test@example.com"}
 
-    data_login = {"password": "12345678", "email": "teast@admin.com"}
+    data_login = {"password": "12345678", "email": "admin@example.com"}
 
     def test_register(self):
         response = self.client.post(
