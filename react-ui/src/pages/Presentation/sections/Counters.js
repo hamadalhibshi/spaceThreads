@@ -56,6 +56,7 @@ function Counters() {
           </Grid>
         </Grid>
       </Container>
+      <Divider sx={{ my: 3 }} />
     </MKBox>
   );
 }

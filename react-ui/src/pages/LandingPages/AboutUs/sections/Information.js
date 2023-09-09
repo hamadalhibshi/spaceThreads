@@ -35,8 +35,8 @@ function Information() {
                 <MKBox mb={5}>
                   <DefaultInfoCard
                     icon="public"
-                    title="Fully integrated"
-                    description="We get insulted by others, lose trust for those We get back freezes"
+                    title="Story"
+                    description="We continuously strive to articulate our aspirations and bring our dreams to fruition."
                   />
                 </MKBox>
               </Grid>
@@ -44,8 +44,8 @@ function Information() {
                 <MKBox mb={5}>
                   <DefaultInfoCard
                     icon="payments"
-                    title="Payments functionality"
-                    description="We get insulted by others, lose trust for those We get back freezes"
+                    title="History"
+                    description="From a spark of imagination in 2023, we've etched epic space stories in the cosmos."
                   />
                 </MKBox>
               </Grid>
@@ -53,8 +53,9 @@ function Information() {
                 <MKBox mb={{ xs: 5, md: 0 }}>
                   <DefaultInfoCard
                     icon="apps"
-                    title="Prebuilt components"
-                    description="We get insulted by others, lose trust for those We get back freezes"
+                    title="Our Mission"
+                    description="Inspire and engage space enthusiasts through imaginative storytelling that transports our audience to the cosmos and beyond."
+
                   />
                 </MKBox>
               </Grid>
@@ -62,8 +63,8 @@ function Information() {
                 <MKBox mb={{ xs: 5, md: 0 }}>
                   <DefaultInfoCard
                     icon="3p"
-                    title="Improved platform"
-                    description="We get insulted by others, lose trust for those We get back freezes"
+                    title="Our Vision"
+                    description="Become the go-to destination for space enthusiasts, known for our exceptional storytelling that ignites curiosity and fuels a lifelong passion for the wonders of the universe."
                   />
                 </MKBox>
               </Grid>
@@ -71,14 +72,14 @@ function Information() {
           </Grid>
           <Grid item xs={12} lg={4} sx={{ ml: "auto", mt: { xs: 3, lg: 0 } }}>
             <CenteredBlogCard
-              image="https://images.unsplash.com/photo-1544717302-de2939b7ef71?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80"
-              title="Get insights on Search"
-              description="Website visitors today demand a frictionless user expericence — especially when using search. Because of the hight standards."
+              image="https://static.vecteezy.com/system/resources/previews/017/125/698/non_2x/cartoon-astronaut-in-outer-space-free-vector.jpg"
+              title="Get insights on Authors"
+              description="Website visitors today demand a frictionless user expericence — especially when using search. Because of the high standards."
               action={{
                 type: "internal",
                 route: "pages/company/about-us",
                 color: "info",
-                label: "find out more",
+                label: "Explore Authors",
               }}
             />
           </Grid>
