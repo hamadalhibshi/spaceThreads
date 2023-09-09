@@ -90,12 +90,12 @@ WSGI_APPLICATION = "core.wsgi.application"
 
 DATABASES = {
     "default": {
-        "ENGINE"  : env("DB_ENGINE"  , default="django.db.backends.sqlite3"),
-        "NAME"    : env("DB_DATABASE", default=os.path.join(BASE_DIR, "db.sqlite3")),
+        "ENGINE"  : env("DB_ENGINE"  , default="django.db.backends.postgresql"),
+        "NAME"    : env("DB_DATABASE", default=None),
         "USER"    : env("DB_USER"    , default=None),
         "PASSWORD": env("DB_PASSWORD", default=None),
         "HOST"    : env("DB_HOST"    , default=None),
-        "PORT"    : env("DB_PORT"    , default=None),
+        "PORT"    : env("DB_PORT"    , default=5432),
     }
 }
 
@@ -122,7 +122,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = "en-us"
 
-TIME_ZONE = "UTC"
+TIME_ZONE = "Asia/Bahrain"
 
 USE_I18N = True
 
