@@ -40,7 +40,6 @@ Coded by www.creative-tim.com
 import Icon from "@mui/material/Icon";
 
 // @mui icons
-import GitHubIcon from "@mui/icons-material/GitHub";
 import AutoStories from "@mui/icons-material/AutoStories";
 
 // Pages
@@ -51,6 +50,7 @@ import SignIn from "layouts/pages/authentication/sign-in";
 import SignUp from "layouts/pages/authentication/sign-up";
 import SignOutPage from "layouts/pages/authentication/sign-out";
 import PresentationPage from "layouts/pages/presentation";
+import ProfilePage from "pages/LandingPages/Profile/index";
 
 // Sections
 import PageHeaders from "layouts/sections/page-sections/page-headers";
@@ -96,28 +96,34 @@ const routes = [
         name: "landing pages",
         collapse: [
           {
+            name: "homepage",
+            route: "/",
+            component: <PresentationPage />,
+            protected: true,
+          },
+          {
             name: "about us",
-            route: "/pages/landing-pages/about-us",
+            route: "/about-us",
             component: <AboutUs />,
             protected: true,
           },
           {
             name: "contact us",
-            route: "/pages/landing-pages/contact-us",
+            route: "/contact-us",
             component: <ContactUs />,
             protected: true,
           },
           {
-            name: "author",
-            route: "/pages/landing-pages/author",
+            name: "authors",
+            route: "/authors",
             component: <Author />,
             protected: true,
           },
           {
-            name: "presentation",
-            route: "/presentation",
-            component: <PresentationPage />,
-            protected: true,
+            name: "profile",
+            route: "/profile",
+            component: <ProfilePage />,
+
           },
         ],
       },
@@ -128,17 +134,17 @@ const routes = [
       //   collapse: [
       //     {
       //       name: "sign in",
-      //       route: "/pages/authentication/sign-in",
+      //       route: "/sign-in",
       //       component: <SignIn />,
       //     },
       //     {
       //       name: "sign up",
-      //       route: "/pages/authentication/sign-up",
+      //       route: "/sign-up",
       //       component: <SignUp />,
       //     },
       //     {
       //       name: "sign out",
-      //       route: "/pages/authentication/sign-out",
+      //       route: "/sign-out",
       //       component: <SignOutPage />,
       //     },
       //   ],
