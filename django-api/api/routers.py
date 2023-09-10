@@ -9,15 +9,15 @@ from api.user.viewsets import UserViewSet
 
 router = routers.SimpleRouter(trailing_slash=False)
 
+# User routes:
 router.register(r"edit", UserViewSet, basename="user-edit")
-
 router.register(r"register", RegisterViewSet, basename="register")
-
 router.register(r"login", LoginViewSet, basename="login")
-
 router.register(r"checkSession", ActiveSessionViewSet, basename="check-session")
-
 router.register(r"logout", LogoutViewSet, basename="logout")
+
+# Story routes:
+router.register(r"listStories", LogoutViewSet, basename="list-stories")
 
 urlpatterns = [
     *router.urls,

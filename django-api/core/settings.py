@@ -60,6 +60,7 @@ INSTALLED_APPS = [
     "api",
     "api.user",
     "api.authentication",
+    "api.story"
 ]
 
 MIDDLEWARE = [
