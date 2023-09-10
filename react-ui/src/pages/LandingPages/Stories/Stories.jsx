@@ -12,12 +12,10 @@ import MKButton from "components/MKButton";
 import DefaultNavbar from "examples/Navbars/DefaultNavbar";
 import DefaultFooter from "examples/Footers/DefaultFooter";
 
-// About Us page sections
-import Information from "pages/LandingPages/AboutUs/sections/Information";
-import Team from "pages/LandingPages/AboutUs/sections/Team";
-import Featuring from "pages/LandingPages/AboutUs/sections/Featuring";
-import Newsletter from "pages/LandingPages/AboutUs/sections/Newsletter";
-
+// Stories page sections
+import Information from "pages/LandingPages/Stories/sections/Information";
+import Team from "pages/LandingPages/Stories/sections/Team";
+import Posts from "pages/LandingPages/Stories/sections/Posts";
 // Routes
 import routes from "routes";
 import footerRoutes from "footer.routes";
@@ -114,8 +112,8 @@ function Stories() {
       >
         <Information />
         <Team />
-        <Featuring />
-        <Newsletter />
+
+        <Posts />
       </Card>
       <MKBox pt={6} px={1} mt={6}>
         <DefaultFooter content={footerRoutes} />
