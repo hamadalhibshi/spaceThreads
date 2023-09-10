@@ -31,9 +31,9 @@ function Counters() {
         <Grid container item xs={12} lg={9} sx={{ mx: "auto" }}>
           <Grid item xs={12} md={4}>
             <DefaultCounterCard
-              count={70}
-              suffix="+"
-              title="Stories"
+              count={5}
+              // suffix="+"
+              title="Sponsors"
               description="From buttons, to inputs, navbars, alerts or cards, you are covered"
             />
           </Grid>
@@ -42,7 +42,7 @@ function Counters() {
             <DefaultCounterCard
               count={15}
               suffix="+"
-              title="Authors"
+              title="Users"
               description="Mix the sections, change the colors and unleash your creativity"
             />
             <Divider orientation="vertical" sx={{ display: { xs: "none", md: "block" }, ml: 0 }} />
@@ -50,7 +50,8 @@ function Counters() {
           <Grid item xs={12} md={4}>
             <DefaultCounterCard
               count={4}
-              title="Readers"
+              suffix="+"
+              title="Award Winning Stories"
               description="Save 3-4 weeks of work when you use our pre-made pages for your website"
             />
           </Grid>

@@ -20,9 +20,6 @@ import Grid from "@mui/material/Grid";
 // Material Kit 2 React components
 import MKBox from "components/MKBox";
 
-// Material Kit 2 React examples
-import DefaultCounterCard from "examples/Cards/CounterCards/DefaultCounterCard";
-
 // Images
 import chatgpt from "assets/images/logos/gray-logos/logo-chatgpt.png";
 import nasa from "assets/images/logos/gray-logos/logo-nasa.svg";
@@ -32,7 +29,7 @@ import spotify from "assets/images/logos/gray-logos/logo-spotify.svg";
 
 function Featuring() {
   return (
-    <MKBox component="section" pt={3} pb={8}>
+    <MKBox component="section" pt={8}>
       <Container>
         <Grid container spacing={3} sx={{ mb: 12, justifyContent:'center'}}>
           <Grid item xs={6} md={4} lg={2}>
@@ -51,7 +48,7 @@ function Featuring() {
             <MKBox component="img" src={generalAssembly} alt="generalAssembly" width="75%" opacity={0.7} />
           </Grid>
         </Grid>
-        <Grid container justifyContent="center" sx={{ textAlign: "center" }}>
+        {/* <Grid container justifyContent="center" sx={{ textAlign: "center" }}>
           <Grid item xs={12} md={3}>
             <DefaultCounterCard
               count={5234}
@@ -77,7 +74,7 @@ function Featuring() {
               description="Actively engage team members that finishes on time"
             />
           </Grid>
-        </Grid>
+        </Grid> */}
       </Container>
     </MKBox>
   );
