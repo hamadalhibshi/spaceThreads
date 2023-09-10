@@ -6,6 +6,8 @@ from api.authentication.viewsets import (
 )
 from rest_framework import routers
 from api.user.viewsets import UserViewSet
+from api.story.viewsets import ListStoriesViewSet
+
 
 router = routers.SimpleRouter(trailing_slash=False)
 
@@ -17,7 +19,7 @@ router.register(r"checkSession", ActiveSessionViewSet, basename="check-session")
 router.register(r"logout", LogoutViewSet, basename="logout")
 
 # Story routes:
-router.register(r"listStories", LogoutViewSet, basename="list-stories")
+router.register(r"listStories", ListStoriesViewSet, basename="list-stories")
 
 urlpatterns = [
     *router.urls,
