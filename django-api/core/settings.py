@@ -12,7 +12,15 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 
 import os, environ
 from pathlib import Path
+from os.path import join, dirname
+from dotenv import load_dotenv
 
+dotenv_path = join(dirname(__file__),'.env')
+load_dotenv(dotenv_path)
+print(dirname(__file__))
+print(dotenv_path)
+print("ENV ENV")
+print(os.getenv('DB_DATABASE'))
 env = environ.Env(
     # set casting, default value
     DEBUG=(bool, False)
@@ -90,12 +98,12 @@ WSGI_APPLICATION = "core.wsgi.application"
 
 DATABASES = {
     "default": {
-        "ENGINE"  : env("DB_ENGINE"  , default="django.db.backends.postgresql"),
-        "NAME"    : env("DB_DATABASE", default=None),
-        "USER"    : env("DB_USER"    , default=None),
-        "PASSWORD": env("DB_PASSWORD", default=None),
-        "HOST"    : env("DB_HOST"    , default=None),
-        "PORT"    : env("DB_PORT"    , default=5432),
+        "ENGINE"  : "django.db.backends.postgresql",
+        "NAME"    : os.getenv('DB_DATABASE'),
+        "USER"    : os.getenv('DB_USER'),
+        "PASSWORD": os.getenv('DB_PASSWORD'),
+        "HOST"    : os.getenv('DB_HOST'),
+        "PORT"    : os.getenv('DB_PORT'),
     }
 }
 
