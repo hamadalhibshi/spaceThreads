@@ -38,6 +38,8 @@ import routes from "routes";
 import footerRoutes from "footer.routes";
 
 import { useAuth } from "auth-context/auth.context";
+import Counters from "./sections/Counters";
+
 
 function AboutUs() {
   const { user } = useAuth();
@@ -127,6 +129,7 @@ function AboutUs() {
           boxShadow: ({ boxShadows: { xxl } }) => xxl,
         }}
       >
+        <Counters />
         <Information />
         <Team />
         <Featuring />

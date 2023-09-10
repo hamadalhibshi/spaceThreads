@@ -21,32 +21,24 @@ import Card from "@mui/material/Card";
 // Material Kit 2 React components
 import MKBox from "components/MKBox";
 import MKTypography from "components/MKTypography";
-import MKSocialButton from "components/MKSocialButton";
 
 // Material Kit 2 React examples
 import DefaultNavbar from "examples/Navbars/DefaultNavbar";
 import DefaultFooter from "examples/Footers/DefaultFooter";
-import FilledInfoCard from "examples/Cards/InfoCards/FilledInfoCard";
 
 // Presentation page sections
-import Counters from "pages/Presentation/sections/Counters";
 import Information from "pages/Presentation/sections/Information";
 import DesignBlocks from "pages/Presentation/sections/DesignBlocks";
-import Pages from "pages/Presentation/sections/Pages";
 import Testimonials from "pages/Presentation/sections/Testimonials";
-import Download from "pages/Presentation/sections/Download";
-
-// Presentation page components
-import BuiltByDevelopers from "pages/Presentation/components/BuiltByDevelopers";
+import HeaderOne from "layouts/sections/page-sections/page-headers/components/HeaderOne";
 
 // Routes
 import routes from "routes";
 import footerRoutes from "footer.routes";
 
-// Images
-import bgImage from "assets/images/bg-presentation.jpg";
-
 import { useAuth } from "auth-context/auth.context";
+import Featuring from "./sections/Featuring";
+import Divider from "@mui/material/Divider";
 
 function Presentation() {
   const { user } = useAuth();
@@ -124,13 +116,10 @@ function Presentation() {
           boxShadow: ({ boxShadows: { xxl } }) => xxl,
         }}
       >
-        <Counters />
+        <Featuring />
+        <Divider />
         <Information />
         <DesignBlocks />
-        {/* <Pages /> */}
-        {/* <Container sx={{ mt: 6 }}>
-          <BuiltByDevelopers />
-        </Container> */}
         <Testimonials />
       </Card>
       <MKBox pt={6} px={1} mt={6}>

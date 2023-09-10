@@ -17,6 +17,9 @@ Coded by www.creative-tim.com
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
 import Divider from "@mui/material/Divider";
+import AutoStoriesIcon from '@mui/icons-material/AutoStories';
+import ForumIcon from '@mui/icons-material/Forum';
+import EditIcon from '@mui/icons-material/Edit';
 
 // Material Kit 2 React components
 import MKBox from "components/MKBox";
@@ -43,21 +46,21 @@ function Information() {
                 icon="touch_app"
                 title={
                   <>
-                    Feel the
+                    Meet the
                     <br />
-                    Material Kit
+                    Team
                   </>
                 }
-                description="All the MUI components that you need in a development have been re-design with the new look."
+                description="Get to know the individuals behind our team's success."
               />
               <RotatingCardBack
                 image={bgBack}
-                title="Discover More"
-                description="You will save a lot of time going from prototyping to full-functional code because all elements are implemented."
+                title="Explore SpaceThreads"
+                description="Delve into the Tale and Vision That Define Us"
                 action={{
                   type: "internal",
                   route: "/sections/page-sections/page-headers",
-                  label: "start with header",
+                  label: "Learn More",
                 }}
               />
             </RotatingCard>
@@ -66,26 +69,25 @@ function Information() {
             <Grid container spacing={3}>
               <Grid item xs={12} md={6}>
                 <DefaultInfoCard
-                  icon="content_copy"
-                  title="Full Documentation"
-                  description="Built by developers for developers. Check the foundation and you will find
-                    everything inside our documentation."
+                  icon={<AutoStoriesIcon sx={{color:'#3e93ee'}}/>}
+                  title="Immersive Stories"
+                  description="Embark on thrilling journeys and captivating stories brought to life through the creative synergy of our authors."
                 />
               </Grid>
               <Grid item xs={12} md={6}>
                 <DefaultInfoCard
-                  icon="flip_to_front"
-                  title="MUI Ready"
-                  description="The world's most popular react components library for building user interfaces."
+                  icon={<ForumIcon sx={{color:'#3e93ee'}}/>}
+                  title="Interactive Community"
+                  description="Join an engaging community where interaction is at the heart of our collective experience, fostered by passionate readers."
                 />
               </Grid>
             </Grid>
             <Grid container spacing={3} sx={{ mt: { xs: 0, md: 6 } }}>
               <Grid item xs={12} md={6}>
                 <DefaultInfoCard
-                  icon="price_change"
-                  title="Save Time & Money"
-                  description="Creating your design from scratch with dedicated designers can be very expensive. Start with our Design System."
+                  icon={<EditIcon sx={{color:'#3e93ee'}}/>}
+                  title="Contribution"
+                  description="Combine your skills as a writer with fellow Authors to write creative, captivating, and memorable stories."
                 />
               </Grid>
               <Grid item xs={12} md={6}>
