@@ -23,6 +23,8 @@ import MKBox from "components/MKBox";
 // Material Kit 2 React examples
 import DefaultInfoCard from "examples/Cards/InfoCards/DefaultInfoCard";
 import CenteredBlogCard from "examples/Cards/BlogCards/CenteredBlogCard";
+import FeaturedStoryCard from "examples/Cards/StoryCard/FeaturedStoryCard";
+import FeaturedStoryCardDetails from "examples/Cards/StoryCard/FeaturedStoryCardDetails";
 
 function Information() {
   return (
@@ -30,7 +32,7 @@ function Information() {
       <Container>
         <Grid container spacing={3} alignItems="center">
           <Grid item xs={12} lg={6}>
-            <CenteredBlogCard
+            <FeaturedStoryCard
               image="https://static.vecteezy.com/system/resources/previews/017/125/698/non_2x/cartoon-astronaut-in-outer-space-free-vector.jpg"
               title="Story of the Month"
               description="Website visitors today demand a frictionless user expericence — especially when using search. Because of the high standards."
@@ -43,9 +45,9 @@ function Information() {
             />
           </Grid>
           <Grid item xs={12} lg={6} sx={{ ml: "auto", mt: { xs: 3, lg: 0 } }}>
-            <CenteredBlogCard
+            <FeaturedStoryCardDetails
               image="https://static.vecteezy.com/system/resources/previews/017/125/698/non_2x/cartoon-astronaut-in-outer-space-free-vector.jpg"
-              title="Story of the Month"
+              title="The Hero of Ages"
               description="Website visitors today demand a frictionless user expericence — especially when using search. Because of the high standards."
               action={{
                 type: "internal",
