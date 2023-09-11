@@ -11,11 +11,13 @@ from rest_framework.permissions import IsAuthenticated
 import cloudinary
 import cloudinary.uploader
 
+
 cloudinary.config( 
   cloud_name = "dt4gzg8z1", 
   api_key = "989749326782435", 
   api_secret = "YEiarfPPvSPQCxsjWbGfmQ5YOAc" 
 )
+
 
 @api_view(['GET'])
 def listStories(request):
@@ -36,7 +38,7 @@ def storyDetails(request, story_id):
 
         # Get all the chapters where the storyId = story_id and where the status == "pending"
         chapters = Chapter.objects.filter(storyId=story_id, status="pending")
-        print(chapters)
+
         # Serialize the story instance
         serializer = StorySerializer(story)
 
@@ -56,6 +58,7 @@ def storyDetails(request, story_id):
         # Handle the case where the story with the provided ID does not exist
         return JsonResponse({'error': 'Story not found'}, status=404)
 
+
 @api_view(['POST'])
 # @permission_classes([IsAuthenticated])
 def createStory(request):
@@ -67,7 +70,6 @@ def createStory(request):
 
     # Add the user ID to the data as authorId
     data['authorId'] = user_id
-    print(data)
 
     # Get the image path from the request data
     image_path = data.get('image')
@@ -134,3 +136,42 @@ def createChapter(request, story_id):
     except Exception as e:
         # Handle any other exceptions (e.g., validation errors)
         return JsonResponse({'error': str(e)}, status=400)
+
+
+@api_view(['GET'])
+def listReviews(request, story_id):
+    if request.method == 'GET':
+        try:
+            story = Story.objects.get(pk=story_id)
+            reviews = Review.objects.filter(storyId=story)
+            serializer = ReviewSerializer(reviews, many=True)
+            data = serializer.data
+            return JsonResponse(data, safe=False)
+        except Story.DoesNotExist:
+            return JsonResponse({'error': 'Story not found'}, status=404)
+    else:
+        raise ValidationError("Method not allowed")
+
+
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def createReview(request, story_id):
+    if request.method == 'POST':
+        try:
+            story = Story.objects.get(pk=story_id)
+        except Story.DoesNotExist:
+            return JsonResponse({'error': 'Story not found'}, status=404)
+
+        user_id = request.user.id
+        data = request.data
+        data['userId'] = user_id
+        data['storyId'] = story_id
+
+        try:
+            review = Review.objects.create(**data)
+            serializer = ReviewSerializer(review)
+            return JsonResponse({'message': 'Review created successfully', 'review': serializer.data}, status=201)
+        except Exception as e:
+            return JsonResponse({'error': str(e)}, status=400)
+    else:
+        raise ValidationError("Method not allowed")
