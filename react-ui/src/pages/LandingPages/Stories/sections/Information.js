@@ -48,12 +48,17 @@ function Information() {
             <FeaturedStoryCardDetails
               image="https://static.vecteezy.com/system/resources/previews/017/125/698/non_2x/cartoon-astronaut-in-outer-space-free-vector.jpg"
               title="The Hero of Ages"
-              description="Website visitors today demand a frictionless user expericence — especially when using search. Because of the high standards."
+              description="The Lord Ruler is dead, and chaos is chaosing everywhere in the realm."
+              genre={{ color: "info", label: "Fantasy | Politics" }}
+              chapters="20"
+              status="Ongoing"
+              createdOn="11/22/636"
+              rating="5"
               action={{
                 type: "internal",
                 route: "pages/company/about-us",
                 color: "info",
-                label: "Explore Authors",
+                label: "Read Story",
               }}
             />
           </Grid>

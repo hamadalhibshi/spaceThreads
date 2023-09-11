@@ -42,24 +42,22 @@ function Information() {
           <Grid item xs={12} lg={4} sx={{ mx: "auto" }}>
             <RotatingCard>
               <RotatingCardFront
-                image={bgFront}
+                image='https://e0.pxfuel.com/wallpapers/331/993/desktop-wallpaper-space-cartoon-iphone.jpg'
                 icon="touch_app"
                 title={
                   <>
-                    Meet the
-                    <br />
-                    Team
+                    Meet the Team
                   </>
                 }
                 description="Get to know the individuals behind our team's success."
               />
               <RotatingCardBack
-                image={bgBack}
+                image='https://img.freepik.com/free-vector/hand-drawn-colorful-space-background_52683-12645.jpg?w=2000'
                 title="Explore SpaceThreads"
                 description="Delve into the Tale and Vision That Define Us"
                 action={{
                   type: "internal",
-                  route: "/sections/page-sections/page-headers",
+                  route: "/about-us",
                   label: "Learn More",
                 }}
               />

@@ -57,7 +57,7 @@ def storyDetails(request, story_id):
         return JsonResponse({'error': 'Story not found'}, status=404)
 
 @api_view(['POST'])
-@permission_classes([IsAuthenticated])
+# @permission_classes([IsAuthenticated])
 def createStory(request):
     # Access the logged-in user's ID using request.user
     user_id = request.user.id
@@ -67,6 +67,7 @@ def createStory(request):
 
     # Add the user ID to the data as authorId
     data['authorId'] = user_id
+    print(data)
 
     # Get the image path from the request data
     image_path = data.get('image')
