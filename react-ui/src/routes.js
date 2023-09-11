@@ -72,6 +72,7 @@ import ProgressBars from "layouts/sections/elements/progress-bars";
 import Toggles from "layouts/sections/elements/toggles";
 import Typography from "layouts/sections/elements/typography";
 import Stories from "pages/LandingPages/Stories/Stories";
+import CreateStory from "./pages/LandingPages/CreateStory/index.js";
 
 const routes = [
   {
@@ -120,10 +121,10 @@ const routes = [
             protected: true,
           },
           {
-            name: "profile",
-            route: "/profile",
-            component: <ProfilePage />,
-
+            name: "story",
+            route: "/createStory",
+            component: <CreateStory /> ,
+            protected: true,
           },
         ],
       },
@@ -146,6 +147,11 @@ const routes = [
             name: "sign out",
             route: "/sign-out",
             component: <SignOutPage />,
+          },
+          {
+            name: "profile",
+            route: "/profile",
+            component: <ProfilePage />,
           },
         ],
       },

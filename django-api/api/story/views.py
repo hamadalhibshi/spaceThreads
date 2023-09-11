@@ -37,7 +37,7 @@ def storyDetails(request, story_id):
 
 
 @api_view(['POST'])
-@permission_classes([IsAuthenticated])
+# @permission_classes([IsAuthenticated])
 def createStory(request):
     # Access the logged-in user's ID using request.user
     user_id = request.user.id
@@ -47,11 +47,13 @@ def createStory(request):
 
     # Add the user ID to the data as authorId
     data['authorId'] = user_id
+    print(data)
 
     # Create a new Story object and save it to the database
     try:
+        print('hello')
         story = Story.objects.create(**data)
-
+        print(story)
         # Serialize the created story
         serializer = StorySerializer(story)
 
