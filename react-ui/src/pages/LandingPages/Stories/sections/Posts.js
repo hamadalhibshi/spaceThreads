@@ -45,7 +45,7 @@ function Places() {
           <Grid item xs={12} sm={6} lg={3}>
             <SingleStoryCard
               image={post1}
-              title="The Way of Kings"
+              title="The Way of Drinks"
               genre={{ color: "info", label: "Fantasy | Politics" }}
               chapters="20"
               status="Ongoing"
@@ -53,7 +53,7 @@ function Places() {
               rating="5"
               action={{
                 type: "internal",
-                route: "/stories",
+                route: "/stories/show",
                 color: "info",
                 label: "read story",
               }}
