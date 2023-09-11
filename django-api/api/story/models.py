@@ -1,8 +1,10 @@
 from django.db import models
 from api.user.models import User
+from cloudinary.models import CloudinaryField
 # Create your models here.
 class Story(models.Model):
     id = models.AutoField(primary_key=True)
+    image = CloudinaryField('image')
     title = models.CharField(max_length=255)
     authorId = models.ForeignKey(User, on_delete=models.CASCADE) 
     genre = models.CharField(max_length=100)
@@ -40,8 +42,10 @@ class Review(models.Model):
     
 class Chapter(models.Model):
     id = models.AutoField(primary_key=True)
+    content = models.TextField()
     storyId = models.ForeignKey('Story', on_delete=models.CASCADE) 
-    userId = models.ForeignKey(User, on_delete=models.CASCADE) 
+    userId = models.ForeignKey(User, on_delete=models.CASCADE)
+    status = models.CharField(max_length=50)
     order = models.PositiveIntegerField()
     rating = models.DecimalField(max_digits=3, decimal_places=2)
     timestamp = models.DateTimeField(auto_now_add=True)

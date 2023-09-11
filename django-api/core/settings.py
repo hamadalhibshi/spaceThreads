@@ -9,11 +9,21 @@ https://docs.djangoproject.com/en/3.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.2/ref/settings/
 """
+# Cloudinary Shennanigans:
+import cloudinary
+import cloudinary.uploader
+import cloudinary.api
 
 import os, environ
 from pathlib import Path
 from os.path import join, dirname
 from dotenv import load_dotenv
+
+cloudinary.config( 
+  cloud_name = "dt4gzg8z1", 
+  api_key = "989749326782435", 
+  api_secret = "YEiarfPPvSPQCxsjWbGfmQ5YOAc" 
+)
 
 dotenv_path = join(dirname(__file__),'.env')
 load_dotenv(dotenv_path)
@@ -60,6 +70,7 @@ INSTALLED_APPS = [
     "api",
     "api.user",
     "api.authentication",
+    "cloudinary",
     "api.story"
 ]
 
