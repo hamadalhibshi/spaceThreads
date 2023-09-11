@@ -42,9 +42,6 @@ import SimpleFooter from "examples/Footers/SimpleFooter";
 // Material Kit 2 React page layout routes
 import routes from "routes";
 
-// Images
-import bgImage from "assets/images/bg-sign-in-basic.jpeg";
-
 import AuthApi from "../../../api/auth";
 import { useAuth } from "../../../auth-context/auth.context";
 
@@ -96,6 +93,8 @@ function SignUpBasic() {
       'https://wallpaperboat.com/wp-content/uploads/2019/10/free-space-background-11.jpg',
       'https://images.hdqwalls.com/download/planet-moon-space-stars-4k-0c-3840x2400.jpg',
       'https://images.wallpaperscraft.com/image/single/planets_galaxy_stars_146448_3840x2160.jpg',
+      'https://wallpaperaccess.com/full/19355.jpg',
+      'https://picstatio.com/large/07ee48/fantasy-planet-space-astronaut.jpg'
     ];
     const randomIndex = Math.floor(Math.random() * imageArray.length);
     setRandomImage(imageArray[randomIndex]);
