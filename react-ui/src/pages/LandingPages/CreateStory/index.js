@@ -45,13 +45,13 @@ import StoryApi from "api/story";
 function CreateStory() {
   const { user } = useAuth();
 
-  const initialStoryData = {
+  const [data, setData] = useState({
     title: '',
-    genre:'',
-    prologue:'',
-  };
-
-  const [data, setData] = useState(initialStoryData);
+    genre: '',
+    prologue: '',
+    authorId: user._id
+  });
+  console.log(user._id)
 
   const handleChange = (e) => {
     // Handle form input changes here
@@ -65,7 +65,7 @@ function CreateStory() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-  
+    console.log('data', data)
     StoryApi.createStory(data)
       .then((response) => {
         console.log('Story created successfully', response.data);
@@ -74,6 +74,36 @@ function CreateStory() {
         console.error('Error creating story', error);
       });
   };
+
+  function handleImageUpload(evt) {
+    // get the image uploaded in input file, it will be the first element in files arr
+    const file = evt.target.files[0];
+    console.log(file);
+
+    TransformFileData(file);
+  }
+  // transfer file/image to base64 string
+  function TransformFileData(file) {
+    //The FileReader object lets web applications asynchronously read the contents of files (or raw data buffers) stored on the user's computer, using File or Blob objects to specify the file or data to read.
+    // FileReader can only access the contents of files that the user has explicitly selected, either using an HTML <input type="file"> element or by drag and drop
+    // filereader is js object
+    const reader = new FileReader();
+
+    if (file) {
+      // Starts reading the contents of the specified Blob, once finished, the "result" attribute contains a data: URL representing the file's data.
+      reader.readAsDataURL(file);
+      // Fired when a read has completed, successfully or not.
+      reader.onloadend = () => {
+        console.log(reader.result);
+        setData({ ...data, image: reader.result });
+        // setError("");
+      };
+    } else {
+      // no image
+      setData({ ...data, image: "" });
+      // setError("");
+    }
+  }
 
   return (
     <>
@@ -140,7 +170,7 @@ function CreateStory() {
               Create a Story
             </MKTypography>
             <MKTypography variant="body1" color="white" opacity={0.8} mt={1} mb={3}>
-            Crafting cosmic tales that transport you to the stars
+              Crafting cosmic tales that transport you to the stars
             </MKTypography>
           </Grid>
         </Container>
@@ -155,7 +185,7 @@ function CreateStory() {
           boxShadow: ({ boxShadows: { xxl } }) => xxl,
         }}
       >
-         <Box component="form" noValidate autoComplete="off" onSubmit={handleSubmit} sx={{ mt: 1 }} id='story-form'>
+        <Box component="form" noValidate autoComplete="off" onSubmit={handleSubmit} sx={{ mt: 1 }} id='story-form'>
           <Grid container spacing={2}>
             <Grid item xs={6}>
               <TextField
@@ -169,7 +199,7 @@ function CreateStory() {
               />
             </Grid>
             <Grid item xs={6}>
-            <InputLabel id="genre-label">Genre</InputLabel>
+              <InputLabel id="genre-label">Genre</InputLabel>
               <Select
                 labelId="genre-label"
                 id="genre"
@@ -196,8 +226,8 @@ function CreateStory() {
                 margin="normal"
                 required
                 fullWidth
-                id='age-group'
-                name="age-group"
+                id='age_group'
+                name="age_group"
                 onChange={handleChange}
                 label="Age Group"
                 autoComplete="off"
@@ -216,13 +246,27 @@ function CreateStory() {
                 autoComplete="off"
               />
             </Grid>
+            <TextField
+              type="file"
+              name="image"
+              id="image"
+              // required
+              inputProps={{ accept: "image/*" }}
+              onChange={handleImageUpload}
+            />
+            <TextField
+              type='hidden'
+              name="authorId"
+              id="authorId"
+              value={data.authorId}
+            />
           </Grid>
           <Button
             type="submit"
             fullWidth
             variant="contained"
             sx={{ mt: 3, mb: 2 }}
-            // disabled={disable}
+          // disabled={disable}
           >
             Add Story
           </Button>

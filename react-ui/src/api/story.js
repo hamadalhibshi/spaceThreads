@@ -1,6 +1,6 @@
 import axios from './index';
 
-const baseURL = ''; 
+const baseURL = '';
 
 class StoryApi {
   static createStory = (data) => axios.post(`${baseURL}/createStory/`, data);
