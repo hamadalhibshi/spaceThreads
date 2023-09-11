@@ -38,7 +38,7 @@ function Places() {
       <Container>
         <Grid container item xs={12} lg={6}>
           <MKTypography variant="h3" mb={6}>
-            Check my latest blogposts
+            Read the latest stories
           </MKTypography>
         </Grid>
         <Grid container spacing={3}>
@@ -60,28 +60,36 @@ function Places() {
             />
           </Grid>
           <Grid item xs={12} sm={6} lg={3}>
-            <TransparentBlogCard
+            <SingleStoryCard
               image={post2}
-              title="MateLabs machine learning"
-              description="If you’ve ever wanted to train a machine learning model and integrate it with IFTTT, you now can with ..."
+              title="The Way of Kings"
+              genre={{ color: "info", label: "Fantasy | Politics" }}
+              chapters="20"
+              status="Ongoing"
+              createdOn="11/22/63"
+              rating="5"
               action={{
                 type: "internal",
-                route: "/pages/blogs/author",
+                route: "/stories",
                 color: "info",
-                label: "read more",
+                label: "read story",
               }}
             />
           </Grid>
           <Grid item xs={12} sm={6} lg={3}>
-            <TransparentBlogCard
+            <SingleStoryCard
               image={post3}
-              title="MateLabs machine learning"
-              description="If you’ve ever wanted to train a machine learning model and integrate it with IFTTT, you now can with ..."
+              title="The Way of Kings"
+              genre={{ color: "info", label: "Fantasy | Politics" }}
+              chapters="20"
+              status="Ongoing"
+              createdOn="11/22/63"
+              rating="5"
               action={{
                 type: "internal",
-                route: "/pages/blogs/author",
+                route: "/stories",
                 color: "info",
-                label: "read more",
+                label: "read story",
               }}
             />
           </Grid>
@@ -98,54 +106,70 @@ function Places() {
             />
           </Grid>
           <Grid item xs={12} sm={6} lg={3}>
-            <TransparentBlogCard
-              image={post3}
-              title="MateLabs machine learning"
-              description="If you’ve ever wanted to train a machine learning model and integrate it with IFTTT, you now can with ..."
+            <SingleStoryCard
+              image={post1}
+              title="The Way of Kings"
+              genre={{ color: "info", label: "Fantasy | Politics" }}
+              chapters="20"
+              status="Ongoing"
+              createdOn="11/22/63"
+              rating="5"
               action={{
                 type: "internal",
-                route: "/pages/blogs/author",
+                route: "/stories",
                 color: "info",
-                label: "read more",
+                label: "read story",
               }}
             />
           </Grid>
           <Grid item xs={12} sm={6} lg={3}>
-            <TransparentBlogCard
+            <SingleStoryCard
               image={post3}
-              title="MateLabs machine learning"
-              description="If you’ve ever wanted to train a machine learning model and integrate it with IFTTT, you now can with ..."
+              title="The Way of Kings"
+              genre={{ color: "info", label: "Fantasy | Politics" }}
+              chapters="20"
+              status="Ongoing"
+              createdOn="11/22/63"
+              rating="5"
               action={{
                 type: "internal",
-                route: "/pages/blogs/author",
+                route: "/stories",
                 color: "info",
-                label: "read more",
+                label: "read story",
               }}
             />
           </Grid>
           <Grid item xs={12} sm={6} lg={3}>
-            <TransparentBlogCard
-              image={post3}
-              title="MateLabs machine learning"
-              description="If you’ve ever wanted to train a machine learning model and integrate it with IFTTT, you now can with ..."
+            <SingleStoryCard
+              image={post2}
+              title="The Way of Kings"
+              genre={{ color: "info", label: "Fantasy | Politics" }}
+              chapters="20"
+              status="Ongoing"
+              createdOn="11/22/63"
+              rating="5"
               action={{
                 type: "internal",
-                route: "/pages/blogs/author",
+                route: "/stories",
                 color: "info",
-                label: "read more",
+                label: "read story",
               }}
             />
           </Grid>
           <Grid item xs={12} sm={6} lg={3}>
-            <TransparentBlogCard
+            <SingleStoryCard
               image={post3}
-              title="MateLabs machine learning"
-              description="If you’ve ever wanted to train a machine learning model and integrate it with IFTTT, you now can with ..."
+              title="The Way of Kings"
+              genre={{ color: "info", label: "Fantasy | Politics" }}
+              chapters="20"
+              status="Ongoing"
+              createdOn="11/22/63"
+              rating="5"
               action={{
                 type: "internal",
-                route: "/pages/blogs/author",
+                route: "/stories",
                 color: "info",
-                label: "read more",
+                label: "read story",
               }}
             />
           </Grid>
