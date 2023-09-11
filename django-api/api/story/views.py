@@ -10,6 +10,8 @@ from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
 import cloudinary
 import cloudinary.uploader
+from django.contrib.auth import get_user_model  # Import the User model
+
 
 cloudinary.config( 
   cloud_name = "dt4gzg8z1", 
@@ -59,40 +61,51 @@ def storyDetails(request, story_id):
 @api_view(['POST'])
 # @permission_classes([IsAuthenticated])
 def createStory(request):
-    # Access the logged-in user's ID using request.user
-    user_id = request.user.id
-
-    # Get the data from the request
+    print(f'request user ==> {request.user}')
     data = request.data
+    # Access the logged-in user's ID using request.user
+    # TODO Put back in?
+    # user_id = request.user.id
+    user_id = data['authorId']
+
+    # Load the User instance based on the logged-in user's ID
+    User = get_user_model()
+    user_instance = User.objects.get(pk=user_id)
+
+    # Assign the User instance to the authorId field in data
+    data['authorId'] = user_instance  # This assumes that authorId is a ForeignKey to User
 
     # Add the user ID to the data as authorId
-    data['authorId'] = user_id
-    print(data)
+    # data['authorId'] = user_id
+    print(data['authorId'])
 
     # Get the image path from the request data
     image_path = data.get('image')
 
     # Upload the image to Cloudinary
     try:
+        print("78")
         uploaded_response = cloudinary.uploader.upload(image_path)
-
+        print("80")
         # Extract the URL of the uploaded image
         image_url = uploaded_response.get('secure_url', '')
-
+        print("83")
         # Add the image URL to the data
         data['image'] = image_url
-
+        print("86")
         # Create a new Story object with the updated data
         story = Story.objects.create(**data)
 
+        print("Before serializer ")
         # Serialize
         serializer = StorySerializer(story)
-
+        print("After serializer ")
         # Return a res
         return JsonResponse({'message': 'Story created successfully', 'story': serializer.data}, status=201)
     
     except Exception as e:
         # Handle any exceptions (e.g., validation errors or image upload errors)
+        print(e)
         return JsonResponse({'error': str(e)}, status=400)
 
 
