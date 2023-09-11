@@ -13,7 +13,7 @@ Coded by www.creative-tim.com
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 */
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 // react-router-dom components
 import { Link, useNavigate } from "react-router-dom";
@@ -42,9 +42,6 @@ import SimpleFooter from "examples/Footers/SimpleFooter";
 // Material Kit 2 React page layout routes
 import routes from "routes";
 
-// Images
-import bgImage from "assets/images/bg-sign-in-basic.jpeg";
-
 import AuthApi from "../../../api/auth";
 import { useAuth } from "../../../auth-context/auth.context";
 
@@ -58,6 +55,8 @@ function SignInBasic() {
 
   const navigate = useNavigate();
   const { user, setUser } = useAuth();
+  const [randomImage, setRandomImage] = useState("");
+
 
   const handleSetRememberMe = () => setRememberMe(!rememberMe);
 
@@ -93,6 +92,25 @@ function SignInBasic() {
         return setError("There has been an error.");
       });
   };
+
+  useEffect(() => {
+    const imageArray = [
+      'https://www.teahub.io/photos/full/85-857724_space-jam-space-background.jpg',
+      'https://wallpaper-house.com/data/out/9/wallpaper2you_326448.jpg',
+      'https://www.nawpic.com/media/2020/space-nawpic-18.jpg',
+      'https://unblast.com/wp-content/uploads/2021/01/Space-Background-Image-3.jpg',
+      'https://unblast.com/wp-content/uploads/2021/01/Space-Background-Image-4.jpg',
+      'https://a-static.besthdwallpaper.com/astronaut-in-the-colorful-lights-of-planets-in-outer-space-wallpaper-2800x1050-93189_88.jpg',
+      'https://www.hdwallpapers.in/download/stars_glare_space_dark_blue_sky_background_4k_hd_space-HD.jpg',
+      'https://wallpapers.com/images/featured/space-background-htygkta8z6o3mcx2.jpg',
+      'https://removal.ai/wp-content/uploads/2021/05/image11.png',
+      'https://wallpaperboat.com/wp-content/uploads/2019/10/free-space-background-11.jpg',
+      'https://images.hdqwalls.com/download/planet-moon-space-stars-4k-0c-3840x2400.jpg',
+      'https://images.wallpaperscraft.com/image/single/planets_galaxy_stars_146448_3840x2160.jpg',
+    ];
+    const randomIndex = Math.floor(Math.random() * imageArray.length);
+    setRandomImage(imageArray[randomIndex]);
+  }, []); 
 
   return (
     <>
@@ -133,7 +151,7 @@ function SignInBasic() {
             `${linearGradient(
               rgba(gradients.dark.main, 0.6),
               rgba(gradients.dark.state, 0.6)
-            )}, url(${bgImage})`,
+            )}, url('${randomImage}')`,
           backgroundSize: "cover",
           backgroundPosition: "center",
           backgroundRepeat: "no-repeat",

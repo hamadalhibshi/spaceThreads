@@ -96,7 +96,7 @@ const routes = [
         name: "landing pages",
         collapse: [
           {
-            name: "homepage",
+            name: "home",
             route: "/",
             component: <PresentationPage />,
             protected: true,
@@ -129,26 +129,26 @@ const routes = [
       },
       //This section follows the original template
       //And thus it will be preserved in
-      // {
-      //   name: "account",
-      //   collapse: [
-      //     {
-      //       name: "sign in",
-      //       route: "/sign-in",
-      //       component: <SignIn />,
-      //     },
-      //     {
-      //       name: "sign up",
-      //       route: "/sign-up",
-      //       component: <SignUp />,
-      //     },
-      //     {
-      //       name: "sign out",
-      //       route: "/sign-out",
-      //       component: <SignOutPage />,
-      //     },
-      //   ],
-      // },
+      {
+        name: "account",
+        collapse: [
+          {
+            name: "sign in",
+            route: "/sign-in",
+            component: <SignIn />,
+          },
+          {
+            name: "sign up",
+            route: "/sign-up",
+            component: <SignUp />,
+          },
+          {
+            name: "sign out",
+            route: "/sign-out",
+            component: <SignOutPage />,
+          },
+        ],
+      },
     ],
   },
   {
