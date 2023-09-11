@@ -175,3 +175,62 @@ def createReview(request, story_id):
             return JsonResponse({'error': str(e)}, status=400)
     else:
         raise ValidationError("Method not allowed")
+
+
+@api_view(['GET'])
+def listComments(request, story_id=None, chapter_id=None):
+    if request.method == 'GET':
+        try:
+            if story_id is not None:
+                story = Story.objects.get(pk=story_id)
+                comments = Comment.objects.filter(storyId=story)
+            elif chapter_id is not None:
+                chapter = Chapter.objects.get(pk=chapter_id)
+                comments = Comment.objects.filter(chapterId=chapter)
+            else:
+                return JsonResponse({'error': 'Invalid request. Provide either story_id or chapter_id.'}, status=400)
+
+            serializer = CommentSerializer(comments, many=True)
+            data = serializer.data
+            return JsonResponse(data, safe=False)
+        except Story.DoesNotExist:
+            return JsonResponse({'error': 'Story not found'}, status=404)
+        except Chapter.DoesNotExist:
+            return JsonResponse({'error': 'Chapter not found'}, status=404)
+    else:
+        raise ValidationError("Method not allowed")
+
+
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def createComment(request, story_id=None, chapter_id=None):
+    if request.method == 'POST':
+        try:
+            if story_id is not None:
+                story = Story.objects.get(pk=story_id)
+            elif chapter_id is not None:
+                chapter = Chapter.objects.get(pk=chapter_id)
+                story = chapter.storyId
+            else:
+                return JsonResponse({'error': 'Invalid request. Provide either story_id or chapter_id.'}, status=400)
+
+            user_id = request.user.id
+            data = request.data
+            data['userId'] = user_id
+
+            if story_id is not None:
+                data['storyId'] = story_id
+            elif chapter_id is not None:
+                data['chapterId'] = chapter_id
+
+            comment = Comment.objects.create(**data)
+            serializer = CommentSerializer(comment)
+            return JsonResponse({'message': 'Comment created successfully', 'comment': serializer.data}, status=201)
+        except Story.DoesNotExist:
+            return JsonResponse({'error': 'Story not found'}, status=404)
+        except Chapter.DoesNotExist:
+            return JsonResponse({'error': 'Chapter not found'}, status=404)
+        except Exception as e:
+            return JsonResponse({'error': str(e)}, status=400)
+    else:
+        raise ValidationError("Method not allowed")
