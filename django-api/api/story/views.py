@@ -234,3 +234,42 @@ def createComment(request, story_id=None, chapter_id=None):
             return JsonResponse({'error': str(e)}, status=400)
     else:
         raise ValidationError("Method not allowed")
+
+
+@api_view(['GET'])
+def listReplies(request, comment_id):
+    if request.method == 'GET':
+        try:
+            comment = Comment.objects.get(pk=comment_id)
+            replies = Reply.objects.filter(commentId=comment)
+            serializer = ReplySerializer(replies, many=True)
+            data = serializer.data
+            return JsonResponse(data, safe=False)
+        except Comment.DoesNotExist:
+            return JsonResponse({'error': 'Comment not found'}, status=404)
+    else:
+        raise ValidationError("Method not allowed")
+
+
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def createReply(request, comment_id):
+    if request.method == 'POST':
+        try:
+            comment = Comment.objects.get(pk=comment_id)
+        except Comment.DoesNotExist:
+            return JsonResponse({'error': 'Comment not found'}, status=404)
+
+        user_id = request.user.id
+        data = request.data
+        data['userId'] = user_id
+        data['commentId'] = comment_id
+
+        try:
+            reply = Reply.objects.create(**data)
+            serializer = ReplySerializer(reply)
+            return JsonResponse({'message': 'Reply created successfully', 'reply': serializer.data}, status=201)
+        except Exception as e:
+            return JsonResponse({'error': str(e)}, status=400)
+    else:
+        raise ValidationError("Method not allowed")
