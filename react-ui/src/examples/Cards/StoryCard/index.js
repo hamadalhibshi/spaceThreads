@@ -24,7 +24,7 @@ import Grid from "@mui/material/Grid";
 import MKBox from "components/MKBox";
 import MKTypography from "components/MKTypography";
 
-function StoryCard({ image, name, position, description }) {
+function StoryCard({ image, name, position, chapters, rating, status, createdOn }) {
   return (
     <Card sx={{ mt: 3 }}>
       <Grid container>
@@ -49,16 +49,16 @@ function StoryCard({ image, name, position, description }) {
             <MKTypography variant="body2" color="text">
               <Grid container spacing={2}>
                 <Grid item xs={6}>
-                  <span>Chapters</span>
+                  <span>Chapters {chapters}</span>
                 </Grid>
                 <Grid item xs={6}>
-                  <span>Rating</span>
+                  <span>Rating {rating}</span>
                 </Grid>
                 <Grid item xs={6}>
-                  <span>Status</span>
+                  <span>Status {status}</span>
                 </Grid>
                 <Grid item xs={6}>
-                  <span>Created On</span>
+                  <span>Created On {createdOn}</span>
                 </Grid>
               </Grid>
             </MKTypography>
@@ -86,7 +86,6 @@ StoryCard.propTypes = {
     ]),
     label: PropTypes.string.isRequired,
   }).isRequired,
-  description: PropTypes.string.isRequired,
 };
 
 export default StoryCard;

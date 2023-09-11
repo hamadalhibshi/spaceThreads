@@ -59,7 +59,10 @@ function Team() {
                 image={team1}
                 name="Danganronpa"
                 position={{ color: "info", label: "Crime | Thriller" }}
-                description="Artist is a term applied to a person who engages in an activity deemed to be an art."
+                chapters="20"
+                status="Completed"
+                createdOn="9/7/1500"
+                rating="5"
               />
             </MKBox>
           </Grid>
@@ -69,7 +72,10 @@ function Team() {
                 image={team2}
                 name="Solo Leveling"
                 position={{ color: "info", label: "Progression" }}
-                description="Artist is a term applied to a person who engages in an activity deemed to be an art."
+                chapters="20"
+                status="Ongoing"
+                createdOn="9/7/2000"
+                rating="5"
               />
             </MKBox>
           </Grid>
@@ -79,7 +85,10 @@ function Team() {
                 image={team3}
                 name="Stormlight Archive"
                 position={{ color: "info", label: "Fantasy | Coming of Age" }}
-                description="Artist is a term applied to a person who engages in an activity deemed to be an art."
+                chapters="20"
+                status="Ongoing"
+                createdOn="12/12/2012"
+                rating="5"
               />
             </MKBox>
           </Grid>
@@ -89,7 +98,10 @@ function Team() {
                 image={team4}
                 name="The Wheel of Time"
                 position={{ color: "info", label: "Fantasy | Politics" }}
-                description="Artist is a term applied to a person who engages in an activity deemed to be an art."
+                chapters="20"
+                status="Ongoing"
+                createdOn="11/22/63"
+                rating="5"
               />
             </MKBox>
           </Grid>
