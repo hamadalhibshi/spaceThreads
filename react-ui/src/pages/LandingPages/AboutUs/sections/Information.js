@@ -26,7 +26,7 @@ import CenteredBlogCard from "examples/Cards/BlogCards/CenteredBlogCard";
 
 function Information() {
   return (
-    <MKBox component="section" py={12}>
+    <MKBox component="section" py={3} sx={{pb:9}}>
       <Container>
         <Grid container spacing={3} alignItems="center">
           <Grid item xs={12} lg={6}>
@@ -55,7 +55,6 @@ function Information() {
                     icon="apps"
                     title="Our Mission"
                     description="Inspire and engage space enthusiasts through imaginative storytelling that transports our audience to the cosmos and beyond."
-
                   />
                 </MKBox>
               </Grid>
@@ -73,11 +72,11 @@ function Information() {
           <Grid item xs={12} lg={4} sx={{ ml: "auto", mt: { xs: 3, lg: 0 } }}>
             <CenteredBlogCard
               image="https://static.vecteezy.com/system/resources/previews/017/125/698/non_2x/cartoon-astronaut-in-outer-space-free-vector.jpg"
-              title="Get insights on Authors"
-              description="Website visitors today demand a frictionless user expericence — especially when using search. Because of the high standards."
+              title="Get insights on our Authors"
+              description="Meet the creative minds behind our space-bending stories."
               action={{
                 type: "internal",
-                route: "pages/company/about-us",
+                route: "/authors",
                 color: "info",
                 label: "Explore Authors",
               }}

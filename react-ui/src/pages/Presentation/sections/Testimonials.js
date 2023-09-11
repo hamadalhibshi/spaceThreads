@@ -29,7 +29,7 @@ function Information() {
   return (
     <MKBox component="section" pt={8}>
       <Container>
-        <Grid
+        {/* <Grid
           container
           item
           xs={12}
@@ -45,7 +45,7 @@ function Information() {
             Many Fortune 500 companies, startups, universities and governmental institutions love
             Creative Tim&apos;s products.
           </MKTypography>
-        </Grid>
+        </Grid> */}
         <Grid container spacing={3} sx={{ mt: 8 }}>
           <Grid item xs={12} md={6} lg={4}>
             <DefaultReviewCard

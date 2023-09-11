@@ -16,7 +16,6 @@ Coded by www.creative-tim.com
 // @mui material components
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
-import Divider from "@mui/material/Divider";
 
 // Material Kit 2 React components
 import MKBox from "components/MKBox";
@@ -24,41 +23,40 @@ import MKBox from "components/MKBox";
 // Material Kit 2 React examples
 import DefaultCounterCard from "examples/Cards/CounterCards/DefaultCounterCard";
 
-function Counters() {
+function Featuring() {
   return (
-    <MKBox component="section" py={3}>
+    <MKBox component="section" pt={4} pb={3}>
       <Container>
-        <Grid container item xs={12} lg={9} sx={{ mx: "auto" }}>
-          <Grid item xs={12} md={4}>
+        <Grid container justifyContent="center" sx={{ textAlign: "center" }}>
+          <Grid item xs={12} md={3}>
             <DefaultCounterCard
-              count={70}
-              suffix="+"
+              count={5234}
+              separator=","
               title="Stories"
-              description="From buttons, to inputs, navbars, alerts or cards, you are covered"
+              description="Of “high-performing” level are led by a certified project manager"
             />
           </Grid>
-          <Grid item xs={12} md={4} display="flex">
-            <Divider orientation="vertical" sx={{ display: { xs: "none", md: "block" }, mx: 0 }} />
+          <Grid item xs={12} md={3}>
             <DefaultCounterCard
-              count={15}
+              count={3400}
+              separator=","
               suffix="+"
               title="Authors"
-              description="Mix the sections, change the colors and unleash your creativity"
+              description="That meets quality standards required by our users"
             />
-            <Divider orientation="vertical" sx={{ display: { xs: "none", md: "block" }, ml: 0 }} />
           </Grid>
-          <Grid item xs={12} md={4}>
+          <Grid item xs={12} md={3}>
             <DefaultCounterCard
-              count={4}
+              count={24}
+              suffix="/7"
               title="Readers"
-              description="Save 3-4 weeks of work when you use our pre-made pages for your website"
+              description="Actively engage team members that finishes on time"
             />
           </Grid>
         </Grid>
       </Container>
-      <Divider sx={{ my: 3 }} />
     </MKBox>
   );
 }
 
-export default Counters;
+export default Featuring;
