@@ -5,7 +5,7 @@ from cloudinary.models import CloudinaryField
 
 class Story(models.Model):
     id = models.AutoField(primary_key=True)
-    image = CloudinaryField('image')
+    image = CloudinaryField('image', null=True)
     title = models.CharField(max_length=255)
     authorId = models.ForeignKey(User, on_delete=models.CASCADE) 
     genre = models.CharField(max_length=100)
