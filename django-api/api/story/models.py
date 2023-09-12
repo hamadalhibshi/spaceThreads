@@ -53,15 +53,15 @@ class Comment(models.Model):
     content = models.TextField()
     timestamp = models.DateTimeField(auto_now_add=True)
 
-    def __str__(self):
-        return f"Comment by User ID {self.userId.id} on Chapter ID {self.chapterId.id}"
+    # def __str__(self):
+    #     return f"Comment by User ID {self.userId.id} on Chapter ID {self.storyId.id}"
 
 
 class Reply(models.Model):
     id = models.AutoField(primary_key=True)
     commentId = models.ForeignKey('Comment', on_delete=models.CASCADE)
     userId = models.ForeignKey(User, on_delete=models.CASCADE)
-    reviewId = models.ForeignKey('Review', on_delete=models.CASCADE)
+    # reviewId = models.ForeignKey('Review', on_delete=models.CASCADE)
     content = models.TextField()
     timestamp = models.DateTimeField(auto_now_add=True)
 

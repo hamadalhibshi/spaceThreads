@@ -44,20 +44,41 @@ def storyDetails(request, story_id):
         # Get all the reviews related to the story
         reviews = Review.objects.filter(storyId=story_id)
 
+        # Get all the comments related to the story
+        comments = Comment.objects.filter(storyId=story_id)
+        print(f"comments =====> {comments}")
+        # comments = Comment.objects.filter(storyId=story_id)  # Replace ... with your filter conditions
+        # if comments.exists():
+        #     first_comment = comments[0]
+        #     print(first_comment)  # This will print the string representation of the first Comment object
+        # Initialize an empty list to store all the replies
+        all_replies = []
+
+        # Iterate over each comment and retrieve its associated replies
+        for comment in comments:
+            replies = Reply.objects.filter(commentId=comment.id)
+            reply_serializer = ReplySerializer(replies, many=True)
+    
+        # Append the replies to the list
+        all_replies.extend(reply_serializer.data)
+        
         # Serialize the story instance
         serializer = StorySerializer(story)
 
         # Serialize the chapters
         chapter_serializer = ChapterSerializer(chapters, many=True)
 
+
         review_serializer = ReviewSerializer(reviews, many=True)
 
-
+        comment_serializer = CommentSerializer(comments, many=True)
         # Create a dictionary with story and chapters data
         response_data = {
             'story': serializer.data,
             'chapters': chapter_serializer.data,
-            'reviews': review_serializer.data
+            'reviews': review_serializer.data,
+            'comments': comment_serializer.data,
+            'replies': reply_serializer.data
         }
         # print(response_data)
         # Return the serialized data as a JSON response
@@ -206,30 +227,30 @@ def createReview(request):
         return JsonResponse({'error': str(e)}, status=400)
 
 
-@api_view(['GET'])
-def listComments(request, story_id=None, chapter_id=None):
-    if request.method == 'GET':
-        try:
-            if story_id is not None:
-                story = Story.objects.get(pk=story_id)
-                comments = Comment.objects.filter(storyId=story)
-            elif chapter_id is not None:
-                chapter = Chapter.objects.get(pk=chapter_id)
-                comments = Comment.objects.filter(chapterId=chapter)
-            else:
-                return JsonResponse({'error': 'Invalid request. Provide either story_id or chapter_id.'}, status=400)
+# @api_view(['GET'])
+# def listComments(request, story_id=None, chapter_id=None):
+#     if request.method == 'GET':
+#         try:
+#             if story_id is not None:
+#                 story = Story.objects.get(pk=story_id)
+#                 comments = Comment.objects.filter(storyId=story)
+#             elif chapter_id is not None:
+#                 chapter = Chapter.objects.get(pk=chapter_id)
+#                 comments = Comment.objects.filter(chapterId=chapter)
+#             else:
+#                 return JsonResponse({'error': 'Invalid request. Provide either story_id or chapter_id.'}, status=400)
 
-            serializer = CommentSerializer(comments, many=True)
-            data = serializer.data
-            return JsonResponse(data, safe=False)
-        except Story.DoesNotExist:
-            return JsonResponse({'error': 'Story not found'}, status=404)
-        except Chapter.DoesNotExist:
-            return JsonResponse({'error': 'Chapter not found'}, status=404)
-    else:
-        raise ValidationError("Method not allowed")
+#             serializer = CommentSerializer(comments, many=True)
+#             data = serializer.data
+#             return JsonResponse(data, safe=False)
+#         except Story.DoesNotExist:
+#             return JsonResponse({'error': 'Story not found'}, status=404)
+#         except Chapter.DoesNotExist:
+#             return JsonResponse({'error': 'Chapter not found'}, status=404)
+#     else:
+#         raise ValidationError("Method not allowed")
 
-
+# works
 @api_view(['POST'])
 # @permission_classes([IsAuthenticated])
 def createComment(request):
@@ -281,41 +302,136 @@ def createComment(request):
     else:
         raise ValidationError("Method not allowed")
 
+# Unnecessary
+# @api_view(['GET'])
+# def listReplies(request, comment_id):
+#     if request.method == 'GET':
+#         try:
+#             comment = Comment.objects.get(pk=comment_id)
+#             replies = Reply.objects.filter(commentId=comment)
+#             serializer = ReplySerializer(replies, many=True)
+#             data = serializer.data
+#             return JsonResponse(data, safe=False)
+#         except Comment.DoesNotExist:
+#             return JsonResponse({'error': 'Comment not found'}, status=404)
+#     else:
+#         raise ValidationError("Method not allowed")
 
-@api_view(['GET'])
-def listReplies(request, comment_id):
-    if request.method == 'GET':
-        try:
-            comment = Comment.objects.get(pk=comment_id)
-            replies = Reply.objects.filter(commentId=comment)
-            serializer = ReplySerializer(replies, many=True)
-            data = serializer.data
-            return JsonResponse(data, safe=False)
-        except Comment.DoesNotExist:
-            return JsonResponse({'error': 'Comment not found'}, status=404)
-    else:
-        raise ValidationError("Method not allowed")
-
-
+# works
 @api_view(['POST'])
-@permission_classes([IsAuthenticated])
-def createReply(request, comment_id):
-    if request.method == 'POST':
+def createReply(request):
+    try:
+        data = request.data
+
+        # Extract data from the request
+        comment_id = data.get('commentId')
+        user_id = data.get('userId')
+        content = data.get('content')
+
+        # Check if commentId and userId exist in the data
+        if comment_id is None or user_id is None:
+            return JsonResponse(
+                {"success": False, "msg": "Missing commentId or userId in request data"},
+                status=400
+            )
+
+        # Check if the Story with the provided commentId exists
         try:
             comment = Comment.objects.get(pk=comment_id)
         except Comment.DoesNotExist:
-            return JsonResponse({'error': 'Comment not found'}, status=404)
-
-        user_id = request.user.id
-        data = request.data
-        data['userId'] = user_id
-        data['commentId'] = comment_id
+            return JsonResponse(
+                {"success": False, "msg": f"Story with commentId {comment_id} does not exist"},
+                status=404
+            )
 
         try:
-            reply = Reply.objects.create(**data)
-            serializer = ReplySerializer(reply)
-            return JsonResponse({'message': 'Reply created successfully', 'reply': serializer.data}, status=201)
-        except Exception as e:
-            return JsonResponse({'error': str(e)}, status=400)
-    else:
-        raise ValidationError("Method not allowed")
+            user = User.objects.get(pk=user_id)
+        except User.DoesNotExist:
+            return JsonResponse(
+                {"success": False, "msg": f"User {user_id} does not exist"},
+                status=404
+            )
+        
+        # Create a Reply instance
+        reply = Reply.objects.create(
+            commentId=comment,
+            userId=user,
+            content=content,
+        )
+        serializer = ReplySerializer(reply)
+        # Return a success response
+        return JsonResponse(
+            {"success": True, "msg": "Reply created successfully", 'reply': serializer.data},
+            status=201
+        )
+
+    except Exception as e:
+        # Handle any exceptions (e.g., validation errors)
+        return JsonResponse({'error': str(e)}, status=400)
+    
+@api_view(['PATCH'])
+# @permission_classes([IsAuthenticated])
+def updateStoryStatus(request, story_id):
+    try:
+        # Retrieve the story instance based on the provided story_id
+        story = Story.objects.get(id=story_id)
+
+        # Check if the request user is the author of the story
+        if request.user == story.authorId:
+            new_status = request.data.get('status')
+
+            # Validate and update the status
+            if new_status in ['Completed']:
+                story.status = new_status
+                story.save()
+
+                # Serialize the updated story and return it in the response
+                serializer = StorySerializer(story)
+                return JsonResponse({'message': 'Story status updated successfully', 'story': serializer.data})
+
+            return JsonResponse({'error': 'Invalid status value'}, status=400)
+        
+        return JsonResponse({'error': 'You are not authorized to update this story'}, status=403)
+
+    except Story.DoesNotExist:
+        # Handle the case where the story with the provided ID does not exist
+        return JsonResponse({'error': 'Story not found'}, status=404)
+    
+
+@api_view(['PATCH'])
+# @permission_classes([IsAuthenticated])
+def updateChapterStatus(request, chapter_id):
+    try:
+        # Retrieve the story instance based on the provided chapter_id
+        chapter = Chapter.objects.get(id=chapter_id)
+
+        # Check if the request user is the author of the story
+        
+        new_status = request.data.get('status')
+        order = request.data.get('order')
+            # Validate and update the status
+        if new_status in ['Approved', 'Pending', 'Rejected']:
+            chapter.status = new_status
+            chapter.save()
+
+            # Serialize the updated story and return it in the response
+            serializer = StorySerializer(chapter)
+            return JsonResponse({'message': 'Story status updated successfully', 'story': serializer.data})
+
+        return JsonResponse({'error': 'Invalid status value'}, status=400)
+        
+
+    except Story.DoesNotExist:
+        # Handle the case where the story with the provided ID does not exist
+        return JsonResponse({'error': 'Story not found'}, status=404)
+    
+@api_view(['GET'])
+def getApprovedChapters(request):
+    # Query the database to get approved chapters ordered by timestamp
+    chapters = Chapter.objects.filter(status='Approved').order_by('timestamp')
+
+    # Serialize the queryset
+    serializer = ChapterSerializer(chapters, many=True)
+
+    # Return the serialized data as a JSON response
+    return JsonResponse({serializer.data})
