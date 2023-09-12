@@ -8,11 +8,10 @@ class Story(models.Model):
     title = models.CharField(max_length=255)
     authorId = models.ForeignKey(User, on_delete=models.CASCADE) 
     genre = models.CharField(max_length=100)
-    setting = models.CharField(max_length=100)
     age_group = models.CharField(max_length=50)
     prologue = models.TextField()
-    status = models.CharField(max_length=50)
-    rating = models.DecimalField(max_digits=3, decimal_places=2)
+    status = models.CharField(max_length=50, default='Pending')
+    rating = models.DecimalField(max_digits=3, decimal_places=2, default=0)
     reviews = models.ForeignKey('Review', on_delete=models.SET_NULL, null=True) 
     timestamp = models.DateTimeField(auto_now_add=True)
 
