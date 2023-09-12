@@ -21,4 +21,6 @@ urlpatterns = [
     path('updateStoryStatus/<int:story_id>/', views.updateStoryStatus, name='update_story_status'),
     path('updateChapterStatus/<int:chapter_id>/', views.updateChapterStatus, name='update_story_status'),
     path('getApprovedChapters', views.getApprovedChapters, name='get_approved_chapters'),
+    path('listAuthorUsers/', views.listAuthorUsers, name='list_author_users'),
+    path('authorUserDetails/<int:user_id>/', views.authorUserDetails, name='author_user_details'),
 ]

@@ -517,3 +517,33 @@ def getApprovedChapters(request):
     # Return the serialized data as a JSON response
     return JsonResponse({serializer.data})
 
+
+@api_view(['GET'])
+# @permission_classes([IsAuthenticated])
+def listAuthorUsers(request):
+    try:
+        # Retrieve all users with userType == "Author"
+        author_users = User.objects.filter(userType="Author")
+        serializer = UserSerializer(author_users, many=True)  # Replace 'UserSerializer' with your serializer
+        data = serializer.data
+        return JsonResponse(data, safe=False)
+    except Exception as e:
+        return JsonResponse({'error': str(e)}, status=500)
+
+
+@api_view(['GET'])
+# @permission_classes([IsAuthenticated])
+def authorUserDetails(request, user_id):
+    try:
+        # Retrieve the user instance based on the provided user_id
+        user = User.objects.get(id=user_id)
+
+        # Serialize the user details
+        serializer = UserSerializer(user)  # Replace 'UserSerializer' with your serializer
+        data = serializer.data
+        return JsonResponse(data)
+    except User.DoesNotExist:
+        return JsonResponse({'error': 'User not found'}, status=404)
+    except Exception as e:
+        return JsonResponse({'error': str(e)}, status=500)
+
