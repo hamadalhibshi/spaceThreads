@@ -19,13 +19,18 @@ import routes from "routes";
 import footerRoutes from "footer.routes";
 import bgImage from "assets/images/city-profile.jpg";
 import { useAuth } from "auth-context/auth.context";
-
+import { Link } from "react-router-dom";
+import BookIcon from "@mui/icons-material/Book";
+import { Icon } from "@mui/material";
 function StoriesShow() {
   const { user } = useAuth();
   const rows = [
-    { id: 1, name: "John Doe", age: 30, email: "john@example.com" },
-    { id: 2, name: "Jane Smith", age: 25, email: "jane@example.com" },
-    { id: 3, name: "Bob Johnson", age: 35, email: "bob@example.com" },
+    { chapterNo: 1, title: "John Doe", author: "John Doe", mergedOn: "11/22/63" },
+    { chapterNo: 2, title: "Jane Smith", author: "John Doe", mergedOn: "19/11/20" },
+    { chapterNo: 3, title: "Bob Johnson", author: "John Doe", mergedOn: "07/9/19" },
+    { chapterNo: 4, title: "John Doe", author: "John Doe", mergedOn: "11/22/63" },
+    { chapterNo: 5, title: "Jane Smith", author: "John Doe", mergedOn: "19/11/20" },
+    { chapterNo: 6, title: "Bob Johnson", author: "John Doe", mergedOn: "07/9/19" },
     // Add more rows as needed
   ];
 
@@ -73,7 +78,7 @@ function StoriesShow() {
         />
       )}
       <MKBox
-        minHeight="75vh"
+        minHeight="60vh"
         width="100%"
         sx={{
           backgroundImage: ({ functions: { linearGradient, rgba }, palette: { gradients } }) =>
@@ -127,8 +132,40 @@ function StoriesShow() {
           boxShadow: ({ boxShadows: { xxl } }) => xxl,
         }}
       >
-        <MKTypography variant="body1" color="black" opacity={0.8} mt={1} mb={3}>
-          *Genres*
+        <MKTypography
+          variant="h4"
+          sx={{ mb: 5 }}
+          component="span"
+          display="flex"
+          alignItems="center"
+          justifyContent="space-around"
+        >
+          <Grid container item xs={12} lg={8} justifyContent="space-around">
+            <MKTypography variant="h4" component="span" display="flex" alignItems="center">
+              <Icon>
+                <BookIcon />
+              </Icon>
+              <span>Genre</span>
+            </MKTypography>
+            <MKTypography variant="h4" component="span" display="flex" alignItems="center">
+              <Icon>
+                <BookIcon />
+              </Icon>
+              <span>Completed</span>
+            </MKTypography>
+            <MKTypography variant="h4" component="span" display="flex" alignItems="center">
+              <Icon>
+                <BookIcon />
+              </Icon>
+              <span>Rating</span>
+            </MKTypography>
+            <MKTypography variant="h4" component="span" display="flex" alignItems="center">
+              <Icon>
+                <BookIcon />
+              </Icon>
+              <span>Created On</span>
+            </MKTypography>
+          </Grid>
         </MKTypography>
         <MKTypography
           display="flex"
@@ -137,7 +174,18 @@ function StoriesShow() {
           textTransform="capitalize"
           fontWeight="bold"
         >
-          <span>Table of Contents</span>
+          <MKTypography
+            variant="h4"
+            sx={{ mb: 5 }}
+            component="span"
+            display="flex"
+            alignItems="center"
+          >
+            <Icon>
+              <BookIcon />
+            </Icon>
+            <span>Table of Contents</span>
+          </MKTypography>
         </MKTypography>
         <Paper>
           <TableContainer>
@@ -186,11 +234,15 @@ function StoriesShow() {
                   ? rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                   : rows
                 ).map((row) => (
-                  <TableRow key={row.id}>
-                    <TableCell align="center">{row.id}</TableCell>
-                    <TableCell align="center">{row.name}</TableCell>
-                    <TableCell align="center">{row.age}</TableCell>
-                    <TableCell align="center">{row.email}</TableCell>
+                  <TableRow key={row.chapterNo}>
+                    <TableCell align="center">{row.chapterNo}</TableCell>
+                    <TableCell align="center">
+                      <Link to={`/stories/${row.title}/${row.chapterNo}`}>{row.title}</Link>
+                    </TableCell>
+                    <TableCell align="center">
+                      <Link to={`/authors/${row.author}`}>{row.author}</Link>
+                    </TableCell>
+                    <TableCell align="center">{row.mergedOn}</TableCell>
                   </TableRow>
                 ))}
 
