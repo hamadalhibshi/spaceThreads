@@ -107,7 +107,7 @@ function CreateStory() {
 
   return (
     <>
-      {user && user.token ? (
+    {user && user.token ? (
         <DefaultNavbar
           routes={routes}
           action={{
@@ -147,7 +147,7 @@ function CreateStory() {
           placeItems: "center",
         }}
       >
-        <Container>
+        <Container maxWidth="lg">
           <Grid
             container
             item
@@ -179,94 +179,106 @@ function CreateStory() {
       <Card
         sx={{
           p: 2,
-          mx: { xs: 2, lg: 3 },
+          mx: "auto",
           mt: -8,
           mb: 4,
           boxShadow: ({ boxShadows: { xxl } }) => xxl,
+          maxWidth: "80vw",
         }}
       >
-        <Box component="form" noValidate autoComplete="off" onSubmit={handleSubmit} sx={{ mt: 1 }} id='story-form'>
-          <Grid container spacing={2}>
-            <Grid item xs={6}>
-              <TextField
-                margin="normal"
-                required
-                fullWidth
-                id="title"
-                label="Title"
-                name="title"
-                onChange={handleChange}
-              />
-            </Grid>
-            <Grid item xs={6}>
-              <InputLabel id="genre-label">Genre</InputLabel>
-              <Select
-                labelId="genre-label"
-                id="genre"
-                name="genre"
-                onChange={handleChange}
-                fullWidth
-              >
-                <MenuItem value="action">Thriller</MenuItem>
-                <MenuItem value="comedy">Comedy</MenuItem>
-                <MenuItem value="drama">Drama</MenuItem>
-                <MenuItem value="science-fiction">Science Fiction</MenuItem>
-                <MenuItem value="historical-fiction">Historical Fiction</MenuItem>
-                <MenuItem value="fantasy">Fantasy</MenuItem>
-                <MenuItem value="romance">Romance</MenuItem>
-                <MenuItem value="horror">Horror</MenuItem>
-                <MenuItem value="fiction">Fiction</MenuItem>
-                <MenuItem value="non-fiction">Non-fiction</MenuItem>
-              </Select>
-            </Grid>
+        <Box component="form" noValidate autoComplete="off" onSubmit={handleSubmit} sx={{ mt: 1 }}>
+        <Grid container spacing={2}>
+          <Grid item xs={6}>
+          <TextField
+            margin="normal"
+            required
+            fullWidth
+            id="title"
+            label="Title"
+            name="title"
+            onChange={handleChange}
+          />
           </Grid>
-          <Grid container spacing={2}>
-            <Grid item xs={6}>
-              <TextField
-                margin="normal"
-                required
-                fullWidth
-                id='age_group'
-                name="age_group"
-                onChange={handleChange}
-                label="Age Group"
-                autoComplete="off"
-                type="number"
-              />
-            </Grid>
-            <Grid item xs={6}>
-              <TextField
-                margin="normal"
-                required
-                fullWidth
-                id='prologue'
-                name="prologue"
-                onChange={handleChange}
-                label="Prologue"
-                autoComplete="off"
-              />
-            </Grid>
-            <TextField
-              type="file"
-              name="image"
-              id="image"
-              // required
-              inputProps={{ accept: "image/*" }}
-              onChange={handleImageUpload}
-            />
-            <TextField
-              type='hidden'
-              name="authorId"
-              id="authorId"
-              value={data.authorId}
-            />
+
+          <Grid item xs={6}>
+          <InputLabel id="genre-label">Genre</InputLabel>
+          <Select
+            labelId="genre-label"
+            id="genre"
+            name="genre"
+            onChange={handleChange}
+            fullWidth
+            sx={{height:43, mt:0.4}}
+          >
+            <MenuItem value="action">Thriller</MenuItem>
+            <MenuItem value="comedy">Comedy</MenuItem>
+            <MenuItem value="drama">Drama</MenuItem>
+            <MenuItem value="science-fiction">Science Fiction</MenuItem>
+            <MenuItem value="historical-fiction">Historical Fiction</MenuItem>
+            <MenuItem value="fantasy">Fantasy</MenuItem>
+            <MenuItem value="romance">Romance</MenuItem>
+            <MenuItem value="horror">Horror</MenuItem>
+            <MenuItem value="fiction">Fiction</MenuItem>
+            <MenuItem value="non-fiction">Non-fiction</MenuItem>
+          </Select>
           </Grid>
+
+          <Grid item xs={6}>
+          <InputLabel id="age-group-label">Age Group</InputLabel>
+          <Select
+            labelId="age-group-label"
+            id="age_group"
+            name="age_group"
+            onChange={handleChange}
+            fullWidth
+            sx={{height:43, mt:0.4}}
+          >
+            <MenuItem value="0-2">0-2</MenuItem>
+            <MenuItem value="3-5">3-5</MenuItem>
+            <MenuItem value="6-8">6-8</MenuItem>
+            <MenuItem value="9-12">9-12</MenuItem>
+            <MenuItem value="13-17">13-17</MenuItem>
+            <MenuItem value="18+">18+</MenuItem>
+          </Select>
+          </Grid>
+
+          <Grid item xs={6}>
+          <TextField
+            type="file"
+            name="image"
+            id="image"
+            fullWidth
+            InputProps={{ inputProps: { accept: "image/*" }}}
+            onChange={handleImageUpload}
+            sx={{ mt: 1.8 }}
+          />
+          </Grid>
+          </Grid>
+
+          <TextField
+            margin="normal"
+            required
+            fullWidth
+            id="prologue"
+            name="prologue"
+            onChange={handleChange}
+            label="Prologue"
+            autoComplete="off"
+            variant="outlined"
+            multiline
+            rows={14}
+          />
+          <input
+            type='hidden'
+            name="authorId"
+            id="authorId"
+            value={data.authorId}
+          />
           <Button
             type="submit"
             fullWidth
             variant="contained"
-            sx={{ mt: 3, mb: 2 }}
-          // disabled={disable}
+            sx={{ mt: 3 }}
           >
             Add Story
           </Button>
