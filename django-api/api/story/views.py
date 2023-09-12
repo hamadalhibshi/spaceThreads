@@ -68,19 +68,21 @@ def createStory(request):
     data = request.data
     # Access the logged-in user's ID using request.user
     # TODO Put back in?
-    # user_id = request.user.id
+    
+    # get the user id from the hidden input
     user_id = data['authorId']
 
     # Load the User instance based on the logged-in user's ID
     User = get_user_model()
     user_instance = User.objects.get(pk=user_id)
 
-    # Assign the User instance to the authorId field in data
-    data['authorId'] = user_instance  # This assumes that authorId is a ForeignKey to User
+    # Assign the User instance to the authorId field in data so that we can push it to the DB
+    data['authorId'] = user_instance 
 
     # Add the user ID to the data as authorId
-    data['authorId'] = user_id
     # data['authorId'] = user_id
+    # data['authorId'] = user_id
+    print("authorID ======>")
     print(data['authorId'])
 
     # Get the image path from the request data
