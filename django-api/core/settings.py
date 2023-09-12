@@ -67,10 +67,11 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "corsheaders",
     "rest_framework",
-    "api",
-    "api.user",
-    "api.authentication",
     "cloudinary",
+    "api",
+    "api.authentication",
+    "api.admin",
+    "api.user",
     "api.story"
 ]
 
