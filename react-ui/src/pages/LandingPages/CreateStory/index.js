@@ -274,14 +274,15 @@ function CreateStory() {
             id="authorId"
             value={data.authorId}
           />
+          <Grid display='flex' justifyContent='center'>
           <Button
             type="submit"
-            fullWidth
             variant="contained"
-            sx={{ mt: 3 }}
+            sx={{ mt: 3, width: 200, color: '#fff' }}
           >
             Add Story
           </Button>
+          </Grid>
         </Box>
       </Card>
       <MKBox pt={6} px={1} mt={6}>
