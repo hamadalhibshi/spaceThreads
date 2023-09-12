@@ -50,21 +50,21 @@
 ## :star2: About the Project
 
 <p>
-Welcome to the universe of creativity and collaboration – SpaceThreads! Conceived by a talented team comprising Ali Haji (as a team leader) along with Ahmed Almadhoob, Hamad Alhibshi, and Qasim Alkuwaiti during their time at General Assembly, it is a web application that reimagines storytelling.
+Welcome to the universe of creativity and collaboration – SpaceThreads! Conceived by a talented team comprising Ali Haji (as a spaceship captain) along with Ahmed Almadhoob, Hamad Alhibshi, and Qasim Alkuwaiti for their final capstone at General Assembly, it is a web application that reimagines storytelling.
 
 Inspired by the boundless expanse of infinite space and the concept of parallel universes, SpaceThreads is a dynamic platform that empowers individuals to craft their own unique stories. With the robust Django backend and the engaging React frontend, this project brings together the best of web development.
 
 At SpaceThreads, the traditional boundaries between authors and readers dissolve, creating an interactive space where stories come to life through collaboration. Whether you're a seasoned writer or a newcomer, SpaceThreads offers an innovative stage for your literary aspirations.
 
-Join us in this cosmic journey, where storytelling knows no limits. Explore SpaceThreads and dive into a universe where creativity knows no bounds – your literary adventure awaits!
+Join us in this cosmic journey, where storytelling has no limits. Explore SpaceThreads and dive into a universe where creativity knows no bounds – your literary adventure awaits!
 </p>
 
 
 <!-- Screenshots -->
 ### :eyes: Resources
 
- - [Collaborative Writing](https://en.wikipedia.org/wiki/Collaborative_writing/)
- - [Networked Books](https://en.wikipedia.org/wiki/Networked_book/)
+ - [Collaborative Writing](https://en.wikipedia.org/wiki/Collaborative_writing)
+ - [Networked Books](https://en.wikipedia.org/wiki/Networked_book)
 
 
 <!-- Screenshots -->
@@ -85,7 +85,8 @@ Join us in this cosmic journey, where storytelling knows no limits. Explore Spac
     <li><a href="https://react.dev/">React Frontend Framework</a></li>
     <li><a href="https://mui.com/material-ui/">Material UI Component Library</a></li>
     <li><a href="https://emotion.sh/docs/introduction">Emotion.js Styling Library</a></li>
-    <li><a href="https://gka.github.io/chroma.js/">Chroma.js Color Conversion</a></li>
+    <li><a href="https://github.com/gka/chroma.js/">Chroma.js Color Conversion</a></li>
+    <li><a href="https://web.dev/vitals/">Web Vitals Metrics Library</a></li>
     <li><a href="https://axios-http.com/">Axios HTTP Client</a></li>
   </ul>
 </details>
@@ -96,27 +97,24 @@ Join us in this cosmic journey, where storytelling knows no limits. Explore Spac
     <li><a href="https://www.python.org/">Python Programming Language</a></li>
     <li><a href="https://www.djangoproject.com/">Django Backend Framework</a></li>
     <li><a href="https://www.django-rest-framework.org/">Django REST Framework</a></li>
+    <li><a href="https://github.com/adamchainz/django-cors-headers/">Django CORS Headers</a></li>
     <li><a href="https://github.com/jpadilla/pyjwt/">Python JWT Implementation</a></li>
+    <li><a href="https://cloudinary.com/">Cloudinary Image API</a></li>
     <li><a href="https://gunicorn.org/">Python WSGI HTTP Server</a></li>
   </ul>
 </details>
 
 <details>
-<summary>Database</summary>
+<summary>DevOps, DB and etc.</summary>
   <ul>
+    <li><a href="https://www.postgresql.org/">GitHub Enterprise CI/CD</a></li>
+    <li><a href="https://render.com/">Render Cloud Hosting</a></li>
+    <li><a href="https://www.docker.com/">Docker Containerization</a></li>
+    <li><a href="https://nginx.org/en/">Nginx Web Server</a></li>
     <li><a href="https://www.postgresql.org/">PostgreSQL Database</a></li>
     <li><a href="https://neon.tech/">Neon Database PaaS</a></li>
   </ul>
 </details>
-
-<details>
-<summary>DevOps</summary>
-  <ul>
-    <li><a href="https://nginx.org/en/">Nginx Server</a></li>
-    <li><a href="https://www.docker.com/">Docker Containerization</a></li>
-  </ul>
-</details>
-
 
 <!-- Features -->
 ### :dart: Features
