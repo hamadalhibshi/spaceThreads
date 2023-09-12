@@ -30,6 +30,7 @@ import Presentation from "layouts/pages/presentation";
 import routes from "routes";
 import { ProtectedRoute } from "./ProtectedRoute";
 import StoriesShow from "pages/LandingPages/StoriesShow";
+import StoriesRead from "pages/LandingPages/StoriesRead";
 
 export default function App() {
   const { pathname } = useLocation();
@@ -67,6 +68,7 @@ export default function App() {
         {getRoutes(routes)}
         <Route path="/presentation" element={<Presentation />} />
         <Route path="/stories/show" element={<StoriesShow />} />
+        <Route path="/stories/show/read" element={<StoriesRead />} />
         <Route path="*" element={<Navigate to="/presentation" />} />
       </Routes>
     </ThemeProvider>

@@ -117,7 +117,11 @@ function StoriesShow() {
             <MKTypography variant="body1" color="white" opacity={0.8} mt={1} mb={3}>
               *by author*
             </MKTypography>
-            <MKButton color="default" sx={{ color: ({ palette: { dark } }) => dark.main }}>
+            <MKButton
+              color="default"
+              sx={{ color: ({ palette: { dark } }) => dark.main }}
+              href="/stories/show/read"
+            >
               Start Reading
             </MKButton>
           </Grid>
