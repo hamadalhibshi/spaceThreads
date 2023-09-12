@@ -20,7 +20,7 @@ cloudinary.config(
   api_secret = "YEiarfPPvSPQCxsjWbGfmQ5YOAc" 
 )
 
-
+# works
 @api_view(['GET'])
 def listStories(request):
     if request.method == 'GET':
@@ -31,7 +31,7 @@ def listStories(request):
     else:
         raise ValidationError("Method not allowed")
 
-
+# works
 @api_view(['GET'])
 def storyDetails(request, story_id):
     try:
@@ -60,11 +60,11 @@ def storyDetails(request, story_id):
         # Handle the case where the story with the provided ID does not exist
         return JsonResponse({'error': 'Story not found'}, status=404)
 
-
+# works
 @api_view(['POST'])
 # @permission_classes([IsAuthenticated])
 def createStory(request):
-    print(f'request user ==> {request.user}')
+    # print(f'request user ==> {request.user}')
     data = request.data
     # Access the logged-in user's ID using request.user
     # TODO Put back in?
@@ -114,24 +114,27 @@ def createStory(request):
         print(e)
         return JsonResponse({'error': str(e)}, status=400)
 
-
+# works
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
-def createChapter(request, story_id):
+def createChapter(request):
     try:
+        story_id = request.data['storyId']
         # Retrieve the associated Story instance based on the provided story_id
         story = Story.objects.get(id=story_id)
 
-        # Get the user ID from the request
-        user_id = request.user.id
+        # Get the user ID from the request (assuming it's provided in hidden input fields)
+        user_id = request.data['userId']
 
-        # Get the content from the request data
-        content = request.data.get('content', '')  # Assuming the content is in the request data
+        # User = get_user_model()
+        user_instance = User.objects.get(pk=user_id)
+        # Get the content from the request data (assuming it's in the request data)
+        content = request.data.get('content', '')
 
         # Create a new Chapter instance with the specified values
         chapter = Chapter.objects.create(
             storyId=story,
-            userId=User.objects.get(id=user_id),  # Assuming you have a User instance
+            userId_id=user_id,  # Assuming you have a User instance
             status="Pending",  # Set the status to "Pending"
             order=None,  # Set the order to null (None)
             rating=0.0,  # Set an initial rating (you can adjust this as needed)
@@ -141,7 +144,7 @@ def createChapter(request, story_id):
         # Serialize the created Chapter instance using the ChapterSerializer
         chapter_serializer = ChapterSerializer(chapter)
 
-        # Return a success response with the serialized chapter data
+        # Return a success response with the serialized chapter data as JSON
         return JsonResponse({'message': 'Chapter created successfully', 'chapter': chapter_serializer.data}, status=201)
     
     except Story.DoesNotExist:
@@ -152,7 +155,7 @@ def createChapter(request, story_id):
         return JsonResponse({'error': 'User not found'}, status=404)
     except Exception as e:
         # Handle any other exceptions (e.g., validation errors)
-        return JsonResponse({'error': str(e)}, status=400)
+        return JsonResponse({'error': str(e)}, status=404)
 
 
 @api_view(['GET'])

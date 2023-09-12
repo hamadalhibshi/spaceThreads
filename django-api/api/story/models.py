@@ -23,10 +23,10 @@ class Story(models.Model):
 class Chapter(models.Model):
     id = models.AutoField(primary_key=True)
     content = models.TextField()
-    storyId = models.ForeignKey('Story', on_delete=models.CASCADE) 
+    storyId = models.ForeignKey('Story', on_delete=models.CASCADE)
     userId = models.ForeignKey(User, on_delete=models.CASCADE)
     status = models.CharField(max_length=50)
-    order = models.PositiveIntegerField()
+    order = models.PositiveIntegerField(null=True)
     rating = models.DecimalField(max_digits=3, decimal_places=2)
     timestamp = models.DateTimeField(auto_now_add=True)
 
