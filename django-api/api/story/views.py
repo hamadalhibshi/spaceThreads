@@ -39,7 +39,10 @@ def storyDetails(request, story_id):
         story = Story.objects.get(id=story_id)
 
         # Get all the chapters where the storyId = story_id and where the status == "pending"
-        chapters = Chapter.objects.filter(storyId=story_id, status="pending")
+        chapters = Chapter.objects.filter(storyId=story_id)
+
+        # Get all the reviews related to the story
+        reviews = Review.objects.filter(storyId=story_id)
 
         # Serialize the story instance
         serializer = StorySerializer(story)
@@ -47,10 +50,14 @@ def storyDetails(request, story_id):
         # Serialize the chapters
         chapter_serializer = ChapterSerializer(chapters, many=True)
 
+        review_serializer = ReviewSerializer(reviews, many=True)
+
+
         # Create a dictionary with story and chapters data
         response_data = {
             'story': serializer.data,
-            'chapters': chapter_serializer.data
+            'chapters': chapter_serializer.data,
+            'reviews': review_serializer.data
         }
         # print(response_data)
         # Return the serialized data as a JSON response
@@ -116,7 +123,7 @@ def createStory(request):
 
 # works
 @api_view(['POST'])
-@permission_classes([IsAuthenticated])
+# @permission_classes([IsAuthenticated])
 def createChapter(request):
     try:
         story_id = request.data['storyId']
@@ -158,43 +165,45 @@ def createChapter(request):
         return JsonResponse({'error': str(e)}, status=404)
 
 
-@api_view(['GET'])
-def listReviews(request, story_id):
-    if request.method == 'GET':
-        try:
-            story = Story.objects.get(pk=story_id)
-            reviews = Review.objects.filter(storyId=story)
-            serializer = ReviewSerializer(reviews, many=True)
-            data = serializer.data
-            return JsonResponse(data, safe=False)
-        except Story.DoesNotExist:
-            return JsonResponse({'error': 'Story not found'}, status=404)
-    else:
-        raise ValidationError("Method not allowed")
+# @api_view(['GET'])
+# def listReviews(request, story_id):
+#     if request.method == 'GET':
+#         try:
+#             story = Story.objects.get(pk=story_id)
+#             reviews = Review.objects.filter(storyId=story)
+#             serializer = ReviewSerializer(reviews, many=True)
+#             data = serializer.data
+#             return JsonResponse(data, safe=False)
+#         except Story.DoesNotExist:
+#             return JsonResponse({'error': 'Story not found'}, status=404)
+#     else:
+#         raise ValidationError("Method not allowed")
 
-
+# works
 @api_view(['POST'])
-@permission_classes([IsAuthenticated])
-def createReview(request, story_id):
-    if request.method == 'POST':
-        try:
-            story = Story.objects.get(pk=story_id)
-        except Story.DoesNotExist:
-            return JsonResponse({'error': 'Story not found'}, status=404)
+# @permission_classes([IsAuthenticated])
+def createReview(request):
+    story_id = request.data['storyId']
+    try:
+        story = Story.objects.get(pk=story_id)
+    except Story.DoesNotExist:
+        return JsonResponse({'error': 'Story not found'}, status=404)
+    user_id = request.data['userId']
+    # user_id = request.user.id
+    data = request.data
+    data['userId'] = user_id
+    data['storyId'] = story_id
 
-        user_id = request.user.id
-        data = request.data
-        data['userId'] = user_id
-        data['storyId'] = story_id
-
-        try:
-            review = Review.objects.create(**data)
-            serializer = ReviewSerializer(review)
-            return JsonResponse({'message': 'Review created successfully', 'review': serializer.data}, status=201)
-        except Exception as e:
-            return JsonResponse({'error': str(e)}, status=400)
-    else:
-        raise ValidationError("Method not allowed")
+    try:
+        review = Review.objects.create(
+            storyId=story,
+            userId_id=user_id,
+            content=data['content'],  # Assuming 'content' is in the request data
+        )
+        serializer = ReviewSerializer(review)
+        return JsonResponse({'message': 'Review created successfully', 'review': serializer.data}, status=201)
+    except Exception as e:
+        return JsonResponse({'error': str(e)}, status=400)
 
 
 @api_view(['GET'])
@@ -222,30 +231,47 @@ def listComments(request, story_id=None, chapter_id=None):
 
 
 @api_view(['POST'])
-@permission_classes([IsAuthenticated])
-def createComment(request, story_id=None, chapter_id=None):
+# @permission_classes([IsAuthenticated])
+def createComment(request):
     if request.method == 'POST':
         try:
-            if story_id is not None:
-                story = Story.objects.get(pk=story_id)
-            elif chapter_id is not None:
-                chapter = Chapter.objects.get(pk=chapter_id)
-                story = chapter.storyId
-            else:
-                return JsonResponse({'error': 'Invalid request. Provide either story_id or chapter_id.'}, status=400)
-
-            user_id = request.user.id
             data = request.data
-            data['userId'] = user_id
+            # Add user_id to the data
+            user_id = data['userId']
+            # user_id = request.user.id
+            print(f'user_id =====> {user_id}')
 
-            if story_id is not None:
-                data['storyId'] = story_id
-            elif chapter_id is not None:
-                data['chapterId'] = chapter_id
+            user = User.objects.get(id=user_id)
+            # Check if either storyId or chapterId is provided in the data
+            if 'storyId' in data:
+                conditional = data['storyId']
+                story = Story.objects.get(id=conditional)
+                try:
+                    comment = Comment.objects.create(
+                    storyId=story,
+                    userId=user,
+                    content=data['content'],  # Assuming 'content' is in the request data
+                )
+                    serializer = CommentSerializer(comment)
+                    return JsonResponse({'message': 'Comment created successfully for a story', 'comment': serializer.data}, status=201)
+                except Exception as e:
+                    return JsonResponse({'error': str(e)}, status=400)
+            elif 'chapterId' in data:
+                conditional = data['chapterId']
+                chapter = Chapter.objects.get(id=conditional)
+                try:
+                    comment = Comment.objects.create(
+                    chapterId=chapter,
+                    userId=user,
+                    content=data['content'],  # Assuming 'content' is in the request data
+                )
+                    serializer = CommentSerializer(comment)
+                    return JsonResponse({'message': 'Comment created successfully for a chapter', 'comment': serializer.data}, status=201)
+                except Exception as e:
+                    return JsonResponse({'error': str(e)}, status=400)
+            else:
+                return JsonResponse({'error': 'Invalid request. Provide either storyId or chapterId.'}, status=400)
 
-            comment = Comment.objects.create(**data)
-            serializer = CommentSerializer(comment)
-            return JsonResponse({'message': 'Comment created successfully', 'comment': serializer.data}, status=201)
         except Story.DoesNotExist:
             return JsonResponse({'error': 'Story not found'}, status=404)
         except Chapter.DoesNotExist:

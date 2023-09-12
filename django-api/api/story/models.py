@@ -47,9 +47,9 @@ class Review(models.Model):
 
 class Comment(models.Model):
     id = models.AutoField(primary_key=True)
-    storyId = models.ForeignKey('Story', on_delete=models.CASCADE)
+    storyId = models.ForeignKey('Story', on_delete=models.CASCADE, null=True)
     userId = models.ForeignKey(User, on_delete=models.CASCADE)
-    chapterId = models.ForeignKey('Chapter', on_delete=models.CASCADE)
+    chapterId = models.ForeignKey('Chapter', on_delete=models.CASCADE, null=True)
     content = models.TextField()
     timestamp = models.DateTimeField(auto_now_add=True)
 
