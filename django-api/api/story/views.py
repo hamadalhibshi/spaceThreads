@@ -24,16 +24,29 @@ cloudinary.config(
 # TESTED AND WORKS
 @api_view(['GET'])
 def listStories(request):
-    if request.method == 'GET':
-        queryset = Story.objects.all()
-        serializer = StorySerializer(queryset, many=True)
-        data = serializer.data
-        return JsonResponse(data, safe=False)
-    else:
-        raise ValidationError("Method not allowed")
+    try:
+        if request.method == 'GET':
+            # Query the database to get all Story objects
+            queryset = Story.objects.all()
+
+            # Serialize the queryset of Story objects using StorySerializer
+            serializer = StorySerializer(queryset, many=True)
+
+            # Extract the serialized data
+            data = serializer.data
+
+            # Return the serialized data as a JSON response
+            return JsonResponse(data, safe=False)
+        else:
+            # Raise a validation error if the request method is not allowed (not GET)
+            raise ValidationError("Method not allowed")
+    except Exception as e:
+        # Handle any exceptions and return an error response as JSON
+        error_message = str(e)
+        return JsonResponse({'error': error_message}, status=400)
 
 
-# works
+# TESTED AND WORKS
 @api_view(['GET'])
 def storyDetails(request, story_id):
     try:
@@ -193,7 +206,7 @@ def createChapter(request):
         return JsonResponse({'error': str(e)}, status=404)
 
 
-# UNNEEDED FUNCTION PROBABLY
+# UNNEEDED FUNCTION
 # @api_view(['GET'])
 # def listReviews(request, story_id):
 #     if request.method == 'GET':
@@ -238,7 +251,8 @@ def createReview(request):
     except Exception as e:
         return JsonResponse({'error': str(e)}, status=400)
 
-# works
+
+# TESTED AND WORKS
 @api_view(['DELETE'])
 # @permission_classes([IsAuthenticated])
 def deleteReview(request, review_id):
@@ -264,86 +278,114 @@ def deleteReview(request, review_id):
         return JsonResponse({'error': 'Review not found'}, status=404)
 
 
-# UNNEEDED FUNCTION PROBABLY
+# TESTED AND WORKS
 @api_view(['GET'])
 def listComments(request):
-    if request.method == 'GET':
-        storyId = request.data["storyId"]
-        chapterId = request.data["chapterId"]
-        try:
+    try:
+        if request.method == 'GET':
+            # Get the values of storyId and chapterId from the request data
+            storyId = request.data.get("storyId")
+            chapterId = request.data.get("chapterId")
+
             if storyId:
+                # If storyId is provided, query the database to get the associated story's comments
                 story = Story.objects.get(pk=storyId)
                 comments = Comment.objects.filter(storyId=story)
             elif chapterId:
+                # If chapterId is provided, query the database to get the associated chapter's comments
                 chapter = Chapter.objects.get(pk=chapterId)
                 comments = Comment.objects.filter(chapterId=chapter)
             else:
+                # If neither storyId nor chapterId is provided, return a bad request response
                 return JsonResponse({'error': 'Invalid request. Provide either story_id or chapter_id.'}, status=400)
 
+            # Serialize the comments using CommentSerializer
             serializer = CommentSerializer(comments, many=True)
             data = serializer.data
+
+            # Return the serialized data as a JSON response
             return JsonResponse(data, safe=False)
-        except Story.DoesNotExist:
-            return JsonResponse({'error': 'Story not found'}, status=404)
-        except Chapter.DoesNotExist:
-            return JsonResponse({'error': 'Chapter not found'}, status=404)
-    else:
-        raise ValidationError("Method not allowed")
+        else:
+            # Return a method not allowed response if the request method is not GET
+            return JsonResponse({'error': 'Method not allowed'}, status=405)
+    except Story.DoesNotExist:
+        # Handle the case where the specified Story does not exist
+        return JsonResponse({'error': 'Story not found'}, status=404)
+    except Chapter.DoesNotExist:
+        # Handle the case where the specified Chapter does not exist
+        return JsonResponse({'error': 'Chapter not found'}, status=404)
+    except Exception as e:
+        # Handle any other exceptions and return an error response as JSON
+        error_message = str(e)
+        return JsonResponse({'error': error_message}, status=400)
 
 
 # TESTED AND WORKS
 @api_view(['POST'])
 # @permission_classes([IsAuthenticated])
 def createComment(request):
-    if request.method == 'POST':
-        try:
-            data = request.data
-            # Add user_id to the data
-            user_id = data['userId']
-            # user_id = request.user.id
-            print(f'user_id =====> {user_id}')
+    try:
+        data = request.data
+        # Extract user_id from the request data
+        user_id = data['userId']
+        # user_id = request.user.id  # Optionally, user_id could be obtained from the authenticated user
+        
+        # Retrieve the User instance based on user_id
+        user = User.objects.get(id=user_id)
 
-            user = User.objects.get(id=user_id)
-            # Check if either storyId or chapterId is provided in the data
-            if 'storyId' in data:
-                conditional = data['storyId']
-                story = Story.objects.get(id=conditional)
-                try:
-                    comment = Comment.objects.create(
+        # Check if either storyId or chapterId is provided in the data
+        if 'storyId' in data:
+            conditional = data['storyId']
+            # Retrieve the Story instance based on storyId
+            story = Story.objects.get(id=conditional)
+            try:
+                # Create a Comment instance for the story
+                comment = Comment.objects.create(
                     storyId=story,
                     userId=user,
                     content=data['content'],  # Assuming 'content' is in the request data
                 )
-                    serializer = CommentSerializer(comment)
-                    return JsonResponse({'message': 'Comment created successfully for a story', 'comment': serializer.data}, status=201)
-                except Exception as e:
-                    return JsonResponse({'error': str(e)}, status=400)
-            elif 'chapterId' in data:
-                conditional = data['chapterId']
-                chapter = Chapter.objects.get(id=conditional)
-                try:
-                    comment = Comment.objects.create(
+                serializer = CommentSerializer(comment)
+
+                # Return a success response with the serialized comment data for a story
+                return JsonResponse({'message': 'Comment created successfully for a story', 'comment': serializer.data}, status=201)
+            except Exception as e:
+                # Handle any exceptions during comment creation and return an error response as JSON
+                return JsonResponse({'error': str(e)}, status=400)
+        elif 'chapterId' in data:
+            conditional = data['chapterId']
+            # Retrieve the Chapter instance based on chapterId
+            chapter = Chapter.objects.get(id=conditional)
+            try:
+                # Create a Comment instance for the chapter
+                comment = Comment.objects.create(
                     chapterId=chapter,
                     userId=user,
                     content=data['content'],  # Assuming 'content' is in the request data
                 )
-                    serializer = CommentSerializer(comment)
-                    return JsonResponse({'message': 'Comment created successfully for a chapter', 'comment': serializer.data}, status=201)
-                except Exception as e:
-                    return JsonResponse({'error': str(e)}, status=400)
-            else:
-                return JsonResponse({'error': 'Invalid request. Provide either storyId or chapterId.'}, status=400)
+                serializer = CommentSerializer(comment)
 
-        except Story.DoesNotExist:
-            return JsonResponse({'error': 'Story not found'}, status=404)
-        except Chapter.DoesNotExist:
-            return JsonResponse({'error': 'Chapter not found'}, status=404)
-        except Exception as e:
-            return JsonResponse({'error': str(e)}, status=400)
-    else:
-        raise ValidationError("Method not allowed")
+                # Return a success response with the serialized comment data for a chapter
+                return JsonResponse({'message': 'Comment created successfully for a chapter', 'comment': serializer.data}, status=201)
+            except Exception as e:
+                # Handle any exceptions during comment creation and return an error response as JSON
+                return JsonResponse({'error': str(e)}, status=400)
+        else:
+            # Return a bad request response if neither storyId nor chapterId is provided
+            return JsonResponse({'error': 'Invalid request. Provide either storyId or chapterId.'}, status=400)
+
+    except Story.DoesNotExist:
+        # Handle the case where the specified Story does not exist and return an error response as JSON
+        return JsonResponse({'error': 'Story not found'}, status=404)
+    except Chapter.DoesNotExist:
+        # Handle the case where the specified Chapter does not exist and return an error response as JSON
+        return JsonResponse({'error': 'Chapter not found'}, status=404)
+    except Exception as e:
+        # Handle any other exceptions and return an error response as JSON
+        return JsonResponse({'error': str(e)}, status=400)
 
 
+#TESTED AND WORKS
 @api_view(['DELETE'])
 # @permission_classes([IsAuthenticated])
 def deleteComment(request, comment_id):
@@ -367,7 +409,7 @@ def deleteComment(request, comment_id):
         return JsonResponse({'error': 'Comment not found'}, status=404)
 
 
-# UNNEEDED FUNCTION PROBABLY
+# UNNEEDED FUNCTION
 # @api_view(['GET'])
 # def listReplies(request, comment_id):
 #     if request.method == 'GET':
@@ -435,7 +477,8 @@ def createReply(request):
         # Handle any exceptions (e.g., validation errors)
         return JsonResponse({'error': str(e)}, status=400)
 
-# pretttty sure this works but didn't test it.
+
+# TESTED AND WORKS
 @api_view(['DELETE'])
 # @permission_classes([IsAuthenticated])
 def deleteReply(request, reply_id):
@@ -459,7 +502,7 @@ def deleteReply(request, reply_id):
         return JsonResponse({'error': 'Reply not found'}, status=404)
 
 
-
+# TESTED AND WORKS
 @api_view(['PATCH'])
 # @permission_classes([IsAuthenticated])
 def updateStoryStatus(request, story_id):
@@ -488,7 +531,8 @@ def updateStoryStatus(request, story_id):
         # Handle the case where the story with the provided ID does not exist
         return JsonResponse({'error': 'Story not found'}, status=404)
 
-# this works
+
+# TESTED AND WORKS
 @api_view(['PATCH'])
 # @permission_classes([IsAuthenticated])
 def updateChapterStatus(request):
@@ -520,7 +564,8 @@ def updateChapterStatus(request):
         # Handle the case where a chapter with the provided ChapterId does not exist
         return JsonResponse({'error': 'Chapter not found'}, status=404)
 
-# works as well
+
+# TESTED AND WORKS
 @api_view(['GET'])
 def getApprovedChapters(request):
     data = request.data
@@ -537,7 +582,8 @@ def getApprovedChapters(request):
     # Return the serialized data as a JSON response
     return JsonResponse(data)
 
-# works
+
+# TESTED AND WORKS
 @api_view(['GET'])
 # @permission_classes([IsAuthenticated])
 def listAuthorUsers(request):
@@ -550,7 +596,8 @@ def listAuthorUsers(request):
     except Exception as e:
         return JsonResponse({'error': str(e)}, status=500)
 
-# works
+
+# TESTED AND WORKS
 @api_view(['GET'])
 def authorUserDetails(request, user_id):
     try:
@@ -606,7 +653,8 @@ def authorUserDetails(request, user_id):
     except Exception as e:
         return JsonResponse({'error': str(e)}, status=500)
 
-# this works as well
+
+# TESTED AND WORKS
 @api_view(['PATCH'])
 def changeToAuthor(request):
     try:
@@ -625,7 +673,8 @@ def changeToAuthor(request):
     except User.DoesNotExist:
         # Handle the case where the user with the provided ID does not exist
         return JsonResponse({'error': 'User not found'}, status=404)
-    
+
+# TO BE TESTED
 @api_view(['GET'])
 def getStats(request):
     # Total number of users
@@ -646,6 +695,8 @@ def getStats(request):
 
     return JsonResponse(response_data)
 
+
+# TO BE TESTED
 @api_view(['GET'])
 def getUserData(request):
     try:
