@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
 import Card from "@mui/material/Card";
@@ -7,7 +7,6 @@ import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
-import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import TablePagination from "@mui/material/TablePagination";
 import MKBox from "components/MKBox";
@@ -24,12 +23,30 @@ import { Link } from "react-router-dom";
 import BookIcon from "@mui/icons-material/Book";
 import { Icon } from "@mui/material";
 import CreateChapter from '../CreateChapter/index'
+import StoryApi from 'api/story'
+import { useState, useEffect } from "react";
+import { useParams } from 'react-router-dom';
+
 
 
 function StoriesShow() {
+  const [data, setData] = useState([]);
+  const { id } = useParams();
+
+  useEffect(() => {
+    StoryApi.getOneStory(id)
+      .then((response) => {
+        setData(response.data);
+        console.log('Data received successfully:', response.data);
+      })
+      .catch((error) => {
+        console.error('Error fetching data:', error);
+      });
+  }, [id]);
+
   const { user } = useAuth();
   console.log(user)
-  
+
   const rows = [
     { chapterNo: 1, title: "John Doe", author: "John Doe", mergedOn: "11/22/63" },
     { chapterNo: 2, title: "Jane Smith", author: "John Doe", mergedOn: "19/11/20" },
@@ -117,6 +134,7 @@ function StoriesShow() {
                   fontSize: size["3xl"],
                 },
               })}
+              
             >
               *Story Title*
             </MKTypography>
@@ -276,11 +294,11 @@ function StoriesShow() {
         </Paper>
       </Card>
 
-      <Container sx={{ display:'flex', justifyContent:'center'}}>
-      <Typography variant='h3' sx={{ marginBottom: 10 }}>
-        Create Chapter
-      </Typography>
-    </Container>
+      <Container sx={{ display: 'flex', justifyContent: 'center' }}>
+        <Typography variant='h3' sx={{ marginBottom: 10 }}>
+          Create Chapter
+        </Typography>
+      </Container>
       <CreateChapter />
 
       <MKBox pt={6} px={1} mt={6}>
