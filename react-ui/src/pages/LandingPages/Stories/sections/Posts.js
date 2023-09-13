@@ -64,9 +64,6 @@ function Places() {
           {data && data?.map((story, index) => {
             const imageUrl = story.image.replace("image/upload/", "");
 
-            const maxWidth = "50px"; 
-            const maxHeight = "50px";
-
             return (
               <Grid item xs={12} sm={6} lg={3}>
                 <SingleStoryCard
@@ -84,7 +81,6 @@ function Places() {
                     color: "info",
                     label: "read story",
                   }}
-                  sx={{ maxWidth, maxHeight }}
                 />
               </Grid>
             );
