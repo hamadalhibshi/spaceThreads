@@ -1,6 +1,6 @@
 from api.story.models import Story, Reply, Review, Chapter, Comment
 from api.user.models import User
-from api.story.serializers import StorySerializer, ReplySerializer, ReviewSerializer, ChapterSerializer, CommentSerializer, CommentDataSerializer
+from api.story.serializers import StorySerializer, ReplySerializer, ReviewSerializer, ChapterSerializer, CommentSerializer, CommentDataSerializer, ApprovedChaptersSerializer
 from api.user.serializers import UserSerializer
 from django.core import serializers
 from django.http import JsonResponse, HttpResponse
@@ -219,16 +219,19 @@ def createReview(request):
     except Story.DoesNotExist:
         return JsonResponse({'error': 'Story not found'}, status=404)
     user_id = request.data['userId']
+
+    rating = request.data['rating']
     # user_id = request.user.id
     data = request.data
     data['userId'] = user_id
     data['storyId'] = story_id
-
+    data['rating'] = rating
     try:
         review = Review.objects.create(
             storyId=story,
             userId_id=user_id,
             content=data['content'],
+            rating = rating
         )
         serializer = ReviewSerializer(review)
         return JsonResponse({'message': 'Review created successfully', 'review': serializer.data}, status=201)
@@ -558,6 +561,12 @@ def authorUserDetails(request, user_id):
         # Retrieve the total number of approved chapters where the user is the author
         total_approved_chapters = Chapter.objects.filter(userId=user_id, status='Approved').count()
 
+        # Retrieve all approved chapters where the user is the author
+        approved_chapters = Chapter.objects.filter(userId=user_id, status='Approved')
+        
+        # Serialize the approved chapters
+        serialized_approved_chapters = ApprovedChaptersSerializer(approved_chapters, many=True)
+
         # Retrieve all the stories authored by the user
         user_stories = Story.objects.filter(authorId=user_id)
 
@@ -585,6 +594,7 @@ def authorUserDetails(request, user_id):
             'total_stories': total_stories,
             'total_approved_chapters': total_approved_chapters,
             'stories_with_reviews': user_story_data,
+            'approved_chapters': serialized_approved_chapters.data
         }
 
         return JsonResponse(response_data)
