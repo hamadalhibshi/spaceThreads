@@ -48,3 +48,11 @@ class CommentDataSerializer(serializers.ModelSerializer):
     class Meta:
         model = Comment
         fields = '__all__'
+
+class ApprovedChaptersSerializer(serializers.ModelSerializer):
+    date = serializers.DateTimeField(read_only=True)
+
+    class Meta:
+        model = Chapter
+        fields = '__all__'
+        read_only_field = ["id"]

@@ -42,6 +42,7 @@ class Review(models.Model):
     userId = models.ForeignKey(User, on_delete=models.CASCADE)
     content = models.TextField()
     timestamp = models.DateTimeField(auto_now_add=True)
+    rating = models.DecimalField(max_digits=3, decimal_places=2)
 
     def __str__(self):
         return f"Review for Story ID {self.storyId.id}"
