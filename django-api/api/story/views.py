@@ -2,7 +2,7 @@ from api.story.models import Story, Reply, Review, Chapter, Comment
 from api.user.models import User
 from api.story.serializers import StorySerializer, ReplySerializer, ReviewSerializer, ChapterSerializer, CommentSerializer
 from django.core import serializers
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponse
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework.exceptions import ValidationError
@@ -13,14 +13,14 @@ import cloudinary.uploader
 from django.contrib.auth import get_user_model  # Import the User model
 
 
-
 cloudinary.config( 
   cloud_name = "dt4gzg8z1", 
   api_key = "989749326782435", 
   api_secret = "YEiarfPPvSPQCxsjWbGfmQ5YOAc" 
 )
 
-# works
+
+# TESTED AND WORKS
 @api_view(['GET'])
 def listStories(request):
     if request.method == 'GET':
@@ -30,6 +30,7 @@ def listStories(request):
         return JsonResponse(data, safe=False)
     else:
         raise ValidationError("Method not allowed")
+
 
 # works
 @api_view(['GET'])
@@ -88,7 +89,8 @@ def storyDetails(request, story_id):
         # Handle the case where the story with the provided ID does not exist
         return JsonResponse({'error': 'Story not found'}, status=404)
 
-# works
+
+# TESTED AND WORKS
 @api_view(['POST'])
 # @permission_classes([IsAuthenticated])
 def createStory(request):
@@ -142,7 +144,8 @@ def createStory(request):
         print(e)
         return JsonResponse({'error': str(e)}, status=400)
 
-# works
+
+# TESTED AND WORKS
 @api_view(['POST'])
 # @permission_classes([IsAuthenticated])
 def createChapter(request):
@@ -186,6 +189,7 @@ def createChapter(request):
         return JsonResponse({'error': str(e)}, status=404)
 
 
+# UNNEEDED FUNCTION PROBABLY
 # @api_view(['GET'])
 # def listReviews(request, story_id):
 #     if request.method == 'GET':
@@ -200,7 +204,8 @@ def createChapter(request):
 #     else:
 #         raise ValidationError("Method not allowed")
 
-# works
+
+# TESTED AND WORKS
 @api_view(['POST'])
 # @permission_classes([IsAuthenticated])
 def createReview(request):
@@ -227,6 +232,30 @@ def createReview(request):
         return JsonResponse({'error': str(e)}, status=400)
 
 
+@api_view(['DELETE'])
+# @permission_classes([IsAuthenticated])
+def deleteReview(request, review_id):
+    try:
+        # Retrieve the review instance based on the provided review_id
+        review = Review.objects.get(id=review_id)
+
+        # Check if the request user is the author of the review or has appropriate permissions
+        # You can add your authorization logic here
+        
+        # Assuming you want to restrict deletion to the author, you can check if the user is the author
+        if request.user == review.userId:
+            # Delete the review
+            review.delete()
+            return JsonResponse({'message': 'Review deleted successfully'}, status=204)
+        
+        return JsonResponse({'error': 'You are not authorized to delete this review'}, status=403)
+
+    except Review.DoesNotExist:
+        # Handle the case where the review with the provided ID does not exist
+        return JsonResponse({'error': 'Review not found'}, status=404)
+
+
+# UNNEEDED FUNCTION PROBABLY
 # @api_view(['GET'])
 # def listComments(request, story_id=None, chapter_id=None):
 #     if request.method == 'GET':
@@ -250,7 +279,8 @@ def createReview(request):
 #     else:
 #         raise ValidationError("Method not allowed")
 
-# works
+
+# TESTED AND WORKS
 @api_view(['POST'])
 # @permission_classes([IsAuthenticated])
 def createComment(request):
@@ -302,7 +332,31 @@ def createComment(request):
     else:
         raise ValidationError("Method not allowed")
 
-# Unnecessary
+
+@api_view(['DELETE'])
+# @permission_classes([IsAuthenticated])
+def deleteComment(request, comment_id):
+    try:
+        # Retrieve the comment instance based on the provided comment_id
+        comment = Comment.objects.get(id=comment_id)
+
+        # Check if the request user is the author of the comment or has appropriate permissions
+        # You can add your authorization logic here
+        
+        # Assuming you want to restrict deletion to the author, you can check if the user is the author
+        if request.user == comment.userId:
+            # Delete the comment
+            comment.delete()
+            return JsonResponse({'message': 'Comment deleted successfully'}, status=204)
+        
+        return JsonResponse({'error': 'You are not authorized to delete this comment'}, status=403)
+
+    except Comment.DoesNotExist:
+        # Handle the case where the comment with the provided ID does not exist
+        return JsonResponse({'error': 'Comment not found'}, status=404)
+
+
+# UNNEEDED FUNCTION PROBABLY
 # @api_view(['GET'])
 # def listReplies(request, comment_id):
 #     if request.method == 'GET':
@@ -317,7 +371,8 @@ def createComment(request):
 #     else:
 #         raise ValidationError("Method not allowed")
 
-# works
+
+# TESTED AND WORKS
 @api_view(['POST'])
 def createReply(request):
     try:
@@ -368,7 +423,32 @@ def createReply(request):
     except Exception as e:
         # Handle any exceptions (e.g., validation errors)
         return JsonResponse({'error': str(e)}, status=400)
-    
+
+
+@api_view(['DELETE'])
+# @permission_classes([IsAuthenticated])
+def deleteReply(request, reply_id):
+    try:
+        # Retrieve the reply instance based on the provided reply_id
+        reply = Reply.objects.get(id=reply_id)
+
+        # Check if the request user is the author of the reply or has appropriate permissions
+        # You can add your authorization logic here
+        
+        # Assuming you want to restrict deletion to the author, you can check if the user is the author
+        if request.user == reply.userId:
+            # Delete the reply
+            reply.delete()
+            return JsonResponse({'message': 'Reply deleted successfully'}, status=204)
+        
+        return JsonResponse({'error': 'You are not authorized to delete this reply'}, status=403)
+
+    except Reply.DoesNotExist:
+        # Handle the case where the reply with the provided ID does not exist
+        return JsonResponse({'error': 'Reply not found'}, status=404)
+
+
+
 @api_view(['PATCH'])
 # @permission_classes([IsAuthenticated])
 def updateStoryStatus(request, story_id):
@@ -396,7 +476,7 @@ def updateStoryStatus(request, story_id):
     except Story.DoesNotExist:
         # Handle the case where the story with the provided ID does not exist
         return JsonResponse({'error': 'Story not found'}, status=404)
-    
+
 
 @api_view(['PATCH'])
 # @permission_classes([IsAuthenticated])
@@ -424,7 +504,8 @@ def updateChapterStatus(request, chapter_id):
     except Story.DoesNotExist:
         # Handle the case where the story with the provided ID does not exist
         return JsonResponse({'error': 'Story not found'}, status=404)
-    
+
+
 @api_view(['GET'])
 def getApprovedChapters(request):
     # Query the database to get approved chapters ordered by timestamp
@@ -435,3 +516,34 @@ def getApprovedChapters(request):
 
     # Return the serialized data as a JSON response
     return JsonResponse({serializer.data})
+
+
+@api_view(['GET'])
+# @permission_classes([IsAuthenticated])
+def listAuthorUsers(request):
+    try:
+        # Retrieve all users with userType == "Author"
+        author_users = User.objects.filter(userType="Author")
+        serializer = UserSerializer(author_users, many=True)  # Replace 'UserSerializer' with your serializer
+        data = serializer.data
+        return JsonResponse(data, safe=False)
+    except Exception as e:
+        return JsonResponse({'error': str(e)}, status=500)
+
+
+@api_view(['GET'])
+# @permission_classes([IsAuthenticated])
+def authorUserDetails(request, user_id):
+    try:
+        # Retrieve the user instance based on the provided user_id
+        user = User.objects.get(id=user_id)
+
+        # Serialize the user details
+        serializer = UserSerializer(user)  # Replace 'UserSerializer' with your serializer
+        data = serializer.data
+        return JsonResponse(data)
+    except User.DoesNotExist:
+        return JsonResponse({'error': 'User not found'}, status=404)
+    except Exception as e:
+        return JsonResponse({'error': str(e)}, status=500)
+
