@@ -31,6 +31,8 @@ import routes from "routes";
 import { ProtectedRoute } from "./ProtectedRoute";
 import StoriesShow from "pages/LandingPages/StoriesShow";
 import StoriesRead from "pages/LandingPages/StoriesRead";
+import SignIn from "layouts/pages/authentication/sign-in";
+import SignUp from "layouts/pages/authentication/sign-up";
 
 export default function App() {
   const { pathname } = useLocation();
@@ -66,6 +68,8 @@ export default function App() {
       <CssBaseline />
       <Routes>
         {getRoutes(routes)}
+        <Route path="/sign-in" element={<SignIn />} />
+        <Route path="/sign-up" element={<SignUp />} />
         <Route path="/presentation" element={<Presentation />} />
         <Route path="/stories/show" element={<StoriesShow />} />
         <Route path="/stories/show/:id/:title" element={<StoriesRead />} />

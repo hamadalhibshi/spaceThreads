@@ -130,7 +130,6 @@ const routes = [
     component: <ProfilePage />,
     protected: true,
   },
-
   {
     name: "sections",
     icon: <Icon>view_day</Icon>,

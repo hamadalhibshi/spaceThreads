@@ -48,7 +48,7 @@ function NavbarDark() {
           action={{
             type: "external",
             route: "https://appseed.us/product/material-kit/api-server-nodejs/react/",
-            label: "download",
+            label: "login",
             color: "info",
           }}
           transparent
