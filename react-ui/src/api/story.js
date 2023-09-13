@@ -4,6 +4,13 @@ const baseURL = '';
 
 class StoryApi {
   static createStory = (data) => axios.post(`${baseURL}/createStory/`, data);
+
+  static getStory = (data) => axios.get(`${baseURL}/listStories/`, data);
+
+  static getUserData = (data) => axios.get(`${baseURL}/getUserData/`, data);
+
+
 }
+
 
 export default StoryApi;

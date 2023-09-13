@@ -13,6 +13,8 @@ Coded by www.creative-tim.com
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 */
 
+import StoryApi from "api/story";
+import { useState, useEffect } from "react";
 // @mui material components
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
@@ -33,6 +35,22 @@ import post4 from "assets/images/examples/blog2.jpg";
 import SingleStoryCard from "examples/Cards/StoryCard/SingleStoryCard";
 
 function Places() {
+
+  const [data, setData] = useState([]);
+
+  useEffect(() => {
+    StoryApi.getStory()
+      .then((response) => {
+        setData(response.data);
+        console.log('Data received successfully:', response.data);
+      })
+      .catch((error) => {
+        console.error('Error fetching data:', error);
+      });
+  }, []);
+
+  console.log(data)
+
   return (
     <MKBox component="section" py={2}>
       <Container>
@@ -42,137 +60,36 @@ function Places() {
           </MKTypography>
         </Grid>
         <Grid container spacing={3}>
-          <Grid item xs={12} sm={6} lg={3}>
-            <SingleStoryCard
-              image={post1}
-              title="The Way of Drinks"
-              genre={{ color: "info", label: "Fantasy | Politics" }}
-              chapters="20"
-              status="Ongoing"
-              createdOn="11/22/63"
-              rating="5"
-              action={{
-                type: "internal",
-                route: "/stories/show",
-                color: "info",
-                label: "read story",
-              }}
-            />
-          </Grid>
-          <Grid item xs={12} sm={6} lg={3}>
-            <SingleStoryCard
-              image={post2}
-              title="The Way of Kings"
-              genre={{ color: "info", label: "Fantasy | Politics" }}
-              chapters="20"
-              status="Ongoing"
-              createdOn="11/22/63"
-              rating="5"
-              action={{
-                type: "internal",
-                route: "/stories",
-                color: "info",
-                label: "read story",
-              }}
-            />
-          </Grid>
-          <Grid item xs={12} sm={6} lg={3}>
-            <SingleStoryCard
-              image={post3}
-              title="The Way of Kings"
-              genre={{ color: "info", label: "Fantasy | Politics" }}
-              chapters="20"
-              status="Ongoing"
-              createdOn="11/22/63"
-              rating="5"
-              action={{
-                type: "internal",
-                route: "/stories",
-                color: "info",
-                label: "read story",
-              }}
-            />
-          </Grid>
-          <Grid item xs={12} sm={6} lg={3}>
-            <BackgroundBlogCard
-              image={post4}
-              title="Flexible work hours"
-              description="Rather than worrying about switching offices every couple years, you stay in the same place."
-              action={{
-                type: "internal",
-                route: "/pages/blogs/author",
-                label: "read more",
-              }}
-            />
-          </Grid>
-          <Grid item xs={12} sm={6} lg={3}>
-            <SingleStoryCard
-              image={post1}
-              title="The Way of Kings"
-              genre={{ color: "info", label: "Fantasy | Politics" }}
-              chapters="20"
-              status="Ongoing"
-              createdOn="11/22/63"
-              rating="5"
-              action={{
-                type: "internal",
-                route: "/stories",
-                color: "info",
-                label: "read story",
-              }}
-            />
-          </Grid>
-          <Grid item xs={12} sm={6} lg={3}>
-            <SingleStoryCard
-              image={post3}
-              title="The Way of Kings"
-              genre={{ color: "info", label: "Fantasy | Politics" }}
-              chapters="20"
-              status="Ongoing"
-              createdOn="11/22/63"
-              rating="5"
-              action={{
-                type: "internal",
-                route: "/stories",
-                color: "info",
-                label: "read story",
-              }}
-            />
-          </Grid>
-          <Grid item xs={12} sm={6} lg={3}>
-            <SingleStoryCard
-              image={post2}
-              title="The Way of Kings"
-              genre={{ color: "info", label: "Fantasy | Politics" }}
-              chapters="20"
-              status="Ongoing"
-              createdOn="11/22/63"
-              rating="5"
-              action={{
-                type: "internal",
-                route: "/stories",
-                color: "info",
-                label: "read story",
-              }}
-            />
-          </Grid>
-          <Grid item xs={12} sm={6} lg={3}>
-            <SingleStoryCard
-              image={post3}
-              title="The Way of Kings"
-              genre={{ color: "info", label: "Fantasy | Politics" }}
-              chapters="20"
-              status="Ongoing"
-              createdOn="11/22/63"
-              rating="5"
-              action={{
-                type: "internal",
-                route: "/stories",
-                color: "info",
-                label: "read story",
-              }}
-            />
-          </Grid>
+
+          {data && data?.map((story, index) => {
+            const imageUrl = story.image.replace("image/upload/", "");
+
+            const maxWidth = "50px"; 
+            const maxHeight = "50px";
+
+            return (
+              <Grid item xs={12} sm={6} lg={3}>
+                <SingleStoryCard
+                  key={index}
+                  image={imageUrl}
+                  title={story.title}
+                  genre={{ color: "info", label: `${story.genre}` }}
+                  chapters="20"
+                  status={story.status}
+                  createdOn={story.timestamp}
+                  rating={story.rating}
+                  action={{
+                    type: "internal",
+                    route: `/stories/show/${story.id}/${story.title}`,
+                    color: "info",
+                    label: "read story",
+                  }}
+                  sx={{ maxWidth, maxHeight }}
+                />
+              </Grid>
+            );
+          })}
+
         </Grid>
       </Container>
     </MKBox>
