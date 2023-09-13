@@ -1,6 +1,6 @@
 from api.story.models import Story, Reply, Review, Chapter, Comment
 from api.user.models import User
-from api.story.serializers import StorySerializer, ReplySerializer, ReviewSerializer, ChapterSerializer, CommentSerializer
+from api.story.serializers import StorySerializer, ReplySerializer, ReviewSerializer, ChapterSerializer, CommentSerializer, CommentDataSerializer
 from api.user.serializers import UserSerializer
 from django.core import serializers
 from django.http import JsonResponse, HttpResponse
@@ -48,44 +48,47 @@ def storyDetails(request, story_id):
 
         # Get all the comments related to the story
         comments = Comment.objects.filter(storyId=story_id)
-        print(f"comments =====> {comments}")
-        # comments = Comment.objects.filter(storyId=story_id)  # Replace ... with your filter conditions
-        # if comments.exists():
-        #     first_comment = comments[0]
-        #     print(first_comment)  # This will print the string representation of the first Comment object
-        # Initialize an empty list to store all the replies
-        all_replies = []
+
+        # Initialize an empty list to store all the comments and their replies
+        all_comments = []
 
         # Iterate over each comment and retrieve its associated replies
         for comment in comments:
             replies = Reply.objects.filter(commentId=comment.id)
             reply_serializer = ReplySerializer(replies, many=True)
-    
-        # Append the replies to the list
-        all_replies.extend(reply_serializer.data)
-        
+
+            # Create a dictionary with comment and replies data
+            comment_data = {
+                'comment': CommentSerializer(comment).data,
+                'replies': reply_serializer.data
+            }
+
+            # Append the comment and replies to the list
+            all_comments.append(comment_data)
+
         # Serialize the story instance
         serializer = StorySerializer(story)
 
         # Serialize the chapters
         chapter_serializer = ChapterSerializer(chapters, many=True)
 
-
+        # Serialize the reviews
         review_serializer = ReviewSerializer(reviews, many=True)
 
-        comment_serializer = CommentSerializer(comments, many=True)
-        # Create a dictionary with story and chapters data
+        # Serialize the comments and replies
+        comment_data_serializer = CommentDataSerializer(all_comments, many=True)
+
+        # Create a dictionary with story, chapters, reviews, comments, and replies data
         response_data = {
             'story': serializer.data,
             'chapters': chapter_serializer.data,
             'reviews': review_serializer.data,
-            'comments': comment_serializer.data,
-            'replies': reply_serializer.data
+            'comments': comment_data_serializer.data,
         }
-        # print(response_data)
+
         # Return the serialized data as a JSON response
         return JsonResponse(response_data)
-    
+
     except Story.DoesNotExist:
         # Handle the case where the story with the provided ID does not exist
         return JsonResponse({'error': 'Story not found'}, status=404)
@@ -113,7 +116,7 @@ def createStory(request):
     # Add the user ID to the data as authorId
     # data['authorId'] = user_id
     # data['authorId'] = user_id
-    print("authorID ======>")
+    # print("authorID ======>")
     print(data['authorId'])
 
     # Get the image path from the request data
@@ -121,22 +124,22 @@ def createStory(request):
 
     # Upload the image to Cloudinary
     try:
-        print("78")
+        # print("78")
         uploaded_response = cloudinary.uploader.upload(image_path)
-        print("80")
+        # print("80")
         # Extract the URL of the uploaded image
         image_url = uploaded_response.get('secure_url', '')
-        print("83")
+        # print("83")
         # Add the image URL to the data
         data['image'] = image_url
-        print("86")
+        # print("86")
         # Create a new Story object with the updated data
         story = Story.objects.create(**data)
 
-        print("Before serializer ")
+        # print("Before serializer ")
         # Serialize
         serializer = StorySerializer(story)
-        print("After serializer ")
+        # print("After serializer ")
         # Return a res
         return JsonResponse({'message': 'Story created successfully', 'story': serializer.data}, status=201)
     
@@ -544,16 +547,48 @@ def listAuthorUsers(request):
 
 # works
 @api_view(['GET'])
-# @permission_classes([IsAuthenticated])
 def authorUserDetails(request, user_id):
     try:
         # Retrieve the user instance based on the provided user_id
         user = User.objects.get(id=user_id)
 
+        # Retrieve the total number of stories authored by the user
+        total_stories = Story.objects.filter(authorId=user_id).count()
+
+        # Retrieve the total number of approved chapters where the user is the author
+        total_approved_chapters = Chapter.objects.filter(userId=user_id, status='Approved').count()
+
+        # Retrieve all the stories authored by the user
+        user_stories = Story.objects.filter(authorId=user_id)
+
+        # Create a list to store serialized data for stories and their associated reviews
+        user_story_data = []
+
+        for story in user_stories:
+            # Retrieve the reviews related to each story
+            reviews = Review.objects.filter(storyId=story.id)
+
+            # Serialize the story and its reviews
+            story_data = {
+                'story': StorySerializer(story).data,
+                'reviews': ReviewSerializer(reviews, many=True).data
+            }
+
+            user_story_data.append(story_data)
+
         # Serialize the user details
-        serializer = UserSerializer(user)  # Replace 'UserSerializer' with your serializer
-        data = serializer.data
-        return JsonResponse(data)
+        user_data = UserSerializer(user).data
+
+        # Create a dictionary with user details, total stories, and total approved chapters
+        response_data = {
+            'user': user_data,
+            'total_stories': total_stories,
+            'total_approved_chapters': total_approved_chapters,
+            'stories_with_reviews': user_story_data,
+        }
+
+        return JsonResponse(response_data)
+
     except User.DoesNotExist:
         return JsonResponse({'error': 'User not found'}, status=404)
     except Exception as e:

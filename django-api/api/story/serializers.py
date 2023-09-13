@@ -41,3 +41,10 @@ class CommentSerializer(serializers.ModelSerializer):
         model = Comment
         fields = '__all__'
         read_only_field = ["id"]
+
+class CommentDataSerializer(serializers.ModelSerializer):
+    replies = ReplySerializer(many=True)  # Serialize the replies using the ReplySerializer
+
+    class Meta:
+        model = Comment
+        fields = '__all__'
