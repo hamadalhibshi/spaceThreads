@@ -117,7 +117,7 @@ def createStory(request):
     # data['authorId'] = user_id
     # data['authorId'] = user_id
     # print("authorID ======>")
-    print(data['authorId'])
+    # print(data['authorId'])
 
     # Get the image path from the request data
     image_path = data.get('image')
@@ -492,7 +492,7 @@ def updateStoryStatus(request, story_id):
 def updateChapterStatus(request):
     try:
         data = request.data
-        print(data)
+        # print(data)
 
         # Validate and update the status for each chapter individually
         updated_chapters = []
@@ -584,7 +584,7 @@ def authorUserDetails(request, user_id):
             }
 
             user_story_data.append(story_data)
-
+        # print(user_story_data)
         # Serialize the user details
         user_data = UserSerializer(user).data
 
