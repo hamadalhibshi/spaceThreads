@@ -11,6 +11,7 @@ class Story(models.Model):
     genre = models.CharField(max_length=100)
     age_group = models.CharField(max_length=50)
     prologue = models.TextField()
+    epilogue = models.TextField()
     status = models.CharField(max_length=50, default='Pending')
     rating = models.DecimalField(max_digits=3, decimal_places=2, default=0)
     reviews = models.ForeignKey('Review', on_delete=models.SET_NULL, null=True) 
@@ -22,6 +23,7 @@ class Story(models.Model):
 
 class Chapter(models.Model):
     id = models.AutoField(primary_key=True)
+    title = models.CharField(max_length=50)
     content = models.TextField()
     storyId = models.ForeignKey('Story', on_delete=models.CASCADE)
     userId = models.ForeignKey(User, on_delete=models.CASCADE)

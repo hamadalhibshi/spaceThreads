@@ -48,7 +48,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     date = models.DateTimeField(auto_now_add=True)
     userType = models.CharField(max_length=50, default="Reader")
     level = models.CharField(max_length=50, default="Student of Space")
-
+    about = models.TextField(null=True)
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = ["username"]
 
