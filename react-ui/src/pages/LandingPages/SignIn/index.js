@@ -120,7 +120,7 @@ function SignInBasic() {
           routes={routes}
           action={{
             type: "internal",
-            route: "/pages/authentication/sign-out",
+            route: "/sign-out",
             label: "logout",
             color: "info",
           }}
@@ -130,12 +130,12 @@ function SignInBasic() {
       ) : (
         <DefaultNavbar
           routes={routes}
-          action={{
-            type: "external",
-            route: "https://appseed.us/product/material-kit/api-server-nodejs/react/",
-            label: "download",
-            color: "info",
-          }}
+          // action={{
+          //   type: "internal",
+          //   route: "/sign-in/",
+          //   label: "login",
+          //   color: "info",
+          // }}
           transparent
           light
         />

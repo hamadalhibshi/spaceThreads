@@ -66,13 +66,13 @@ function SimpleFooter({ company, links, light }) {
           color={light ? "white" : "text"}
           fontSize={size.sm}
         >
-          &copy; {' '}
+          &copy;{" "}
           <Link href={href} target="_blank">
             <MKTypography variant="button" fontWeight="medium" color={light ? "white" : "dark"}>
               &nbsp;{name}&nbsp;
             </MKTypography>
           </Link>
-          - Coded by AppSeed.
+          - Coded by the guys that brought you oceanThreads.
         </MKBox>
         <MKBox
           component="ul"
@@ -100,11 +100,14 @@ function SimpleFooter({ company, links, light }) {
 
 // Setting default values for the props of SimpleFooter
 SimpleFooter.defaultProps = {
-  company: { href: "https://www.creative-tim.com/?AFFILIATE=128200", name: "Creative Tim" },
+  company: { href: "https://www.creative-tim.com/?AFFILIATE=128200", name: "SpaceThreads" },
   links: [
-    { href: "https://appseed.us/support/", name: "Support" },
-    { href: "https://appseed.us/product/material-kit/api-server-nodejs/react/", name: "Download" },
-    { href: "https://appseed.us", name: "AppSeed" },
+    { href: "https://git.generalassemb.ly/astronauts-team/space-threads", name: "GitHub" },
+    { href: "https://git.generalassemb.ly/pirates-team/ocean-threads", name: "oceanThreads" },
+    {
+      href: "https://www.linkedin.com/company/general-assembly-middle-east/?originalSubdomain=bh",
+      name: "General Assembly ME",
+    },
   ],
   light: false,
 };
