@@ -73,16 +73,49 @@ import Toggles from "layouts/sections/elements/toggles";
 import Typography from "layouts/sections/elements/typography";
 import Stories from "pages/LandingPages/Stories/Stories";
 import CreateStory from "./pages/LandingPages/CreateStory/index.js";
-import AuthorProfile from './pages/LandingPages/AuthorProfile/index.js'
-import Dashboard from './pages/LandingPages/Dashboard/index.js'
-import CreateChapter from './pages/LandingPages/CreateChapter/index.js'
-
+import AuthorProfile from "./pages/LandingPages/AuthorProfile/index.js";
+import Dashboard from "./pages/LandingPages/Dashboard/index.js";
+import CreateChapter from "./pages/LandingPages/CreateChapter/index.js";
+import EditIcon from "@mui/icons-material/Edit";
 const routes = [
+  {
+    name: "home",
+    icon: <Icon>home</Icon>,
+    route: "/",
+    component: <PresentationPage />,
+    protected: true,
+    collapse: [
+      {
+        name: "about us",
+        route: "/about-us",
+        component: <AboutUs />,
+        protected: true,
+      },
+      {
+        name: "contact us",
+        route: "/contact-us",
+        component: <ContactUs />,
+        protected: true,
+      },
+      {
+        name: "dashboard",
+        route: "/dashboard",
+        component: <Dashboard />,
+      },
+    ],
+  },
   {
     name: "Stories",
     icon: <AutoStories />,
     route: "/stories",
     component: <Stories />,
+  },
+  {
+    name: "Write",
+    icon: <EditIcon />,
+    route: "/createStory",
+    component: <CreateStory />,
+    protected: true,
   },
   {
     name: "Authors",
@@ -91,85 +124,13 @@ const routes = [
     component: <Author />,
   },
   {
-    name: "pages",
-    icon: <Icon>dashboard</Icon>,
-    columns: 1,
-    rowsPerColumn: 2,
-    collapse: [
-      {
-        name: "landing pages",
-        collapse: [
-          {
-            name: "home",
-            route: "/",
-            component: <PresentationPage />,
-            protected: true,
-          },
-          {
-            name: "about us",
-            route: "/about-us",
-            component: <AboutUs />,
-            protected: true,
-          },
-          {
-            name: "contact us",
-            route: "/contact-us",
-            component: <ContactUs />,
-            protected: true,
-          },
-          {
-            name: "authors",
-            route: "/authors",
-            component: <Author />,
-            protected: true,
-          },
-          {
-            name: "create-story",
-            route: "/createStory",
-            component: <CreateStory />,
-            protected: true,
-          },
-          {
-            route: "/author/author-details",
-            component: <AuthorProfile />,
-            protected: true,
-          }
-        ],
-      },
-      //This section follows the original template
-      //And thus it will be preserved in
-      {
-        name: "account",
-        collapse: [
-          {
-            name: "sign in",
-            route: "/sign-in",
-            component: <SignIn />,
-          },
-          {
-            name: "sign up",
-            route: "/sign-up",
-            component: <SignUp />,
-          },
-          {
-            name: "sign out",
-            route: "/sign-out",
-            component: <SignOutPage />,
-          },
-          {
-            name: "profile",
-            route: "/profile",
-            component: <ProfilePage />,
-          },
-          {
-            name: "dashboard",
-            route: "/dashboard",
-            component: <Dashboard /> ,
-          },
-        ],
-      },
-    ],
+    name: "Profile",
+    icon: <Icon>person</Icon>,
+    route: "/profile",
+    component: <ProfilePage />,
+    protected: true,
   },
+
   {
     name: "sections",
     icon: <Icon>view_day</Icon>,
