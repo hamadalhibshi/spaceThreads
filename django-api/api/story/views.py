@@ -266,14 +266,16 @@ def deleteReview(request, review_id):
 
 # UNNEEDED FUNCTION PROBABLY
 @api_view(['GET'])
-def listComments(request, story_id=None, chapter_id=None):
+def listComments(request):
     if request.method == 'GET':
+        storyId = request.data["storyId"]
+        chapterId = request.data["chapterId"]
         try:
-            if story_id is not None:
-                story = Story.objects.get(pk=story_id)
+            if storyId:
+                story = Story.objects.get(pk=storyId)
                 comments = Comment.objects.filter(storyId=story)
-            elif chapter_id is not None:
-                chapter = Chapter.objects.get(pk=chapter_id)
+            elif chapterId:
+                chapter = Chapter.objects.get(pk=chapterId)
                 comments = Comment.objects.filter(chapterId=chapter)
             else:
                 return JsonResponse({'error': 'Invalid request. Provide either story_id or chapter_id.'}, status=400)

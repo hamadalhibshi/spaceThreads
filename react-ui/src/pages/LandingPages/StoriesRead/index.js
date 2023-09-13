@@ -1,4 +1,3 @@
-
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
 import Card from "@mui/material/Card";
@@ -21,10 +20,11 @@ import DarkModeIcon from "@mui/icons-material/DarkMode";
 import LightModeIcon from "@mui/icons-material/LightMode";
 import { FormControl, InputLabel, Select, MenuItem, styled } from "@mui/material";
 import { useState, useEffect } from "react";
-import StoryApi from 'api/story'
-
+import TextField from "@mui/material/TextField";
+import { useParams } from "react-router-dom";
 
 function StoriesRead() {
+  const { id } = useParams();
 
   const popularFontFamilies = [
     "Arial",
@@ -93,17 +93,25 @@ function StoriesRead() {
   };
 
   // Styled components
-  const CommentContainer = styled(Paper)`
-    && {
-      margin-bottom: 16px;
-    }
-  `;
+  // const CommentContainer = styled(Paper)`
+  //   && {
+  //     margin-bottom: 16px;
+  //   }
+  // `;
 
   const CommentText = styled("div")`
     padding-left: ${({ isReply }) => (isReply ? "32px" : "0")};
   `;
 
   const [comment, setComment] = useState([]);
+  useEffect(() => {
+    req = {
+      storyId: id,
+      chapterId: 0,
+    };
+    allComments = StoryApi.listComment(req);
+    console.log(allComments);
+  }, [comment]);
   async function addComment() {
     try {
       const userId = user._id;
@@ -111,6 +119,7 @@ function StoriesRead() {
       const req = {
         userId,
         content: comment,
+        storyId: id,
       };
 
       await StoryApi.createComment(req);
