@@ -15,7 +15,6 @@ Coded by www.creative-tim.com
 
 import footerRoutes from "footer.routes";
 
-
 // @mui material components
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
@@ -39,8 +38,6 @@ import routes from "routes";
 
 import { useAuth } from "auth-context/auth.context";
 
-
-
 function Author() {
   const { user } = useAuth();
   return (
@@ -50,7 +47,7 @@ function Author() {
           routes={routes}
           action={{
             type: "internal",
-            route: "/pages/authentication/sign-out",
+            route: "/sign-out/",
             label: "logout",
             color: "default",
           }}
@@ -61,9 +58,9 @@ function Author() {
         <DefaultNavbar
           routes={routes}
           action={{
-            type: "external",
-            route: "https://appseed.us/product/material-kit/api-server-nodejs/react/",
-            label: "download",
+            type: "internal",
+            route: "/sign-in/",
+            label: "login",
             color: "default",
           }}
           transparent
@@ -133,15 +130,15 @@ function Author() {
           boxShadow: ({ boxShadows: { xxl } }) => xxl,
         }}
       >
-      <SingleAuthor
-        image='https://assets.aboutamazon.com/dims4/default/71b222e/2147483647/strip/true/crop/2000x1074+0+130/resize/1440x773!/quality/90/?url=https%3A%2F%2Famazon-blogs-brightspot.s3.amazonaws.com%2F56%2F01%2F834aa61747c19ef723f0b48ec134%2F20180517nealthompsonauthor-js-11.jpg'
-        title='hello'
-        genre='wow'
-        chapters='1'
-        rating='0'
-        status='Pending'
-        createdOn='11/11/11'
-      />
+        <SingleAuthor
+          image="https://assets.aboutamazon.com/dims4/default/71b222e/2147483647/strip/true/crop/2000x1074+0+130/resize/1440x773!/quality/90/?url=https%3A%2F%2Famazon-blogs-brightspot.s3.amazonaws.com%2F56%2F01%2F834aa61747c19ef723f0b48ec134%2F20180517nealthompsonauthor-js-11.jpg"
+          title="hello"
+          genre="wow"
+          chapters="1"
+          rating="0"
+          status="Pending"
+          createdOn="11/11/11"
+        />
       </Card>
       <MKBox pt={6} px={1} mt={6}>
         <DefaultFooter content={footerRoutes} />
