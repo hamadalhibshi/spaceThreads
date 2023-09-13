@@ -67,8 +67,8 @@ export default function App() {
       <Routes>
         {getRoutes(routes)}
         <Route path="/presentation" element={<Presentation />} />
-        <Route path="/stories/show" element={<StoriesShow />} />
-        <Route path="/stories/show/:id/:title" element={<StoriesRead />} />
+        <Route path="/storyDetails/:id" element={<StoriesShow />} />
+        <Route path="/storyDetails/:id/:prologue" element={<StoriesRead />} />
         <Route path="*" element={<Navigate to="/presentation" />} />
       </Routes>
     </ThemeProvider>
