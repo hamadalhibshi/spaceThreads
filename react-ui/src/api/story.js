@@ -1,6 +1,6 @@
-import axios from './index';
+import axios from "./index";
 
-const baseURL = '';
+const baseURL = "";
 
 class StoryApi {
   static createStory = (data) => axios.post(`${baseURL}/createStory/`, data);
@@ -9,8 +9,7 @@ class StoryApi {
 
   static getUserData = (data) => axios.get(`${baseURL}/getUserData/`, data);
 
-
+  static createComment = (data) => axios.post(`${baseURL}/createComment/`, data);
 }
-
 
 export default StoryApi;
