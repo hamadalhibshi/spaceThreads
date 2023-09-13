@@ -2,7 +2,7 @@
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
 import Card from "@mui/material/Card";
-
+import StoryApi from "../../../api/story";
 import MKBox from "components/MKBox";
 import MKTypography from "components/MKTypography";
 import MKButton from "components/MKButton";
@@ -53,6 +53,7 @@ function StoriesRead() {
   }));
 
   const { user } = useAuth();
+
   const [fontSize, setFontSize] = useState(13.5); // Initial font size
   const [lightMode, setLightMode] = useState(false);
   const [bgColor, setBgColor] = useState("white");
@@ -102,6 +103,23 @@ function StoriesRead() {
     padding-left: ${({ isReply }) => (isReply ? "32px" : "0")};
   `;
 
+  const [comment, setComment] = useState([]);
+  async function addComment() {
+    try {
+      const userId = user._id;
+      console.log(`this is the user id =====> ${userId}`);
+      const req = {
+        userId,
+        content: comment,
+      };
+
+      await StoryApi.createComment(req);
+
+      setComment("");
+    } catch (error) {
+      console.error("Error adding comment:", error);
+    }
+  }
   return (
     <>
       {user && user.token ? (
@@ -363,16 +381,25 @@ function StoriesRead() {
               margin="normal"
               fullWidth
               id="prologue"
-              name="prologue"
+              name="content"
               label="Write a Comment"
               autoComplete="off"
               variant="outlined"
               multiline
               rows={2}
+              value={comment}
+              onChange={(e) => setComment(e.target.value)}
             />
           </Grid>
           <Grid item xs={12} lg={8}>
-            <MKButton component={Link} to={"/home"} variant="gradient" size="small" color={"dark"}>
+            <MKButton
+              component={Link}
+              to={"/home"}
+              variant="gradient"
+              size="small"
+              color={"dark"}
+              onClick={addComment}
+            >
               Add Comment
             </MKButton>
           </Grid>
