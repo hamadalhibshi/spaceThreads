@@ -73,6 +73,8 @@ import Toggles from "layouts/sections/elements/toggles";
 import Typography from "layouts/sections/elements/typography";
 import Stories from "pages/LandingPages/Stories/Stories";
 import CreateStory from "./pages/LandingPages/CreateStory/index.js";
+import AuthorProfile from './pages/LandingPages/AuthorProfile/index.js'
+import Dashboard from './pages/LandingPages/Dashboard/index.js'
 
 const routes = [
   {
@@ -123,9 +125,14 @@ const routes = [
           {
             name: "create",
             route: "/createStory",
-            component: <CreateStory /> ,
+            component: <CreateStory />,
             protected: true,
           },
+          {
+            route: "/author/author-details",
+            component: <AuthorProfile />,
+            protected: true,
+          }
         ],
       },
       //This section follows the original template
@@ -152,6 +159,11 @@ const routes = [
             name: "profile",
             route: "/profile",
             component: <ProfilePage />,
+          },
+          {
+            name: "dashboard",
+            route: "/dashboard",
+            component: <Dashboard /> ,
           },
         ],
       },

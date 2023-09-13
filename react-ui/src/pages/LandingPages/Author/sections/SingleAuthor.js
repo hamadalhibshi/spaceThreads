@@ -7,7 +7,7 @@ import Button from '@mui/material/Button';
 import CardActions from '@mui/material/CardActions';
 import { Link } from 'react-router-dom';
 
-export default function MultiActionAreaCard() {
+export default function SingleAuthor() {
   const authors = [
     {
       name: 'Hamad Alhibshi',
@@ -113,7 +113,7 @@ export default function MultiActionAreaCard() {
                   variant="contained"
                   style={buttonStyle}
                   component={Link}
-                  to="/"
+                  to='/author/author-details'
                 >
                   Visit Profile
                 </Button>

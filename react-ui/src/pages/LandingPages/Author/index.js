@@ -141,7 +141,6 @@ function Author() {
         rating='0'
         status='Pending'
         createdOn='11/11/11'
-        action='/'
       />
       </Card>
       <MKBox pt={6} px={1} mt={6}>
