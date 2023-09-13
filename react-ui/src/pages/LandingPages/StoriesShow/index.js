@@ -13,6 +13,7 @@ import TablePagination from "@mui/material/TablePagination";
 import MKBox from "components/MKBox";
 import MKTypography from "components/MKTypography";
 import MKButton from "components/MKButton";
+import Typography from "@mui/material/Typography";
 import DefaultNavbar from "examples/Navbars/DefaultNavbar";
 import DefaultFooter from "examples/Footers/DefaultFooter";
 import routes from "routes";
@@ -22,8 +23,13 @@ import { useAuth } from "auth-context/auth.context";
 import { Link } from "react-router-dom";
 import BookIcon from "@mui/icons-material/Book";
 import { Icon } from "@mui/material";
+import CreateChapter from '../CreateChapter/index'
+
+
 function StoriesShow() {
   const { user } = useAuth();
+  console.log(user)
+  
   const rows = [
     { chapterNo: 1, title: "John Doe", author: "John Doe", mergedOn: "11/22/63" },
     { chapterNo: 2, title: "Jane Smith", author: "John Doe", mergedOn: "19/11/20" },
@@ -132,7 +138,7 @@ function StoriesShow() {
           p: 2,
           mx: { xs: 2, lg: 3 },
           mt: -8,
-          mb: 4,
+          mb: 10,
           boxShadow: ({ boxShadows: { xxl } }) => xxl,
         }}
       >
@@ -269,6 +275,14 @@ function StoriesShow() {
           />
         </Paper>
       </Card>
+
+      <Container sx={{ display:'flex', justifyContent:'center'}}>
+      <Typography variant='h3' sx={{ marginBottom: 10 }}>
+        Create Chapter
+      </Typography>
+    </Container>
+      <CreateChapter />
+
       <MKBox pt={6} px={1} mt={6}>
         <DefaultFooter content={footerRoutes} />
       </MKBox>
