@@ -539,7 +539,7 @@ def listAuthorUsers(request):
     try:
         # Retrieve all users with userType == "Author"
         author_users = User.objects.filter(userType="author")
-        serializer = UserSerializer(author_users, many=True)  # Replace 'UserSerializer' with your serializer
+        serializer = UserSerializer(author_users, many=True) 
         data = serializer.data
         return JsonResponse(data, safe=False)
     except Exception as e:
@@ -633,3 +633,25 @@ def getStats(request):
     }
 
     return JsonResponse(response_data)
+
+@api_view(['GET'])
+def getUserData(request):
+    try:
+        # Extract the user_id from the request data
+        user_id = request.data["id"]
+
+        # Retrieve the user instance based on the provided user_id
+        user = User.objects.get(id=user_id)
+
+        # Serialize the user instance
+        # Assuming you have a UserSerializer defined
+        serializer = UserSerializer(user)
+
+        # Return the serialized user data as a JSON response
+        return JsonResponse(serializer.data)
+    except User.DoesNotExist:
+        # Handle the case where the user with the provided ID does not exist
+        return JsonResponse({'error': 'User not found'}, status=404)
+    except Exception as e:
+        # Handle other exceptions if needed
+        return JsonResponse({'error': str(e)}, status=500)
