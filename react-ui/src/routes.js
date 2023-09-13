@@ -85,7 +85,7 @@ const routes = [
     name: "Authors",
     icon: <Icon>groups</Icon>,
     route: "/authors",
-    component: <Stories />,
+    component: <Author />,
   },
   {
     name: "pages",
@@ -121,7 +121,7 @@ const routes = [
             protected: true,
           },
           {
-            name: "story",
+            name: "create",
             route: "/createStory",
             component: <CreateStory /> ,
             protected: true,
