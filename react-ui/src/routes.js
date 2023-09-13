@@ -75,6 +75,7 @@ import Stories from "pages/LandingPages/Stories/Stories";
 import CreateStory from "./pages/LandingPages/CreateStory/index.js";
 import AuthorProfile from './pages/LandingPages/AuthorProfile/index.js'
 import Dashboard from './pages/LandingPages/Dashboard/index.js'
+import CreateChapter from './pages/LandingPages/CreateChapter/index.js'
 
 const routes = [
   {
@@ -123,7 +124,7 @@ const routes = [
             protected: true,
           },
           {
-            name: "create",
+            name: "create-story",
             route: "/createStory",
             component: <CreateStory />,
             protected: true,
