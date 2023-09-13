@@ -1,8 +1,10 @@
 from django.urls import include, path
 from api.story import views
+from api.contact import views as contactViews
 
 urlpatterns = [
     # api/ WHATEVEER
+    path('sendContactForm/', contactViews.sendContactForm, name='send_contact_form'),
     path('listStories/', views.listStories, name='list_stories'),
     path('storyDetails/<int:story_id>/', views.storyDetails, name='story_details'),
     path('createStory/', views.createStory, name='create_story'),
