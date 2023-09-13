@@ -56,6 +56,9 @@ function SingleStoryCard({ image, title, genre, chapters, rating, status, create
         width="100%"
         position="relative"
         zIndex={1}
+        sx={{
+          maxWidth:'200px',
+        }}
       />
       <MKBox
         borderRadius="lg"
@@ -70,6 +73,7 @@ function SingleStoryCard({ image, title, genre, chapters, rating, status, create
           transform: "scale(0.94)",
           filter: "blur(12px)",
           backgroundSize: "cover",
+          maxWidth:'200px'
         }}
       />
     </MKBox>
