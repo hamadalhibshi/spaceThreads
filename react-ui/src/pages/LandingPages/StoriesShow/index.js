@@ -30,7 +30,7 @@ import { useParams } from 'react-router-dom';
 
 
 function StoriesShow() {
-  const [data, setData] = useState([]);
+  const [data, setData] = useState({});
   const { id } = useParams();
 
   useEffect(() => {
@@ -72,6 +72,7 @@ function StoriesShow() {
   const emptyRows = rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
 
   // Sample data for the table
+
 
   return (
     <>
@@ -126,28 +127,33 @@ function StoriesShow() {
             flexDirection="column"
             sx={{ mx: "auto", textAlign: "center" }}
           >
-            <MKTypography
-              variant="h1"
-              color="white"
-              sx={({ breakpoints, typography: { size } }) => ({
-                [breakpoints.down("md")]: {
-                  fontSize: size["3xl"],
-                },
-              })}
-              
-            >
-              *Story Title*
-            </MKTypography>
-            <MKTypography variant="body1" color="white" opacity={0.8} mt={1} mb={3}>
-              *by author*
-            </MKTypography>
-            <MKButton
-              color="default"
-              sx={{ color: ({ palette: { dark } }) => dark.main }}
-              href="/stories/show/read"
-            >
-              Start Reading
-            </MKButton>
+
+            {data && data.story && (
+              <div>
+                <MKTypography
+                  variant="h1"
+                  color="white"
+                  sx={({ breakpoints, typography: { size } }) => ({
+                    [breakpoints.down("md")]: {
+                      fontSize: size["3xl"],
+                    },
+                  })}
+                >
+                  {data.story.title}
+                </MKTypography>
+                <MKTypography variant="body1" color="white" opacity={0.8} mt={1} mb={3}>
+                  by {data.story.authorId}
+                </MKTypography>
+                <MKButton
+                  color="default"
+                  sx={{ color: ({ palette: { dark } }) => dark.main }}
+                  href={`/storyDetails/${data.story.id}/${data.story.prologue}`}
+                >
+                  Start Reading
+                </MKButton>
+              </div>
+            )}
+
           </Grid>
         </Container>
       </MKBox>

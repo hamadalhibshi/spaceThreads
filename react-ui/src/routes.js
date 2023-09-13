@@ -102,6 +102,11 @@ const routes = [
         route: "/dashboard",
         component: <Dashboard />,
       },
+      {
+        name: "login",
+        route: "/login",
+        component: <SignIn />,
+      },
     ],
   },
   {
