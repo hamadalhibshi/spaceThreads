@@ -68,7 +68,6 @@ INSTALLED_APPS = [
     "corsheaders",
     "rest_framework",
     "cloudinary",
-    "admin",
     "api",
     "api.authentication",
     "api.user",
