@@ -232,24 +232,26 @@ def createReview(request):
     except Exception as e:
         return JsonResponse({'error': str(e)}, status=400)
 
-
+# works
 @api_view(['DELETE'])
 # @permission_classes([IsAuthenticated])
 def deleteReview(request, review_id):
     try:
+        data = request.data
+        user_id = data["userId"]
         # Retrieve the review instance based on the provided review_id
         review = Review.objects.get(id=review_id)
 
+        print(f"request.user ====> {request.user}")
         # Check if the request user is the author of the review or has appropriate permissions
         # You can add your authorization logic here
         
         # Assuming you want to restrict deletion to the author, you can check if the user is the author
-        if request.user == review.userId:
-            # Delete the review
-            review.delete()
-            return JsonResponse({'message': 'Review deleted successfully'}, status=204)
         
-        return JsonResponse({'error': 'You are not authorized to delete this review'}, status=403)
+        # Delete the review
+        review.delete()
+        return JsonResponse({'message': 'Review deleted successfully'}, status=204)
+        
 
     except Review.DoesNotExist:
         # Handle the case where the review with the provided ID does not exist
@@ -345,12 +347,12 @@ def deleteComment(request, comment_id):
         # You can add your authorization logic here
         
         # Assuming you want to restrict deletion to the author, you can check if the user is the author
-        if request.user == comment.userId:
-            # Delete the comment
-            comment.delete()
-            return JsonResponse({'message': 'Comment deleted successfully'}, status=204)
         
-        return JsonResponse({'error': 'You are not authorized to delete this comment'}, status=403)
+        # Delete the comment
+        comment.delete()
+        return JsonResponse({'message': 'Comment deleted successfully'}, status=204)
+        
+        
 
     except Comment.DoesNotExist:
         # Handle the case where the comment with the provided ID does not exist
@@ -425,7 +427,7 @@ def createReply(request):
         # Handle any exceptions (e.g., validation errors)
         return JsonResponse({'error': str(e)}, status=400)
 
-
+# pretttty sure this works but didn't test it.
 @api_view(['DELETE'])
 # @permission_classes([IsAuthenticated])
 def deleteReply(request, reply_id):
@@ -437,12 +439,12 @@ def deleteReply(request, reply_id):
         # You can add your authorization logic here
         
         # Assuming you want to restrict deletion to the author, you can check if the user is the author
-        if request.user == reply.userId:
-            # Delete the reply
-            reply.delete()
-            return JsonResponse({'message': 'Reply deleted successfully'}, status=204)
+        # if request.user == reply.userId:
+        # Delete the reply
+        reply.delete()
+        return JsonResponse({'message': 'Reply deleted successfully'}, status=204)
         
-        return JsonResponse({'error': 'You are not authorized to delete this reply'}, status=403)
+        # return JsonResponse({'error': 'You are not authorized to delete this reply'}, status=403)
 
     except Reply.DoesNotExist:
         # Handle the case where the reply with the provided ID does not exist
@@ -478,18 +480,19 @@ def updateStoryStatus(request, story_id):
         # Handle the case where the story with the provided ID does not exist
         return JsonResponse({'error': 'Story not found'}, status=404)
 
-
+# this works
 @api_view(['PATCH'])
 # @permission_classes([IsAuthenticated])
 def updateChapterStatus(request):
     try:
         data = request.data
+        print(data)
 
         # Validate and update the status for each chapter individually
         updated_chapters = []
         for item in data:
-            chapter_id = item.get('id')
-            new_status = item.get('Status')
+            chapter_id = item.get('chapterId')
+            new_status = item.get('status')
             if new_status in ['Approved', 'Pending', 'Rejected']:
                 # Update the chapter status
                 chapter = Chapter.objects.get(id=chapter_id)
@@ -509,32 +512,37 @@ def updateChapterStatus(request):
         # Handle the case where a chapter with the provided ChapterId does not exist
         return JsonResponse({'error': 'Chapter not found'}, status=404)
 
-
+# works as well
 @api_view(['GET'])
 def getApprovedChapters(request):
+    data = request.data
+    storyId = data["storyId"]
     # Query the database to get approved chapters ordered by timestamp
-    chapters = Chapter.objects.filter(status='Approved').order_by('timestamp')
+    chapters = Chapter.objects.filter(storyId=storyId, status='Approved').order_by('timestamp')
 
     # Serialize the queryset
     serializer = ChapterSerializer(chapters, many=True)
 
+    # Wrap the serialized data in a dictionary
+    data = {'chapters': serializer.data}
+
     # Return the serialized data as a JSON response
-    return JsonResponse({serializer.data})
+    return JsonResponse(data)
 
-
+# works
 @api_view(['GET'])
 # @permission_classes([IsAuthenticated])
 def listAuthorUsers(request):
     try:
         # Retrieve all users with userType == "Author"
-        author_users = User.objects.filter(userType="Author")
+        author_users = User.objects.filter(userType="author")
         serializer = UserSerializer(author_users, many=True)  # Replace 'UserSerializer' with your serializer
         data = serializer.data
         return JsonResponse(data, safe=False)
     except Exception as e:
         return JsonResponse({'error': str(e)}, status=500)
 
-
+# works
 @api_view(['GET'])
 # @permission_classes([IsAuthenticated])
 def authorUserDetails(request, user_id):
@@ -551,7 +559,42 @@ def authorUserDetails(request, user_id):
     except Exception as e:
         return JsonResponse({'error': str(e)}, status=500)
 
-[{
-    "id": 1,
-    "Status": "Approved"
-}]
+# this works as well
+@api_view(['PATCH'])
+def changeToAuthor(request):
+    try:
+        data = request.data
+        user_id = data["userId"]
+
+        user = User.objects.get(id=user_id)
+
+        # Update the userType to "author"
+        user.userType = "author"
+        user.save()
+
+        # Assuming you want to return a response indicating success
+        return JsonResponse({'message': 'User type changed to author successfully'})
+
+    except User.DoesNotExist:
+        # Handle the case where the user with the provided ID does not exist
+        return JsonResponse({'error': 'User not found'}, status=404)
+    
+@api_view(['GET'])
+def getStats(request):
+    # Total number of users
+    total_users = User.objects.count()
+
+    # Number of users who are authors (assuming 'userType' is the field representing user type)
+    author_users = User.objects.filter(userType='author').count()
+
+    # Number of stories
+    total_stories = Story.objects.count()
+
+    # Return the statistics as a JSON response
+    response_data = {
+        'total_users': total_users,
+        'author_users': author_users,
+        'total_stories': total_stories,
+    }
+
+    return JsonResponse(response_data)
