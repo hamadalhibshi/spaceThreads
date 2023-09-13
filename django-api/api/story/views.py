@@ -1,6 +1,7 @@
 from api.story.models import Story, Reply, Review, Chapter, Comment
 from api.user.models import User
 from api.story.serializers import StorySerializer, ReplySerializer, ReviewSerializer, ChapterSerializer, CommentSerializer
+from api.user.serializers import UserSerializer
 from django.core import serializers
 from django.http import JsonResponse, HttpResponse
 from django.contrib.auth.decorators import login_required
@@ -224,7 +225,7 @@ def createReview(request):
         review = Review.objects.create(
             storyId=story,
             userId_id=user_id,
-            content=data['content'],  # Assuming 'content' is in the request data
+            content=data['content'],
         )
         serializer = ReviewSerializer(review)
         return JsonResponse({'message': 'Review created successfully', 'review': serializer.data}, status=201)
@@ -480,30 +481,33 @@ def updateStoryStatus(request, story_id):
 
 @api_view(['PATCH'])
 # @permission_classes([IsAuthenticated])
-def updateChapterStatus(request, chapter_id):
+def updateChapterStatus(request):
     try:
-        # Retrieve the story instance based on the provided chapter_id
-        chapter = Chapter.objects.get(id=chapter_id)
+        data = request.data
 
-        # Check if the request user is the author of the story
-        
-        new_status = request.data.get('status')
-        order = request.data.get('order')
-            # Validate and update the status
-        if new_status in ['Approved', 'Pending', 'Rejected']:
-            chapter.status = new_status
-            chapter.save()
+        # Validate and update the status for each chapter individually
+        updated_chapters = []
+        for item in data:
+            chapter_id = item.get('id')
+            new_status = item.get('Status')
+            if new_status in ['Approved', 'Pending', 'Rejected']:
+                # Update the chapter status
+                chapter = Chapter.objects.get(id=chapter_id)
+                chapter.status = new_status
+                chapter.save()
 
-            # Serialize the updated story and return it in the response
-            serializer = StorySerializer(chapter)
-            return JsonResponse({'message': 'Story status updated successfully', 'story': serializer.data})
+                # Append the updated chapter to the list
+                updated_chapters.append(chapter)
 
-        return JsonResponse({'error': 'Invalid status value'}, status=400)
-        
+        # Serialize the updated chapters
+        serializer = ChapterSerializer(updated_chapters, many=True)
 
-    except Story.DoesNotExist:
-        # Handle the case where the story with the provided ID does not exist
-        return JsonResponse({'error': 'Story not found'}, status=404)
+        # Return a JsonResponse with the serialized data
+        return JsonResponse({'message': 'Chapter statuses updated successfully', 'chapters': serializer.data})
+
+    except Chapter.DoesNotExist:
+        # Handle the case where a chapter with the provided ChapterId does not exist
+        return JsonResponse({'error': 'Chapter not found'}, status=404)
 
 
 @api_view(['GET'])
@@ -547,3 +551,7 @@ def authorUserDetails(request, user_id):
     except Exception as e:
         return JsonResponse({'error': str(e)}, status=500)
 
+[{
+    "id": 1,
+    "Status": "Approved"
+}]
