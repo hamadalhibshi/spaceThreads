@@ -72,7 +72,8 @@ INSTALLED_APPS = [
     "api.authentication",
     "api.admin",
     "api.user",
-    "api.story"
+    "api.story",
+    "api.contact"
 ]
 
 MIDDLEWARE = [
