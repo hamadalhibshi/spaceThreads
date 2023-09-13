@@ -1,6 +1,6 @@
 from api.story.models import Story, Reply, Review, Chapter, Comment
 from api.user.models import User
-from api.story.serializers import StorySerializer, ReplySerializer, ReviewSerializer, ChapterSerializer, CommentSerializer, CommentDataSerializer
+from api.story.serializers import StorySerializer, ReplySerializer, ReviewSerializer, ChapterSerializer, CommentSerializer, CommentDataSerializer, ApprovedChaptersSerializer
 from api.user.serializers import UserSerializer
 from django.core import serializers
 from django.http import JsonResponse, HttpResponse
@@ -219,16 +219,19 @@ def createReview(request):
     except Story.DoesNotExist:
         return JsonResponse({'error': 'Story not found'}, status=404)
     user_id = request.data['userId']
+
+    rating = request.data['rating']
     # user_id = request.user.id
     data = request.data
     data['userId'] = user_id
     data['storyId'] = story_id
-
+    data['rating'] = rating
     try:
         review = Review.objects.create(
             storyId=story,
             userId_id=user_id,
             content=data['content'],
+            rating = rating
         )
         serializer = ReviewSerializer(review)
         return JsonResponse({'message': 'Review created successfully', 'review': serializer.data}, status=201)
@@ -539,7 +542,7 @@ def listAuthorUsers(request):
     try:
         # Retrieve all users with userType == "Author"
         author_users = User.objects.filter(userType="author")
-        serializer = UserSerializer(author_users, many=True)  # Replace 'UserSerializer' with your serializer
+        serializer = UserSerializer(author_users, many=True) 
         data = serializer.data
         return JsonResponse(data, safe=False)
     except Exception as e:
@@ -557,6 +560,12 @@ def authorUserDetails(request, user_id):
 
         # Retrieve the total number of approved chapters where the user is the author
         total_approved_chapters = Chapter.objects.filter(userId=user_id, status='Approved').count()
+
+        # Retrieve all approved chapters where the user is the author
+        approved_chapters = Chapter.objects.filter(userId=user_id, status='Approved')
+        
+        # Serialize the approved chapters
+        serialized_approved_chapters = ApprovedChaptersSerializer(approved_chapters, many=True)
 
         # Retrieve all the stories authored by the user
         user_stories = Story.objects.filter(authorId=user_id)
@@ -585,6 +594,7 @@ def authorUserDetails(request, user_id):
             'total_stories': total_stories,
             'total_approved_chapters': total_approved_chapters,
             'stories_with_reviews': user_story_data,
+            'approved_chapters': serialized_approved_chapters.data
         }
 
         return JsonResponse(response_data)
@@ -633,3 +643,25 @@ def getStats(request):
     }
 
     return JsonResponse(response_data)
+
+@api_view(['GET'])
+def getUserData(request):
+    try:
+        # Extract the user_id from the request data
+        user_id = request.data["id"]
+
+        # Retrieve the user instance based on the provided user_id
+        user = User.objects.get(id=user_id)
+
+        # Serialize the user instance
+        # Assuming you have a UserSerializer defined
+        serializer = UserSerializer(user)
+
+        # Return the serialized user data as a JSON response
+        return JsonResponse(serializer.data)
+    except User.DoesNotExist:
+        # Handle the case where the user with the provided ID does not exist
+        return JsonResponse({'error': 'User not found'}, status=404)
+    except Exception as e:
+        # Handle other exceptions if needed
+        return JsonResponse({'error': str(e)}, status=500)
