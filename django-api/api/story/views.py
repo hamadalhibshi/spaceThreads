@@ -265,28 +265,28 @@ def deleteReview(request, review_id):
 
 
 # UNNEEDED FUNCTION PROBABLY
-# @api_view(['GET'])
-# def listComments(request, story_id=None, chapter_id=None):
-#     if request.method == 'GET':
-#         try:
-#             if story_id is not None:
-#                 story = Story.objects.get(pk=story_id)
-#                 comments = Comment.objects.filter(storyId=story)
-#             elif chapter_id is not None:
-#                 chapter = Chapter.objects.get(pk=chapter_id)
-#                 comments = Comment.objects.filter(chapterId=chapter)
-#             else:
-#                 return JsonResponse({'error': 'Invalid request. Provide either story_id or chapter_id.'}, status=400)
+@api_view(['GET'])
+def listComments(request, story_id=None, chapter_id=None):
+    if request.method == 'GET':
+        try:
+            if story_id is not None:
+                story = Story.objects.get(pk=story_id)
+                comments = Comment.objects.filter(storyId=story)
+            elif chapter_id is not None:
+                chapter = Chapter.objects.get(pk=chapter_id)
+                comments = Comment.objects.filter(chapterId=chapter)
+            else:
+                return JsonResponse({'error': 'Invalid request. Provide either story_id or chapter_id.'}, status=400)
 
-#             serializer = CommentSerializer(comments, many=True)
-#             data = serializer.data
-#             return JsonResponse(data, safe=False)
-#         except Story.DoesNotExist:
-#             return JsonResponse({'error': 'Story not found'}, status=404)
-#         except Chapter.DoesNotExist:
-#             return JsonResponse({'error': 'Chapter not found'}, status=404)
-#     else:
-#         raise ValidationError("Method not allowed")
+            serializer = CommentSerializer(comments, many=True)
+            data = serializer.data
+            return JsonResponse(data, safe=False)
+        except Story.DoesNotExist:
+            return JsonResponse({'error': 'Story not found'}, status=404)
+        except Chapter.DoesNotExist:
+            return JsonResponse({'error': 'Chapter not found'}, status=404)
+    else:
+        raise ValidationError("Method not allowed")
 
 
 # TESTED AND WORKS
