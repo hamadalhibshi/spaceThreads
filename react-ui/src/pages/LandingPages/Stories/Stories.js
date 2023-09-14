@@ -24,6 +24,7 @@ import footerRoutes from "footer.routes";
 import bgImage from "assets/images/city-profile.jpg";
 
 import { useAuth } from "auth-context/auth.context";
+import { Link } from "react-router-dom";
 
 function Stories() {
   const { user } = useAuth();
@@ -95,7 +96,7 @@ function Stories() {
               Have you ever pondered the magnificent stories that could arise from a collaboration
               among brilliant minds amidst the celestial expanse?
             </MKTypography>
-            <MKButton color="default" sx={{ color: ({ palette: { dark } }) => dark.main }}>
+            <MKButton component={Link} to='/createStory' color="default" sx={{ color: ({ palette: { dark } }) => dark.main }}>
               start your cosmic tale
             </MKButton>
           </Grid>
