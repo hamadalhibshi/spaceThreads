@@ -14,76 +14,53 @@ const date = new Date().getFullYear();
 
 export default {
   brand: {
-    name: "Material Kit 2",
+    name: "SpaceThreads",
     image: logoCT,
     route: "/",
   },
   socials: [
     {
-      icon: <FacebookIcon />,
-      link: "https://www.facebook.com/CreativeTim/",
-    },
-    {
-      icon: <TwitterIcon />,
-      link: "https://twitter.com/creativetim",
-    },
-    {
       icon: <GitHubIcon />,
-      link: "https://github.com/creativetimofficial",
-    },
-    {
-      icon: <YouTubeIcon />,
-      link: "https://www.youtube.com/channel/UCVyTG4sCw-rOvB9oHkzZD1w",
+      link: "https://git.generalassemb.ly/astronauts-team/space-threads",
     },
   ],
   menus: [
     {
-      name: "company",
+      name: "home",
       items: [
-        { name: "about us", href: "https://www.creative-tim.com/presentation" },
-        { name: "freebies", href: "https://www.creative-tim.com/templates/free" },
-        { name: "premium tools", href: "https://www.creative-tim.com/templates/premium" },
-        { name: "blog", href: "https://www.creative-tim.com/blog" },
+        { name: "about us", href: "/about-us" },
+        { name: "contact us", href: "/contact-us" },
       ],
     },
     {
-      name: "resources",
+      name: "story",
       items: [
-        { name: "illustrations", href: "https://iradesign.io/" },
-        { name: "bits & snippets", href: "https://www.creative-tim.com/bits" },
-        { name: "affiliate program", href: "https://www.creative-tim.com/affiliates/new" },
+        { name: "view stories", href: "/stories" },
+        { name: "write stories", href: "/createStory" },
+        { name: "dashboard", href: "/dashboard" },
       ],
     },
     {
-      name: "help & support",
-      items: [
-        { name: "contact us", href: "https://www.creative-tim.com/contact-us" },
-        { name: "knowledge center", href: "https://www.creative-tim.com/knowledge-center" },
-        { name: "custom development", href: "https://services.creative-tim.com/" },
-        { name: "sponsorships", href: "https://www.creative-tim.com/sponsorships" },
-      ],
+      name: "Account",
+      items: [{ name: "Profile", href: "/profile" }],
     },
     {
-      name: "legal",
-      items: [
-        { name: "terms & conditions", href: "https://www.creative-tim.com/terms" },
-        { name: "privacy policy", href: "https://www.creative-tim.com/privacy" },
-        { name: "licenses (EULA)", href: "https://www.creative-tim.com/license" },
-      ],
+      name: "Authors",
+      items: [{ name: "View Authors", href: "/authors" }],
     },
   ],
   copyright: (
     <MKTypography variant="button" fontWeight="regular">
-      All rights reserved. Copyright &copy; {date} Material Kit by{" "}
+      All rights reserved. Copyright &copy; {date} SpaceThreads by{" "}
       <MKTypography
         component="a"
-        href="https://www.creative-tim.com"
+        href="https://git.generalassemb.ly/astronauts-team/space-threads"
         target="_blank"
         rel="noreferrer"
         variant="button"
         fontWeight="regular"
       >
-        Creative Tim
+        SEI-05 Boiz
       </MKTypography>
       .
     </MKTypography>
