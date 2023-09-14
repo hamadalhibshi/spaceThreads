@@ -1,21 +1,19 @@
 <div align="center">
 
-  <img src="logo.png" alt="The logo of SpaceThreads" width="200" height="auto" />
+  <img src="assets/logo.png" alt="The official logo of SpaceThreads" width="200" height="auto" />
   <h1>SpaceThreads</h1>
   
   <p>
-    Unleash Your Imagination, Thread by Thread
+    Unveiling the Universe, One Story at a Time.
   </p>
 
 
 <h4>
-    <a href="https://ihaji.pro/">Live Website</a>
+    <a href="https://st.ihaji.pro/">Visit Website</a>
   <span> · </span>
-    <a href="https://trello.com/b/RFAVvXwQ/spacethreads/">Contribute</a>
+    <a href="https://trello.com/b/RFAVvXwQ/spacethreads/">Trello Board</a>
   <span> · </span>
     <a href="https://git.generalassemb.ly/astronauts-team/space-threads/issues/">Report Bugs</a>
-  <span> · </span>
-    <a href="https://git.generalassemb.ly/astronauts-team/space-threads/issues/">Request Features</a>
   </h4>
 </div>
 
@@ -26,28 +24,33 @@
 # :notebook_with_decorative_cover: Table of Contents
 
 - [About the Project](#star2-about-the-project)
-  * [Resources](#eyes-resources)
-  * [Screenshots](#camera-screenshots)
-  * [Tech Stack](#space_invader-tech-stack)
-  * [Features](#dart-features)
-  * [Color Reference](#art-color-reference)
-  * [Environment Variables](#key-environment-variables)
-- [Getting Started](#toolbox-getting-started)
-  * [Prerequisites](#bangbang-prerequisites)
-  * [Installation](#gear-installation)
-  * [Run Locally](#running-run-locally)
-  * [Deployment](#triangular_flag_on_post-deployment)
-- [Usage](#eyes-usage)
-- [Roadmap](#compass-roadmap)
-- [Contributing](#wave-contributing)
-- [FAQ](#grey_question-faq)
-- [License](#warning-license)
-- [Contact](#handshake-contact)
-- [Acknowledgements](#gem-acknowledgements)
+  * [Data Modeling](#star2-data-modeling)
+  * [User Stories](#star2-user-stories)
+  * [Tech Stack](#star2-tech-stack)
+  * [Features](#star2-features)
+- [Getting Started](#star2-getting-started)
+  * [Prerequisites](#star2-prerequisites)
+  * [Environment Variables](#star2-environment-variables)
+  * [Installation](#star2-installation)
+  * [Run Locally](#star2-run-locally)
+  * [Deployment](#star2-deployment)
+- [Usage](#star2-usage)
+- [Roadmap](#star2-roadmap)
+- [Contributing](#star2-contributing)
+- [FAQ](#star2-faq)
+- [License](#star2-license)
+- [Contact](#star2-contact)
+- [Acknowledgements](#star2-acknowledgements)
 
 
 <!-- About the Project -->
 ## :star2: About the Project
+
+<div align="center"> 
+  <img src="assets/screenshot.png" alt="Screenshot of the homepage" width="80%" height="auto" />
+</div>
+
+<br />
 
 <p>
 Welcome to the universe of creativity and collaboration – SpaceThreads! Conceived by a talented team comprising Ali Haji (as a spaceship captain) along with Ahmed Almadhoob, Hamad Alhibshi, and Qasim Alkuwaiti for their final capstone at General Assembly, it is a web application that reimagines storytelling.
@@ -59,24 +62,37 @@ At SpaceThreads, the traditional boundaries between authors and readers dissolve
 Join us in this cosmic journey, where storytelling has no limits. Explore SpaceThreads and dive into a universe where creativity knows no bounds – your literary adventure awaits!
 </p>
 
-
-<!-- Screenshots -->
-### :eyes: Resources
-
  - [Collaborative Writing](https://en.wikipedia.org/wiki/Collaborative_writing)
  - [Networked Books](https://en.wikipedia.org/wiki/Networked_book)
 
 
-<!-- Screenshots -->
-### :camera: Screenshots
+<!-- Data Modeling -->
+### :star2: Data Modeling
+
+<p>Here you can find the Entity Relationship Diagram (ERD):</p>
 
 <div align="center"> 
-  <img src="https://placehold.co/600x400?text=Your+Screenshot+here" alt="The homepage of SpaceThreads" />
+  <img src="assets/models.png" alt="The ERD of SpaceThreads" width="60%" height="auto" />
 </div>
 
 
+<!-- User Stories -->
+### :star2: User Stories
+
+<p>We have asked six types of users what features and why they want to use the application, and the survey results were as the following:</p>
+
+<ul>
+  <li>As an Aspiring Writer: I want to write and publish stories: To share my creativity with the community.</li>
+  <li>As a Participating Writer: I want to collaborate with others: To co-author stories and learn from fellows.</li>
+  <li>As a Learning Writer: I want to receive reviews and comments: To improve my skills and connect with readers.</li>
+  <li>As a Reader and Enthusiast: I want to browse a diverse library of stories: So I can discover new authors.</li>
+  <li>As a Critical Reader: I want to leave comments and feedback: To engage with authors and fellow readers.</li>
+  <li>As an Administrator: I want to manage user accounts: To ensure a safe and enjoyable platform experience.</li>
+</ul>
+
+
 <!-- TechStack -->
-### :space_invader: Tech Stack
+### :star2: Tech Stack
 
 <details>
   <summary>Frontend</summary>
@@ -85,8 +101,8 @@ Join us in this cosmic journey, where storytelling has no limits. Explore SpaceT
     <li><a href="https://react.dev/">React Frontend Framework</a></li>
     <li><a href="https://mui.com/material-ui/">Material UI Component Library</a></li>
     <li><a href="https://emotion.sh/docs/introduction">Emotion.js Styling Library</a></li>
-    <li><a href="https://github.com/gka/chroma.js/">Chroma.js Color Conversion</a></li>
-    <li><a href="https://web.dev/vitals/">Web Vitals Metrics Library</a></li>
+    <li><a href="https://github.com/gka/chroma.js/">Chroma.js Color Library</a></li>
+    <li><a href="https://web.dev/vitals/">Web Vitals Metrics</a></li>
     <li><a href="https://axios-http.com/">Axios HTTP Client</a></li>
   </ul>
 </details>
@@ -100,14 +116,14 @@ Join us in this cosmic journey, where storytelling has no limits. Explore SpaceT
     <li><a href="https://github.com/adamchainz/django-cors-headers/">Django CORS Headers</a></li>
     <li><a href="https://github.com/jpadilla/pyjwt/">Python JWT Implementation</a></li>
     <li><a href="https://cloudinary.com/">Cloudinary Image API</a></li>
-    <li><a href="https://gunicorn.org/">Python WSGI HTTP Server</a></li>
+    <li><a href="https://gunicorn.org/">Gunicorn WSGI HTTP Server</a></li>
   </ul>
 </details>
 
 <details>
-<summary>DevOps, DB and etc.</summary>
+<summary>DevOps, Databases, etc.</summary>
   <ul>
-    <li><a href="https://www.postgresql.org/">GitHub Enterprise CI/CD</a></li>
+    <li><a href="https://www.github.com/">GitHub Enterprise CI/CD</a></li>
     <li><a href="https://render.com/">Render Cloud Hosting</a></li>
     <li><a href="https://www.docker.com/">Docker Containerization</a></li>
     <li><a href="https://nginx.org/en/">Nginx Web Server</a></li>
@@ -116,37 +132,13 @@ Join us in this cosmic journey, where storytelling has no limits. Explore SpaceT
   </ul>
 </details>
 
-<!-- Features -->
-### :dart: Features
-
-- Feature 1
-- Feature 2
-- Feature 3
-
-
-<!-- Color Reference -->
-### :art: Color Reference
-
-| Color             | Hex                                                                |
-| ----------------- | ------------------------------------------------------------------ |
-| Primary Color | ![#222831](https://via.placeholder.com/10/222831?text=+) #222831 |
-| Secondary Color | ![#393E46](https://via.placeholder.com/10/393E46?text=+) #393E46 |
-| Accent Color | ![#00ADB5](https://via.placeholder.com/10/00ADB5?text=+) #00ADB5 |
-| Text Color | ![#EEEEEE](https://via.placeholder.com/10/EEEEEE?text=+) #EEEEEE |
-
-
-<!-- Env Variables -->
-### :key: Environment Variables
-
-To run this project, you will need to add the following environment variables to your '.env' file: `SECRET_KEY`, `DJANGO_ALLOWED_HOSTS`, `DB_ENGINE`, `DB_DATABASE`, `DB_USER`, `DB_PASSWORD`, `DB_HOST`, `DB_PORT`.
-
 
 <!-- Getting Started -->
-## 	:toolbox: Getting Started
+## 	:star2: Getting Started
 
 
 <!-- Prerequisites -->
-### :bangbang: Prerequisites
+### :star2: Prerequisites
 
 This project uses NPM as package manager:
 
@@ -154,9 +146,14 @@ This project uses NPM as package manager:
  npm install --global npm
 ```
 
+<!-- Env Variables -->
+### :star2: Environment Variables
+
+To run this project, you will need to add the following environment variables to your '.env' file: `SECRET_KEY`, `DJANGO_ALLOWED_HOSTS`, `DB_ENGINE`, `DB_DATABASE`, `DB_USER`, `DB_PASSWORD`, `DB_HOST`, `DB_PORT`.
+
 
 <!-- Installation -->
-### :gear: Installation
+### :star2: Installation
 
 Install it with NPM as the following:
 
@@ -167,7 +164,7 @@ Install it with NPM as the following:
 
 
 <!-- Run Locally -->
-### :running: Run Locally
+### :star2: Run Locally
 
 Clone the project
 
@@ -195,7 +192,7 @@ Start the server
 
 
 <!-- Deployment -->
-### :triangular_flag_on_post: Deployment
+### :star2: Deployment
 
 To deploy this project run:
 
@@ -204,53 +201,23 @@ To deploy this project run:
 ```
 
 
-<!-- Usage -->
-## :eyes: Usage
-
-Use this space to tell a little more about your project and how it can be used. Show additional screenshots, code samples, demos or link to other resources.
-
-
 <!-- Roadmap -->
-## :compass: Roadmap
+## :star2: Roadmap
 
-* [x] Todo 1
-* [ ] Todo 2
+* [ ] Frontend Dashboard
+* [ ] Deployment CI/CD
 
 
 <!-- Contributing -->
-## :wave: Contributing
+## :star2: Contributing
 
-Contributions are always welcome!
-
-
-<!-- FAQ -->
-## :grey_question: FAQ
-
-- Question 1
-
-  + Answer 1
-
-- Question 2
-
-  + Answer 2
-
-- Question 3
-
-  + Answer 3
+Contributions are always welcome. [Click here](https://git.generalassemb.ly/astronauts-team/space-threads/issues/) to request a feature or report a bug.
 
 
 <!-- License -->
 ## :warning: License
 
 Distributed under the MIT License. [Click here](LICENSE.md) for more information.
-
-
-<!-- Contact -->
-## :handshake: Contact
-
-Name - [@GitHub](https://git.generalassemb.ly/) - someone@example.com
-
-Project Link: [https://git.generalassemb.ly/astronauts-team/space-threads/](https://git.generalassemb.ly/astronauts-team/space-threads/)
 
 
 <!-- Acknowledgments -->
