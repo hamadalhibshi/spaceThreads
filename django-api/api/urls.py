@@ -22,10 +22,9 @@ urlpatterns = [
     path('updateChapterStatus/', views.updateChapterStatus, name='update_chapter_status'),
     path('getApprovedChapters/', views.getApprovedChapters, name='get_approved_chapters'),
     path('listAuthorUsers/', views.listAuthorUsers, name='list_author_users'),
-    path('authorUserDetails/<int:user_id>/', views.authorUserDetails, name='author_user_details'),
+    path('authorUserDetails/', views.authorUserDetails, name='author_user_details'),
     path('changeToAuthor/', views.changeToAuthor, name='change_to_author'),
     path('getStats/', views.getStats, name='get_stats'),
     path('getUserData/', views.getUserData, name='get_user_data'),
 
-    
 ]
