@@ -174,6 +174,8 @@ def createChapter(request):
         # Get the user ID from the request (assuming it's provided in hidden input fields)
         user_id = request.data['userId']
 
+        title = request.data['title']
+
         # User = get_user_model()
         user_instance = User.objects.get(pk=user_id)
         # Get the content from the request data (assuming it's in the request data)
@@ -187,6 +189,7 @@ def createChapter(request):
             order=None,  # Set the order to null (None)
             rating=0.0,  # Set an initial rating (you can adjust this as needed)
             content=content,  # Set the content from the request
+            title=title,  # Set the title from the request
         )
 
         # Serialize the created Chapter instance using the ChapterSerializer
@@ -278,7 +281,7 @@ def deleteReview(request, review_id):
         return JsonResponse({'error': 'Review not found'}, status=404)
 
 
-# TESTED AND WORKS
+# TO BE TESTED
 @api_view(['GET'])
 def listComments(request):
     try:
@@ -599,7 +602,13 @@ def listAuthorUsers(request):
 
 # TESTED AND WORKS
 @api_view(['GET'])
-def authorUserDetails(request, user_id):
+def authorUserDetails(request):
+    print("this is the request ===>")
+    print(request),
+    user_id = request.query_params.get("id")
+    print("this is the user_id ====>")
+    print(user_id)
+    
     try:
         # Retrieve the user instance based on the provided user_id
         user = User.objects.get(id=user_id)

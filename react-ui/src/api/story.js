@@ -14,6 +14,10 @@ class StoryApi {
   static createComment = (data) => axios.post(`${baseURL}/createComment/`, data);
 
   static listComment = (data) => axios.get(`${baseURL}/listComments/`, data);
+
+  static authorUserDetails = (data) => axios.get(`${baseURL}/authorUserDetails/`, data);
+
+  static getStats = (data) => axios.get(`${baseURL}/getStats/`, data);
 }
 
 export default StoryApi;

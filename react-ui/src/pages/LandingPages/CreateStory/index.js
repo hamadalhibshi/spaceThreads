@@ -50,7 +50,6 @@ function CreateStory() {
     prologue: "",
     authorId: user._id,
   });
-  console.log(user._id);
 
   const handleChange = (e) => {
     // Handle form input changes here

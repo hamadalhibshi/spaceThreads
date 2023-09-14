@@ -40,17 +40,22 @@ import { useAuth } from "auth-context/auth.context";
 import { useState } from "react";
 import axios from 'axios'
 import ChapterApi from "api/chapter";
+import { useParams } from "react-router-dom";
 
 
 function CreateStory() {
   const { user } = useAuth();
 
+  const id = useParams();
+
   const [data, setData] = useState({
     title: '',
     content: '',
-    authorId: user._id,
-    storyId: '',
+    storyId: id.id,
+    userId: user._id,
+    status:'Pending'
   });
+
   console.log(user._id)
 
   const handleChange = (e) => {
@@ -131,7 +136,7 @@ function CreateStory() {
               variant="contained"
               sx={{ mt: 3, width: 200, color: '#fff' }}
             >
-              Add Story
+              Add Chapter
             </Button>
           </Grid>
         </Box>
