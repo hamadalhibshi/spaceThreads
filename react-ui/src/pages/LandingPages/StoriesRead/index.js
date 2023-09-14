@@ -1,7 +1,7 @@
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
 import Card from "@mui/material/Card";
-import StoryApi from "../../../api/story";
+import StoryApi from "api/story";
 import MKBox from "components/MKBox";
 import MKTypography from "components/MKTypography";
 import MKButton from "components/MKButton";
@@ -25,6 +25,34 @@ import { useParams } from "react-router-dom";
 
 function StoriesRead() {
   let { id } = useParams();
+  const [data, setData] = useState({});
+  const [chapterNo, setChapterNo] = useState(0)
+
+  const handleNextChapter = () => {
+    console.log("Next Chapter Clicked, NO: " + chapterNo)
+    console.log(data.chapters.length)
+    if (chapterNo < data.chapters.length - 1) {
+      setChapterNo(prevState => prevState + 1)
+    }
+
+  }
+  const handlePreviousChapter = () => {
+    console.log("Previous Chapter Clicked, NO: " + chapterNo)
+    if (chapterNo > 0) {
+      setChapterNo(prevState => prevState - 1)
+    }
+
+  }
+  useEffect(() => {
+    StoryApi.getOneStory(id)
+      .then((response) => {
+        setData(response.data);
+        console.log("Data received successfully:", response.data);
+      })
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+      });
+  }, [id]);
 
   const popularFontFamilies = [
     "Arial",
@@ -190,31 +218,24 @@ function StoriesRead() {
             flexDirection="column"
             sx={{ mx: "auto", textAlign: "center" }}
           >
-            <MKTypography
-              variant="h1"
-              color="white"
-              sx={({ breakpoints, typography: { size } }) => ({
-                [breakpoints.down("md")]: {
-                  fontSize: size["3xl"],
-                },
-              })}
-            >
-              *Story Title*
-            </MKTypography>
-            <MKTypography variant="body1" color="white" opacity={0.8} mt={1} mb={3}>
-              *by author*
-            </MKTypography>
-            <MKTypography
-              variant="h3"
-              color="white"
-              sx={({ breakpoints, typography: { size } }) => ({
-                [breakpoints.down("md")]: {
-                  fontSize: size["3xl"],
-                },
-              })}
-            >
-              *1. Chapter Title*
-            </MKTypography>
+            {data && data.story && (
+              <div>
+                <MKTypography
+                  variant="h1"
+                  color="white"
+                  sx={({ breakpoints, typography: { size } }) => ({
+                    [breakpoints.down("md")]: {
+                      fontSize: size["3xl"],
+                    },
+                  })}
+                >
+                  {data.story.title}
+                </MKTypography>
+                <MKTypography variant="body1" color="white" opacity={0.8} mt={1} mb={3}>
+                  {`by ${data.story.author}`}
+                </MKTypography>
+              </div>
+            )}
           </Grid>
         </Container>
       </MKBox>
@@ -236,10 +257,10 @@ function StoriesRead() {
           justifyContent="space-around"
         >
           <Grid container item xs={12} lg={8} justifyContent="space-between">
-            <MKButton component={Link} to={"/home"} variant="gradient" size="small" color={"dark"}>
+            <MKButton variant="gradient" size="small" color={"dark"} onClick={handlePreviousChapter}>
               Previous Chapter
             </MKButton>
-            <MKButton component={Link} to={"/home"} variant="gradient" size="small" color={"dark"}>
+            <MKButton variant="gradient" size="small" color={"dark"} onClick={handleNextChapter}>
               Next Chapter
             </MKButton>
           </Grid>
@@ -292,64 +313,43 @@ function StoriesRead() {
           bgcolor: bgColor,
         }}
       >
-        <MKTypography
-          variant="body1"
-          color={fontColor}
-          alignItems="center"
-          display="flex"
-          flexDirection="column"
-          justifyContent="center"
-          opacity={0.8}
-          mt={1}
-          mb={3}
-        >
-          <span> *Chapter No*</span>
-          <span> *Chapter Title*</span>
-        </MKTypography>
-        <MKTypography
-          fontSize={fontSize}
-          fontFamily={selectedFont}
-          color={fontColor}
-          alignItems="center"
-          display="flex"
-          flexDirection="column"
-          justifyContent="center"
-          lineHeight={1.5}
-          textAlign="justify"
-          textJustify="inter-word"
-          opacity={0.8}
-          mt={1}
-          mb={5}
-        >
-          Zorian’s eyes abruptly shot open as a sharp pain erupted from his stomach. His whole body
-          convulsed, buckling against the object that fell on him, and suddenly he was wide awake,
-          not a trace of drowsiness in his mind. “Good morning, brother!” an annoyingly cheerful
-          voice sounded right on top of him. “Morning, morning, MORNING!!!” Zorian glared at his
-          little sister, but she just smiled back at him cheekily, still sprawled across his
-          stomach. She was humming to herself in obvious satisfaction, kicking her feet playfully in
-          the air as she studied the giant world map Zorian had tacked to the wall next to his bed.
-          Or rather, pretended to study – Zorian could see her watching him intently out of the
-          corner of her eyes for a reaction. This was what he got for not arcane-locking the door
-          and setting up a basic alarm perimeter around his bed. “Get off,” he told her in the
-          calmest voice he could muster. “Mom said to wake you up,” she said matter-of-factly, not
-          budging from her spot. “Not like this, she didn’t,” Zorian grumbled, swallowing his
-          irritation and patiently waiting till she dropped her guard. Predictably, Kirielle grew
-          visibly agitated after only a few moments of this pretend disinterest. Zorian’s eyes
-          abruptly shot open as a sharp pain erupted from his stomach. His whole body convulsed,
-          buckling against the object that fell on him, and suddenly he was wide awake, not a trace
-          of drowsiness in his mind. “Good morning, brother!” an annoyingly cheerful voice sounded
-          right on top of him. “Morning, morning, MORNING!!!” Zorian glared at his little sister,
-          but she just smiled back at him cheekily, still sprawled across his stomach. She was
-          humming to herself in obvious satisfaction, kicking her feet playfully in the air as she
-          studied the giant world map Zorian had tacked to the wall next to his bed. Or rather,
-          pretended to study – Zorian could see her watching him intently out of the corner of her
-          eyes for a reaction. This was what he got for not arcane-locking the door and setting up a
-          basic alarm perimeter around his bed. “Get off,” he told her in the calmest voice he could
-          muster. “Mom said to wake you up,” she said matter-of-factly, not budging from her spot.
-          “Not like this, she didn’t,” Zorian grumbled, swallowing his irritation and patiently
-          waiting till she dropped her guard. Predictably, Kirielle grew visibly agitated after only
-          a few moments of this pretend disinterest.
-        </MKTypography>
+        {data && data.story && data.chapters && (
+          <>
+            <MKTypography
+              fontSize={fontSize}
+              fontFamily={selectedFont}
+              variant="body1"
+              color={fontColor}
+              alignItems="center"
+              display="flex"
+              flexDirection="column"
+              justifyContent="center"
+              opacity={0.8}
+              mt={1}
+              mb={3}
+            >
+              <span> *Chapter No* {data.chapters[chapterNo].id}</span>
+              <span> *Chapter Title* {data.chapters[chapterNo].title}</span>
+            </MKTypography>
+            <MKTypography
+              fontSize={fontSize}
+              fontFamily={selectedFont}
+              color={fontColor}
+              alignItems="center"
+              display="flex"
+              flexDirection="column"
+              justifyContent="center"
+              lineHeight={1.5}
+              textAlign="justify"
+              textJustify="inter-word"
+              opacity={0.8}
+              mt={1}
+              mb={5}
+            >
+              {data.chapters[chapterNo].content}
+            </MKTypography>
+          </>
+        )}
       </Card>
       <Card
         sx={{
@@ -369,20 +369,25 @@ function StoriesRead() {
           alignItems="center"
           justifyContent="space-around"
         >
+
           <Grid container item xs={12} lg={8} justifyContent="space-between">
-            <MKButton component={Link} to={"/home"} variant="gradient" size="small" color={"dark"}>
+            <MKButton variant="gradient" size="small" color={"dark"} onClick={handlePreviousChapter}>
               Previous Chapter
             </MKButton>
-            <MKButton
-              component={Link}
-              to={"/stories/show"}
-              variant="gradient"
-              size="small"
-              color={"dark"}
-            >
-              Chapters Index
-            </MKButton>
-            <MKButton component={Link} to={"/home"} variant="gradient" size="small" color={"dark"}>
+            {data && data.story && (
+              <>
+                <MKButton
+                  component={Link}
+                  to={`/storyDetails/${data?.story.id}`}
+                  variant="gradient"
+                  size="small"
+                  color={"dark"}
+                >
+                  Chapters Index
+                </MKButton>
+              </>
+            )}
+            <MKButton variant="gradient" size="small" color={"dark"} onClick={handleNextChapter}>
               Next Chapter
             </MKButton>
           </Grid>
