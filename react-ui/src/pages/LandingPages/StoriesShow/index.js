@@ -259,7 +259,7 @@ function StoriesShow() {
                     <TableRow key={index}>
                       <TableCell align="center">{chapter.id}</TableCell>
                       <TableCell align="center">
-                        <Link to={`/stories/${chapter.title}/${chapter.chapterNo}`}>{chapter.title}</Link>
+                        <Link to={`/stories/${chapter.title}/${chapter.id}`}>{chapter.title}</Link>
                       </TableCell>
                       <TableCell align="center">
                         <Link to={`/authors/${chapter.author}`}>{chapter.userId}</Link>
