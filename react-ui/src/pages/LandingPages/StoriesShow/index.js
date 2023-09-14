@@ -255,19 +255,16 @@ function StoriesShow() {
 
               <TableBody>
                 {data && data.chapters && data.story && (
-                  (rowsPerPage > 0
-                    ? rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                    : rows
-                  ).map((row, index) => (
+                  data.chapters.map((chapter, index) => (
                     <TableRow key={index}>
-                      <TableCell align="center">{data.story.id}</TableCell>
+                      <TableCell align="center">{chapter.id}</TableCell>
                       <TableCell align="center">
-                        <Link to={`/stories/${row.title}/${row.chapterNo}`}>{data.chapters[0].title}</Link>
+                        <Link to={`/stories/${chapter.title}/${chapter.chapterNo}`}>{chapter.title}</Link>
                       </TableCell>
                       <TableCell align="center">
-                        <Link to={`/authors/${row.author}`}>{data.story.authorId}</Link>
+                        <Link to={`/authors/${chapter.author}`}>{chapter.userId}</Link>
                       </TableCell>
-                      <TableCell align="center">{data.chapters[0].timestamp}</TableCell>
+                      <TableCell align="center">{chapter.timestamp}</TableCell>
                     </TableRow>
                   ))
                 )}
@@ -277,6 +274,7 @@ function StoriesShow() {
                   </TableRow>
                 )}
               </TableBody>
+
 
             </Table>
           </TableContainer>
