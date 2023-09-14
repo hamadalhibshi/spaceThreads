@@ -34,7 +34,7 @@ function Stories() {
           routes={routes}
           action={{
             type: "internal",
-            route: "/pages/authentication/sign-out",
+            route: "/sign-out/",
             label: "logout",
             color: "default",
           }}
@@ -45,9 +45,9 @@ function Stories() {
         <DefaultNavbar
           routes={routes}
           action={{
-            type: "external",
-            route: "https://appseed.us/product/material-kit/api-server-nodejs/react/",
-            label: "download",
+            type: "internal",
+            route: "/sign-in/",
+            label: "login",
             color: "default",
           }}
           transparent

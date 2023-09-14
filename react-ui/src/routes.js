@@ -83,24 +83,22 @@ const routes = [
     icon: <Icon>home</Icon>,
     route: "/",
     component: <PresentationPage />,
-    protected: true,
     collapse: [
       {
         name: "about us",
         route: "/about-us",
         component: <AboutUs />,
-        protected: true,
       },
       {
         name: "contact us",
         route: "/contact-us",
         component: <ContactUs />,
-        protected: true,
       },
       {
         name: "dashboard",
         route: "/dashboard",
         component: <Dashboard />,
+        protected: true,
       },
       {
         name: "login",
@@ -135,7 +133,6 @@ const routes = [
     component: <ProfilePage />,
     protected: true,
   },
-
   {
     name: "sections",
     icon: <Icon>view_day</Icon>,
@@ -285,37 +282,6 @@ const routes = [
       },
     ],
   },
-  // {
-  //   name: "docs",
-  //   icon: <Icon>article</Icon>,
-  //   collapse: [
-  //     {
-  //       name: "Support",
-  //       description: "Get LIVE assistance from experts",
-  //       href: "https://appseed.us/support/",
-  //     },
-  //     {
-  //       name: "foundation",
-  //       description: "See our colors, icons and typography",
-  //       href: "https://www.creative-tim.com/learning-lab/react/colors/material-kit/?AFFILIATE=128200",
-  //     },
-  //     {
-  //       name: "components",
-  //       description: "Explore our collection of fully designed components",
-  //       href: "https://www.creative-tim.com/learning-lab/react/alerts/material-kit/?AFFILIATE=128200",
-  //     },
-  //     {
-  //       name: "plugins",
-  //       description: "Check how you can integrate our plugins",
-  //       href: "https://www.creative-tim.com/learning-lab/react/datepicker/material-kit/?AFFILIATE=128200",
-  //     },
-  //   ],
-  // },
-  // {
-  //   name: "github",
-  //   icon: <GitHubIcon />,
-  //   href: "https://github.com/app-generator/react-material-kit",
-  // },
 ];
 
 export default routes;

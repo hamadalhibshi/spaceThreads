@@ -38,93 +38,91 @@ import footerRoutes from "footer.routes";
 import { useAuth } from "auth-context/auth.context";
 import Featuring from "./sections/Featuring";
 import Divider from "@mui/material/Divider";
-import video from './video/earth.mp4'
-
-
+import video from "./video/earth.mp4";
 
 function Presentation() {
   const { user } = useAuth();
   return (
     <>
       {user && user.token ? (
-         <DefaultNavbar
-         routes={routes}
-         action={{
-           type: "internal",
-           route: "/pages/authentication/sign-out",
-           label: "logout",
-           color: "default",
-         }}
-         transparent
-         light
-       />
-     ) : (
-       <DefaultNavbar
-         routes={routes}
-         action={{
-           type: "external",
-           route: "https://appseed.us/product/material-kit/api-server-nodejs/react/",
-           label: "download",
-           color: "default",
-         }}
-         transparent
-         light
-       />
-     )}
-     <MKBox
-      minHeight="110vh"
-      width="100%"
-      sx={{
-        backgroundImage: 'none', // Clear the background image
-        display: "grid",
-        placeItems: "center",
-      }}
-    >
-      <video
-        autoPlay
-        muted
-        // loop
-        playsInline
-        style={{
-          width: '100%',
-          height: '100%',
-          objectFit: 'cover',
-          position: 'absolute',
-          top: 0,
-          left: 0,
+        <DefaultNavbar
+          routes={routes}
+          action={{
+            type: "internal",
+            route: "/pages/authentication/sign-out",
+            label: "logout",
+            color: "default",
+          }}
+          transparent
+          light
+        />
+      ) : (
+        <DefaultNavbar
+          routes={routes}
+          action={{
+            type: "internal",
+            route: "/sign-in",
+            label: "login",
+            color: "default",
+          }}
+          transparent
+          light
+        />
+      )}
+      <MKBox
+        minHeight="110vh"
+        width="100%"
+        sx={{
+          backgroundImage: "none", // Clear the background image
+          display: "grid",
+          placeItems: "center",
         }}
       >
-        <source src={video} type="video/mp4" />
-        Your browser does not support the video tag.
-      </video>
-       <Container>
-         <Grid
-           container
-           item
-           xs={12}
-           lg={8}
-           justifyContent="center"
-           alignItems="center"
-           flexDirection="column"
-           sx={{ mx: "auto", textAlign: "center" }}
-         >
-           <MKTypography
-             variant="h1"
-             color="white"
-             sx={({ breakpoints, typography: { size } }) => ({
-               [breakpoints.down("md")]: {
-                 fontSize: size["3xl"],
-               },
-             })}
-           >
-             SpaceThreads
-           </MKTypography>
-           <MKTypography variant="body1" color="white" opacity={0.8} mt={1} mb={3}>
-           Unveiling the Universe, One Story at a Time.
-           </MKTypography>
-         </Grid>
-       </Container>
-     </MKBox>
+        <video
+          autoPlay
+          muted
+          // loop
+          playsInline
+          style={{
+            width: "100%",
+            height: "100%",
+            objectFit: "cover",
+            position: "absolute",
+            top: 0,
+            left: 0,
+          }}
+        >
+          <source src={video} type="video/mp4" />
+          Your browser does not support the video tag.
+        </video>
+        <Container>
+          <Grid
+            container
+            item
+            xs={12}
+            lg={8}
+            justifyContent="center"
+            alignItems="center"
+            flexDirection="column"
+            sx={{ mx: "auto", textAlign: "center" }}
+          >
+            <MKTypography
+              variant="h1"
+              color="white"
+              sx={({ breakpoints, typography: { size } }) => ({
+                [breakpoints.down("md")]: {
+                  fontSize: size["3xl"],
+                },
+              })}
+            >
+              SpaceThreads
+            </MKTypography>
+            <MKTypography variant="body1" color="white" opacity={0.8} mt={1} mb={3}>
+              Unveiling the Universe, One Story at a Time.
+            </MKTypography>
+          </Grid>
+        </Container>
+      </MKBox>
       <Card
         sx={{
           p: 2,
