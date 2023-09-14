@@ -23,16 +23,40 @@ import MKBox from "components/MKBox";
 import MKAvatar from "components/MKAvatar";
 import MKButton from "components/MKButton";
 import MKTypography from "components/MKTypography";
-
+import StoryApi from "../../../../api/story";
 // Images
 import profilePicture from "assets/images/bruce-mars.jpg";
+import { useEffect, useState } from "react";
+import { useAuth } from "../../../../auth-context/auth.context";
 
 function Profile() {
+  const { user } = useAuth();
+  useEffect(() => {
+    const id = user._id;
+    const req = {
+      params: {
+        id: id,
+      },
+    };
+    console.log(`this is the req ====>`);
+    console.log(req);
+    async function getEverything() {
+      const stats = await StoryApi.getStats(req);
+      console.log(`this is stats =====>`);
+      const actualStats = stats.data;
+      console.log(actualStats);
+      console.log("this is the req beofer the author details");
+      console.log(req);
+      const details = await StoryApi.authorUserDetails(req);
+      console.log(details);
+    }
+    getEverything();
+  }, []);
   return (
     <MKBox component="section" py={{ xs: 6, sm: 12 }}>
       <Container>
         <Grid container item xs={12} justifyContent="center" mx="auto">
-          <MKBox mt={{ xs: -16, md: -20}} textAlign="center">
+          <MKBox mt={{ xs: -16, md: -20 }} textAlign="center">
             <MKAvatar src={profilePicture} alt="Burce Mars" size="xxl" shadow="xl" />
           </MKBox>
           <Grid container justifyContent="center">
@@ -40,7 +64,7 @@ function Profile() {
               <MKBox display="flex" justifyContent="space-between" alignItems="center" mb={1}>
                 {/* <MKTypography variant="h3">Hamad Alhibshi</MKTypography> */}
               </MKBox>
-              <Grid container spacing={3} mb={3} justifyContent='space-around'>
+              <Grid container spacing={3} mb={3} justifyContent="space-around">
                 <Grid item>
                   <MKTypography component="span" variant="h3" fontWeight="bold">
                     323&nbsp;

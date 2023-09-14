@@ -24,7 +24,7 @@ import TextField from "@mui/material/TextField";
 import { useParams } from "react-router-dom";
 
 function StoriesRead() {
-  const { id } = useParams();
+  let { id } = useParams();
 
   const popularFontFamilies = [
     "Arial",
@@ -52,7 +52,7 @@ function StoriesRead() {
     fontSize: "1rem",
   }));
 
-  const { user } = useAuth();
+  let { user } = useAuth();
 
   const [fontSize, setFontSize] = useState(13.5); // Initial font size
   const [lightMode, setLightMode] = useState(false);
@@ -105,21 +105,29 @@ function StoriesRead() {
 
   const [comment, setComment] = useState([]);
   useEffect(() => {
-    req = {
+    id = parseInt(id);
+    const req = {
       storyId: id,
       chapterId: 0,
     };
-    allComments = StoryApi.listComment(req);
-    console.log(allComments);
+    console.log("this is the req ====>");
+    console.log(req);
+    async function listStuff() {
+      allComments = await StoryApi.listComment(req);
+      console.log("these are the comments ===>");
+      console.log(allComments);
+    }
+    listStuff();
   }, [comment]);
   async function addComment() {
     try {
       const userId = user._id;
       console.log(`this is the user id =====> ${userId}`);
       const req = {
-        userId,
+        userId: userId,
         content: comment,
         storyId: id,
+        chapterId: 0,
       };
 
       await StoryApi.createComment(req);
