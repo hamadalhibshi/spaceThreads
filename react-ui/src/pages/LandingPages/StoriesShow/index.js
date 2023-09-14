@@ -45,13 +45,9 @@ function StoriesShow() {
   console.log(user);
 
   const rows = [
-    { chapterNo: 1, title: "John Doe", author: "John Doe", mergedOn: "11/22/63" },
-    { chapterNo: 2, title: "Jane Smith", author: "John Doe", mergedOn: "19/11/20" },
-    { chapterNo: 3, title: "Bob Johnson", author: "John Doe", mergedOn: "07/9/19" },
-    { chapterNo: 4, title: "John Doe", author: "John Doe", mergedOn: "11/22/63" },
-    { chapterNo: 5, title: "Jane Smith", author: "John Doe", mergedOn: "19/11/20" },
-    { chapterNo: 6, title: "Bob Johnson", author: "John Doe", mergedOn: "07/9/19" },
-    // Add more rows as needed
+    { chapterNo: '', title: "", author: "", mergedOn: "" },
+
+    // // Add more rows as needed
   ];
 
   const [page, setPage] = useState(0);
@@ -258,28 +254,30 @@ function StoriesShow() {
               </TableRow>
 
               <TableBody>
-                {(rowsPerPage > 0
-                  ? rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                  : rows
-                ).map((row) => (
-                  <TableRow key={row.chapterNo}>
-                    <TableCell align="center">{row.chapterNo}</TableCell>
-                    <TableCell align="center">
-                      <Link to={`/stories/${row.title}/${row.chapterNo}`}>{row.title}</Link>
-                    </TableCell>
-                    <TableCell align="center">
-                      <Link to={`/authors/${row.author}`}>{row.author}</Link>
-                    </TableCell>
-                    <TableCell align="center">{row.mergedOn}</TableCell>
-                  </TableRow>
-                ))}
-
+                {data && data.chapters && data.story && (
+                  (rowsPerPage > 0
+                    ? rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                    : rows
+                  ).map((row, index) => (
+                    <TableRow key={index}>
+                      <TableCell align="center">{data.story.id}</TableCell>
+                      <TableCell align="center">
+                        <Link to={`/stories/${row.title}/${row.chapterNo}`}>{data.chapters[0].title}</Link>
+                      </TableCell>
+                      <TableCell align="center">
+                        <Link to={`/authors/${row.author}`}>{data.story.authorId}</Link>
+                      </TableCell>
+                      <TableCell align="center">{data.chapters[0].timestamp}</TableCell>
+                    </TableRow>
+                  ))
+                )}
                 {emptyRows > 0 && (
                   <TableRow style={{ height: 53 * emptyRows }}>
                     <TableCell colSpan={4} />
                   </TableRow>
                 )}
               </TableBody>
+
             </Table>
           </TableContainer>
           <TablePagination
