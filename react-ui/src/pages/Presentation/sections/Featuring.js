@@ -23,14 +23,17 @@ import MKBox from "components/MKBox";
 // Material Kit 2 React examples
 import DefaultCounterCard from "examples/Cards/CounterCards/DefaultCounterCard";
 
+import { useAuth } from "auth-context/auth.context";
+
 function Featuring() {
+  const { user } = useAuth();
   return (
     <MKBox component="section" pt={4} pb={3}>
       <Container>
         <Grid container justifyContent="center" sx={{ textAlign: "center" }}>
           <Grid item xs={12} md={3}>
             <DefaultCounterCard
-              count={5234}
+              count={12}
               separator=","
               title="Stories"
               description="Of “high-performing” level are led by a certified project manager"
@@ -38,7 +41,7 @@ function Featuring() {
           </Grid>
           <Grid item xs={12} md={3}>
             <DefaultCounterCard
-              count={3400}
+              count={7}
               separator=","
               suffix="+"
               title="Authors"
@@ -47,8 +50,8 @@ function Featuring() {
           </Grid>
           <Grid item xs={12} md={3}>
             <DefaultCounterCard
-              count={24}
-              suffix="/7"
+              count={9000}
+              suffix="+"
               title="Readers"
               description="Actively engage team members that finishes on time"
             />
