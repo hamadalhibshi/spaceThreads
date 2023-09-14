@@ -43,6 +43,8 @@ import DefaultNavbarMobile from "examples/Navbars/DefaultNavbar/DefaultNavbarMob
 // Material Kit 2 React base styles
 import breakpoints from "assets/theme/base/breakpoints";
 
+import { useAuth } from "auth-context/auth.context";
+
 function DefaultNavbar({ brand, routes, transparent, light, action, sticky, relative, center }) {
   const [dropdown, setDropdown] = useState("");
   const [dropdownEl, setDropdownEl] = useState("");
@@ -448,7 +450,16 @@ function DefaultNavbar({ brand, routes, transparent, light, action, sticky, rela
       )}
     </Popper>
   );
-
+  const { user } = useAuth();
+  const handleLogout = () => {
+    if (user) {
+      console.log("Clicked logout");
+      localStorage.removeItem("user");
+      window.location.reload(false);
+    } else {
+      console.log("Clicked Login");
+    }
+  };
   return (
     <Container sx={sticky ? { position: "sticky", top: 0, zIndex: 10 } : null}>
       <MKBox
@@ -492,6 +503,7 @@ function DefaultNavbar({ brand, routes, transparent, light, action, sticky, rela
             {action &&
               (action.type === "internal" ? (
                 <MKButton
+                  onClick={() => handleLogout()}
                   component={Link}
                   to={action.route}
                   variant={

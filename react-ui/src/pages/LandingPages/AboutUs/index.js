@@ -42,6 +42,7 @@ import Counters from "./sections/Counters";
 
 function AboutUs() {
   const { user } = useAuth();
+
   return (
     <>
       {user && user.token ? (
@@ -49,7 +50,7 @@ function AboutUs() {
           routes={routes}
           action={{
             type: "internal",
-            route: "/pages/authentication/sign-out",
+            route: "/",
             label: "logout",
             color: "default",
           }}
@@ -109,12 +110,6 @@ function AboutUs() {
             <MKTypography variant="body1" color="white" opacity={0.8} mt={1} mb={3}>
               Crafting cosmic tales that transport you to the stars
             </MKTypography>
-
-            {user.id && (
-              <MKButton color="default" sx={{ color: ({ palette: { dark } }) => dark.main }}>
-                create account
-              </MKButton>
-            )}
           </Grid>
         </Container>
       </MKBox>
