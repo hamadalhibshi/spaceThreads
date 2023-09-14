@@ -137,7 +137,7 @@ function Presentation() {
         <Featuring />
         <Divider />
         <Information />
-        <DesignBlocks />
+        {/* <DesignBlocks /> */}
         <Testimonials />
       </Card>
       <MKBox pt={6} px={1} mt={6}>

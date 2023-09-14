@@ -33,7 +33,7 @@ function NavbarDark() {
           routes={routes}
           action={{
             type: "internal",
-            route: "/pages/authentication/sign-out",
+            route: "/sign-out/",
             label: "logout",
             color: "info",
           }}
@@ -47,7 +47,7 @@ function NavbarDark() {
           routes={routes}
           action={{
             type: "external",
-            route: "https://appseed.us/product/material-kit/api-server-nodejs/react/",
+            route: "/sign-in/",
             label: "login",
             color: "info",
           }}

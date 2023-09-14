@@ -77,6 +77,7 @@ import AuthorProfile from "./pages/LandingPages/AuthorProfile/index.js";
 import Dashboard from "./pages/LandingPages/Dashboard/index.js";
 import CreateChapter from "./pages/LandingPages/CreateChapter/index.js";
 import EditIcon from "@mui/icons-material/Edit";
+import FactCheckIcon from "@mui/icons-material/FactCheck";
 const routes = [
   {
     name: "home",
@@ -94,17 +95,6 @@ const routes = [
         route: "/contact-us",
         component: <ContactUs />,
       },
-      {
-        name: "dashboard",
-        route: "/dashboard",
-        component: <Dashboard />,
-        protected: true,
-      },
-      {
-        name: "login",
-        route: "/login",
-        component: <SignIn />,
-      },
     ],
   },
   {
@@ -121,6 +111,13 @@ const routes = [
     protected: true,
   },
   {
+    name: "dashboard",
+    icon: <FactCheckIcon />,
+    route: "/dashboard",
+    component: <Dashboard />,
+    protected: true,
+  },
+  {
     name: "Authors",
     icon: <Icon>groups</Icon>,
     route: "/authors",
@@ -133,155 +130,155 @@ const routes = [
     component: <ProfilePage />,
     protected: true,
   },
-  {
-    name: "sections",
-    icon: <Icon>view_day</Icon>,
-    collapse: [
-      {
-        name: "page sections",
-        description: "See all sections",
-        dropdown: true,
-        collapse: [
-          {
-            name: "page headers",
-            route: "/sections/page-sections/page-headers",
-            component: <PageHeaders />,
-            protected: true,
-          },
-          {
-            name: "features",
-            route: "/sections/page-sections/features",
-            component: <Features />,
-            protected: true,
-          },
-        ],
-      },
-      {
-        name: "navigation",
-        description: "See all navigations",
-        dropdown: true,
-        collapse: [
-          {
-            name: "navbars",
-            route: "/sections/navigation/navbars",
-            component: <Navbars />,
-            protected: true,
-          },
-          {
-            name: "nav tabs",
-            route: "/sections/navigation/nav-tabs",
-            component: <NavTabs />,
-            protected: true,
-          },
-          {
-            name: "pagination",
-            route: "/sections/navigation/pagination",
-            component: <Pagination />,
-            protected: true,
-          },
-        ],
-      },
-      {
-        name: "input areas",
-        description: "See all input areas",
-        dropdown: true,
-        collapse: [
-          {
-            name: "inputs",
-            route: "/sections/input-areas/inputs",
-            component: <Inputs />,
-            protected: true,
-          },
-          {
-            name: "forms",
-            route: "/sections/input-areas/forms",
-            component: <Forms />,
-            protected: true,
-          },
-        ],
-      },
-      {
-        name: "attention catchers",
-        description: "See all examples",
-        dropdown: true,
-        collapse: [
-          {
-            name: "alerts",
-            route: "/sections/attention-catchers/alerts",
-            component: <Alerts />,
-            protected: true,
-          },
-          {
-            name: "modals",
-            route: "/sections/attention-catchers/modals",
-            component: <Modals />,
-            protected: true,
-          },
-          {
-            name: "tooltips & popovers",
-            route: "/sections/attention-catchers/tooltips-popovers",
-            component: <TooltipsPopovers />,
-            protected: true,
-          },
-        ],
-      },
-      {
-        name: "elements",
-        description: "See all 32 examples",
-        dropdown: true,
-        collapse: [
-          {
-            name: "avatars",
-            route: "/sections/elements/avatars",
-            component: <Avatars />,
-            protected: true,
-          },
-          {
-            name: "badges",
-            route: "/sections/elements/badges",
-            component: <Badges />,
-            protected: true,
-          },
-          {
-            name: "breadcrumbs",
-            route: "/sections/elements/breadcrumbs",
-            component: <BreadcrumbsEl />,
-            protected: true,
-          },
-          {
-            name: "buttons",
-            route: "/sections/elements/buttons",
-            component: <Buttons />,
-            protected: true,
-          },
-          {
-            name: "dropdowns",
-            route: "/sections/elements/dropdowns",
-            component: <Dropdowns />,
-            protected: true,
-          },
-          {
-            name: "progress bars",
-            route: "/sections/elements/progress-bars",
-            component: <ProgressBars />,
-            protected: true,
-          },
-          {
-            name: "toggles",
-            route: "/sections/elements/toggles",
-            component: <Toggles />,
-            protected: true,
-          },
-          {
-            name: "typography",
-            route: "/sections/elements/typography",
-            component: <Typography />,
-            protected: true,
-          },
-        ],
-      },
-    ],
-  },
+  // {
+  //   name: "sections",
+  //   icon: <Icon>view_day</Icon>,
+  //   collapse: [
+  //     {
+  //       name: "page sections",
+  //       description: "See all sections",
+  //       dropdown: true,
+  //       collapse: [
+  //         {
+  //           name: "page headers",
+  //           route: "/sections/page-sections/page-headers",
+  //           component: <PageHeaders />,
+  //           protected: true,
+  //         },
+  //         {
+  //           name: "features",
+  //           route: "/sections/page-sections/features",
+  //           component: <Features />,
+  //           protected: true,
+  //         },
+  //       ],
+  //     },
+  //     {
+  //       name: "navigation",
+  //       description: "See all navigations",
+  //       dropdown: true,
+  //       collapse: [
+  //         {
+  //           name: "navbars",
+  //           route: "/sections/navigation/navbars",
+  //           component: <Navbars />,
+  //           protected: true,
+  //         },
+  //         {
+  //           name: "nav tabs",
+  //           route: "/sections/navigation/nav-tabs",
+  //           component: <NavTabs />,
+  //           protected: true,
+  //         },
+  //         {
+  //           name: "pagination",
+  //           route: "/sections/navigation/pagination",
+  //           component: <Pagination />,
+  //           protected: true,
+  //         },
+  //       ],
+  //     },
+  //     {
+  //       name: "input areas",
+  //       description: "See all input areas",
+  //       dropdown: true,
+  //       collapse: [
+  //         {
+  //           name: "inputs",
+  //           route: "/sections/input-areas/inputs",
+  //           component: <Inputs />,
+  //           protected: true,
+  //         },
+  //         {
+  //           name: "forms",
+  //           route: "/sections/input-areas/forms",
+  //           component: <Forms />,
+  //           protected: true,
+  //         },
+  //       ],
+  //     },
+  //     {
+  //       name: "attention catchers",
+  //       description: "See all examples",
+  //       dropdown: true,
+  //       collapse: [
+  //         {
+  //           name: "alerts",
+  //           route: "/sections/attention-catchers/alerts",
+  //           component: <Alerts />,
+  //           protected: true,
+  //         },
+  //         {
+  //           name: "modals",
+  //           route: "/sections/attention-catchers/modals",
+  //           component: <Modals />,
+  //           protected: true,
+  //         },
+  //         {
+  //           name: "tooltips & popovers",
+  //           route: "/sections/attention-catchers/tooltips-popovers",
+  //           component: <TooltipsPopovers />,
+  //           protected: true,
+  //         },
+  //       ],
+  //     },
+  //     {
+  //       name: "elements",
+  //       description: "See all 32 examples",
+  //       dropdown: true,
+  //       collapse: [
+  //         {
+  //           name: "avatars",
+  //           route: "/sections/elements/avatars",
+  //           component: <Avatars />,
+  //           protected: true,
+  //         },
+  //         {
+  //           name: "badges",
+  //           route: "/sections/elements/badges",
+  //           component: <Badges />,
+  //           protected: true,
+  //         },
+  //         {
+  //           name: "breadcrumbs",
+  //           route: "/sections/elements/breadcrumbs",
+  //           component: <BreadcrumbsEl />,
+  //           protected: true,
+  //         },
+  //         {
+  //           name: "buttons",
+  //           route: "/sections/elements/buttons",
+  //           component: <Buttons />,
+  //           protected: true,
+  //         },
+  //         {
+  //           name: "dropdowns",
+  //           route: "/sections/elements/dropdowns",
+  //           component: <Dropdowns />,
+  //           protected: true,
+  //         },
+  //         {
+  //           name: "progress bars",
+  //           route: "/sections/elements/progress-bars",
+  //           component: <ProgressBars />,
+  //           protected: true,
+  //         },
+  //         {
+  //           name: "toggles",
+  //           route: "/sections/elements/toggles",
+  //           component: <Toggles />,
+  //           protected: true,
+  //         },
+  //         {
+  //           name: "typography",
+  //           route: "/sections/elements/typography",
+  //           component: <Typography />,
+  //           protected: true,
+  //         },
+  //       ],
+  //     },
+  //   ],
+  // },
 ];
 
 export default routes;

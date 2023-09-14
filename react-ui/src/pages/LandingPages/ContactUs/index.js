@@ -66,7 +66,7 @@ function ContactUs() {
             routes={routes}
             action={{
               type: "internal",
-              route: "/pages/authentication/sign-out",
+              route: "/sign-out/",
               label: "logout",
               color: "info",
             }}

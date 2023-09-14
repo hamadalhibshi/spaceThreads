@@ -72,7 +72,7 @@ function SignInBasic() {
     user = JSON.stringify(user);
     setUser(user);
     localStorage.setItem("user", user);
-    return navigate("/dashboard");
+    return navigate("/presentation");
   };
 
   const handleSubmit = (e) => {
