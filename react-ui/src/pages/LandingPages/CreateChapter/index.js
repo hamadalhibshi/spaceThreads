@@ -136,7 +136,7 @@ function CreateStory() {
               variant="contained"
               sx={{ mt: 3, width: 200, color: '#fff' }}
             >
-              Add Story
+              Add Chapter
             </Button>
           </Grid>
         </Box>
