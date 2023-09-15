@@ -20,6 +20,9 @@ import bgImage from "assets/images/city-profile.jpg";
 import { useAuth } from "auth-context/auth.context";
 import { Link } from "react-router-dom";
 import BookIcon from "@mui/icons-material/Book";
+import GradeIcon from "@mui/icons-material/Grade";
+import FormatListBulletedIcon from "@mui/icons-material/FormatListBulleted";
+import LibraryBooksIcon from "@mui/icons-material/LibraryBooks";
 import { Icon } from "@mui/material";
 import CreateChapter from "../CreateChapter/index";
 import StoryApi from "api/story";
@@ -45,7 +48,7 @@ function StoriesShow() {
   console.log(user);
 
   const rows = [
-    { chapterNo: '', title: "", author: "", mergedOn: "" },
+    { chapterNo: "", title: "", author: "", mergedOn: "" },
 
     // // Add more rows as needed
   ];
@@ -65,6 +68,15 @@ function StoriesShow() {
   const emptyRows = rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
 
   // Sample data for the table
+
+  // Function to format timestamp
+  const formatTimestamp = (timestamp) => {
+    const parts = timestamp.split("T"); // Split at the "T" character
+    if (parts.length > 0) {
+      return parts[0]; // Keep the part before "T"
+    }
+    return timestamp; // Return the original timestamp if "T" is not found
+  };
 
   return (
     <>
@@ -164,30 +176,36 @@ function StoriesShow() {
           alignItems="center"
           justifyContent="space-around"
         >
-          <Grid container item xs={12} lg={8} justifyContent="space-around">
+          <Grid container item xs={12} lg={10} justifyContent="space-around">
             <MKTypography variant="h4" component="span" display="flex" alignItems="center">
               <Icon>
                 <BookIcon />
               </Icon>
-              <span>Genre</span>
+              <span>Genre/s: {data.story?.genre}</span>
+            </MKTypography>
+            <MKTypography variant="h4" component="span" display="flex" alignItems="center">
+              <Icon>
+                <FormatListBulletedIcon />
+              </Icon>
+              <span>{data.chapters?.length} Chapters</span>
             </MKTypography>
             <MKTypography variant="h4" component="span" display="flex" alignItems="center">
               <Icon>
                 <BookIcon />
               </Icon>
-              <span>Completed</span>
+              <span>{data.story?.status}</span>
+            </MKTypography>
+            <MKTypography variant="h4" component="span" display="flex" alignItems="center">
+              <Icon>
+                <GradeIcon />
+              </Icon>
+              <span>{data.story?.rating}</span>
             </MKTypography>
             <MKTypography variant="h4" component="span" display="flex" alignItems="center">
               <Icon>
                 <BookIcon />
               </Icon>
-              <span>Rating</span>
-            </MKTypography>
-            <MKTypography variant="h4" component="span" display="flex" alignItems="center">
-              <Icon>
-                <BookIcon />
-              </Icon>
-              <span>Created On</span>
+              <span>{data.story && formatTimestamp(data.story?.timestamp)}</span>
             </MKTypography>
           </Grid>
         </MKTypography>
@@ -206,7 +224,7 @@ function StoriesShow() {
             alignItems="center"
           >
             <Icon>
-              <BookIcon />
+              <LibraryBooksIcon />
             </Icon>
             <span>Table of Contents</span>
           </MKTypography>
@@ -254,28 +272,27 @@ function StoriesShow() {
               </TableRow>
 
               <TableBody>
-                {data && data.chapters && data.story && (
+                {data &&
+                  data.chapters &&
+                  data.story &&
                   data.chapters.map((chapter, index) => (
                     <TableRow key={index}>
-                      <TableCell align="center">{chapter.id}</TableCell>
+                      <TableCell align="center">{index + 1}</TableCell>
                       <TableCell align="center">
                         <Link to={`/stories/${chapter.title}/${chapter.id}`}>{chapter.title}</Link>
                       </TableCell>
                       <TableCell align="center">
                         <Link to={`/authors/${chapter.author}`}>{chapter.userId}</Link>
                       </TableCell>
-                      <TableCell align="center">{chapter.timestamp}</TableCell>
+                      <TableCell align="center">{formatTimestamp(chapter.timestamp)}</TableCell>
                     </TableRow>
-                  ))
-                )}
+                  ))}
                 {emptyRows > 0 && (
                   <TableRow style={{ height: 53 * emptyRows }}>
                     <TableCell colSpan={4} />
                   </TableRow>
                 )}
               </TableBody>
-
-
             </Table>
           </TableContainer>
           <TablePagination

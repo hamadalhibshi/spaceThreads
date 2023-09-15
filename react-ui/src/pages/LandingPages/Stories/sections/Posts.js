@@ -29,23 +29,23 @@ import BackgroundBlogCard from "examples/Cards/BlogCards/BackgroundBlogCard";
 
 // Images
 import SingleStoryCard from "examples/Cards/StoryCard/SingleStoryCard";
+import CircularProgress from "@mui/material/CircularProgress"; // Add the CircularProgress component
 
 function Places() {
-
   const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(true); // Add a loading state
 
   useEffect(() => {
     StoryApi.getStory()
       .then((response) => {
         setData(response.data);
-        console.log('Data received successfully:', response.data);
+        setLoading(false); // Set loading to false when data is received
+        console.log("Data received successfully:", response.data);
       })
       .catch((error) => {
-        console.error('Error fetching data:', error);
+        console.error("Error fetching data:", error);
       });
   }, []);
-
-  console.log(data)
 
   return (
     <MKBox component="section" py={2}>
@@ -55,34 +55,36 @@ function Places() {
             Read the latest stories
           </MKTypography>
         </Grid>
-        <Grid container spacing={3}>
+        {loading ? ( // Render the loading animation if loading is true
+          <CircularProgress />
+        ) : (
+          <Grid container spacing={3}>
+            {data &&
+              data?.map((story, index) => {
+                const imageUrl = story.image.replace("image/upload/", "");
 
-          {data && data?.map((story, index) => {
-            const imageUrl = story.image.replace("image/upload/", "");
-
-            return (
-              <Grid item xs={12} sm={6} lg={3}>
-                <SingleStoryCard
-                  key={index}
-                  image={imageUrl}
-                  title={story.title}
-                  genre={{ color: "info", label: `${story.genre}` }}
-                  chapters="20"
-                  status={story.status}
-                  createdOn={story.timestamp}
-                  rating={story.rating}
-                  action={{
-                    type: "internal",
-                    route: `/storyDetails/${story.id}`,
-                    color: "info",
-                    label: "read story",
-                  }}
-                />
-              </Grid>
-            );
-          })}
-
-        </Grid>
+                return (
+                  <Grid item xs={12} sm={6} lg={3} key={index}>
+                    <SingleStoryCard
+                      image={imageUrl}
+                      title={story.title}
+                      genre={{ color: "info", label: `${story.genre}` }}
+                      chapters="20"
+                      status={story.status}
+                      createdOn={story.timestamp}
+                      rating={story.rating}
+                      action={{
+                        type: "internal",
+                        route: `/storyDetails/${story.id}`,
+                        color: "info",
+                        label: "read story",
+                      }}
+                    />
+                  </Grid>
+                );
+              })}
+          </Grid>
+        )}
       </Container>
     </MKBox>
   );
