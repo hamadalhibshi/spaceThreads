@@ -60,24 +60,24 @@ def storyDetails(request, story_id):
         reviews = Review.objects.filter(storyId=story_id)
 
         # Get all the comments related to the story
-        comments = Comment.objects.filter(storyId=story_id)
+        # comments = Comment.objects.filter(storyId=story_id)
 
         # Initialize an empty list to store all the comments and their replies
-        all_comments = []
+        # all_comments = []
 
         # Iterate over each comment and retrieve its associated replies
-        for comment in comments:
-            replies = Reply.objects.filter(commentId=comment.id)
-            reply_serializer = ReplySerializer(replies, many=True)
+        # for comment in comments:
+        #     replies = Reply.objects.filter(commentId=comment.id)
+        #     reply_serializer = ReplySerializer(replies, many=True)
 
-            # Create a dictionary with comment and replies data
-            comment_data = {
-                'comment': CommentSerializer(comment).data,
-                'replies': reply_serializer.data
-            }
+        #     # Create a dictionary with comment and replies data
+        #     comment_data = {
+        #         'comment': CommentSerializer(comment).data,
+        #         'replies': reply_serializer.data
+        #     }
 
-            # Append the comment and replies to the list
-            all_comments.append(comment_data)
+        #     # Append the comment and replies to the list
+        #     all_comments.append(comment_data)
 
         # Serialize the story instance
         serializer = StorySerializer(story)
@@ -89,14 +89,13 @@ def storyDetails(request, story_id):
         review_serializer = ReviewSerializer(reviews, many=True)
 
         # Serialize the comments and replies
-        comment_data_serializer = CommentDataSerializer(all_comments, many=True)
+        # comment_data_serializer = CommentDataSerializer(all_comments, many=True)
 
         # Create a dictionary with story, chapters, reviews, comments, and replies data
         response_data = {
             'story': serializer.data,
             'chapters': chapter_serializer.data,
             'reviews': review_serializer.data,
-            'comments': comment_data_serializer.data,
         }
 
         # Return the serialized data as a JSON response
@@ -114,7 +113,6 @@ def createStory(request):
     # print(f'request user ==> {request.user}')
     data = request.data
     # Access the logged-in user's ID using request.user
-    # TODO Put back in?
     
     # get the user id from the hidden input
     user_id = data['authorId']
@@ -158,7 +156,7 @@ def createStory(request):
     
     except Exception as e:
         # Handle any exceptions (e.g., validation errors or image upload errors)
-        print(e)
+        # print(e)
         return JsonResponse({'error': str(e)}, status=400)
 
 
@@ -265,7 +263,7 @@ def deleteReview(request, review_id):
         # Retrieve the review instance based on the provided review_id
         review = Review.objects.get(id=review_id)
 
-        print(f"request.user ====> {request.user}")
+        # print(f"request.user ====> {request.user}")
         # Check if the request user is the author of the review or has appropriate permissions
         # You can add your authorization logic here
         
@@ -286,21 +284,16 @@ def deleteReview(request, review_id):
 def listComments(request):
     try:
         if request.method == 'GET':
-            # Get the values of storyId and chapterId from the request data
-            storyId = request.data.get("storyId")
+            # Get the values of chapterId from the request data
             chapterId = request.data.get("chapterId")
 
-            if storyId:
-                # If storyId is provided, query the database to get the associated story's comments
-                story = Story.objects.get(pk=storyId)
-                comments = Comment.objects.filter(storyId=story)
-            elif chapterId:
+            if chapterId:
                 # If chapterId is provided, query the database to get the associated chapter's comments
                 chapter = Chapter.objects.get(pk=chapterId)
                 comments = Comment.objects.filter(chapterId=chapter)
             else:
                 # If neither storyId nor chapterId is provided, return a bad request response
-                return JsonResponse({'error': 'Invalid request. Provide either story_id or chapter_id.'}, status=400)
+                return JsonResponse({'error': 'Invalid request. Provide chapter_id.'}, status=400)
 
             # Serialize the comments using CommentSerializer
             serializer = CommentSerializer(comments, many=True)
@@ -311,12 +304,6 @@ def listComments(request):
         else:
             # Return a method not allowed response if the request method is not GET
             return JsonResponse({'error': 'Method not allowed'}, status=405)
-    except Story.DoesNotExist:
-        # Handle the case where the specified Story does not exist
-        return JsonResponse({'error': 'Story not found'}, status=404)
-    except Chapter.DoesNotExist:
-        # Handle the case where the specified Chapter does not exist
-        return JsonResponse({'error': 'Chapter not found'}, status=404)
     except Exception as e:
         # Handle any other exceptions and return an error response as JSON
         error_message = str(e)
@@ -337,25 +324,7 @@ def createComment(request):
         user = User.objects.get(id=user_id)
 
         # Check if either storyId or chapterId is provided in the data
-        if 'storyId' in data:
-            conditional = data['storyId']
-            # Retrieve the Story instance based on storyId
-            story = Story.objects.get(id=conditional)
-            try:
-                # Create a Comment instance for the story
-                comment = Comment.objects.create(
-                    storyId=story,
-                    userId=user,
-                    content=data['content'],  # Assuming 'content' is in the request data
-                )
-                serializer = CommentSerializer(comment)
-
-                # Return a success response with the serialized comment data for a story
-                return JsonResponse({'message': 'Comment created successfully for a story', 'comment': serializer.data}, status=201)
-            except Exception as e:
-                # Handle any exceptions during comment creation and return an error response as JSON
-                return JsonResponse({'error': str(e)}, status=400)
-        elif 'chapterId' in data:
+        if 'chapterId' in data:
             conditional = data['chapterId']
             # Retrieve the Chapter instance based on chapterId
             chapter = Chapter.objects.get(id=conditional)
@@ -374,15 +343,9 @@ def createComment(request):
                 # Handle any exceptions during comment creation and return an error response as JSON
                 return JsonResponse({'error': str(e)}, status=400)
         else:
-            # Return a bad request response if neither storyId nor chapterId is provided
-            return JsonResponse({'error': 'Invalid request. Provide either storyId or chapterId.'}, status=400)
+            # Return a bad request response if chapterId is not provided
+            return JsonResponse({'error': 'Invalid request. Provide chapterId.'}, status=400)
 
-    except Story.DoesNotExist:
-        # Handle the case where the specified Story does not exist and return an error response as JSON
-        return JsonResponse({'error': 'Story not found'}, status=404)
-    except Chapter.DoesNotExist:
-        # Handle the case where the specified Chapter does not exist and return an error response as JSON
-        return JsonResponse({'error': 'Chapter not found'}, status=404)
     except Exception as e:
         # Handle any other exceptions and return an error response as JSON
         return JsonResponse({'error': str(e)}, status=400)
@@ -603,11 +566,11 @@ def listAuthorUsers(request):
 # TESTED AND WORKS
 @api_view(['GET'])
 def authorUserDetails(request):
-    print("this is the request ===>")
-    print(request),
+    # print("this is the request ===>")
+    # print(request),
     user_id = request.query_params.get("id")
-    print("this is the user_id ====>")
-    print(user_id)
+    # print("this is the user_id ====>")
+    # print(user_id)
     
     try:
         # Retrieve the user instance based on the provided user_id
