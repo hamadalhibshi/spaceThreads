@@ -23,7 +23,8 @@ import InputLabel from "@mui/material/InputLabel";
 import Select from "@mui/material/Select";
 import Box from "@mui/material/Box";
 import MenuItem from "@mui/material/MenuItem";
-
+import Icon from "@mui/material/Icon";
+import Menu from "@mui/material/Menu";
 // Material Kit 2 React components
 import MKBox from "components/MKBox";
 import MKTypography from "components/MKTypography";
@@ -31,6 +32,9 @@ import MKTypography from "components/MKTypography";
 // Material Kit 2 React examples
 import DefaultNavbar from "examples/Navbars/DefaultNavbar";
 import DefaultFooter from "examples/Footers/DefaultFooter";
+
+// Material Kit 2 React components
+import MKButton from "components/MKButton";
 
 // Routes
 import routes from "routes";
@@ -58,6 +62,12 @@ function CreateStory() {
       ...data,
       [name]: value,
     });
+    console.log(data);
+  };
+
+  const handleAgeGroupChange = (e) => {
+    setData({ ...data, [e.target.getAttribute("name")]: e.target.getAttribute("value") }); // Update selectedAgeGroup with the value attribute of the clicked MenuItem
+    closeDropdown(); // Close the menu after selection
     console.log(data);
   };
 
@@ -102,6 +112,24 @@ function CreateStory() {
       // setError("");
     }
   }
+
+  //DROP DOWN STYLING
+  const [dropdown, setDropdown] = useState(null);
+
+  const openDropdown = ({ currentTarget }) => setDropdown(currentTarget);
+  const closeDropdown = () => setDropdown(null);
+
+  // Styles
+  const iconStyles = {
+    ml: 1,
+    fontWeight: "bold",
+    transition: "transform 200ms ease-in-out",
+  };
+
+  const dropdownIconStyles = {
+    transform: dropdown ? "rotate(180deg)" : "rotate(0)",
+    ...iconStyles,
+  };
 
   return (
     <>
@@ -204,6 +232,7 @@ function CreateStory() {
                 labelId="genre-label"
                 id="genre"
                 name="genre"
+                defaultValue="fiction"
                 onChange={handleChange}
                 fullWidth
                 sx={{ height: 43, mt: 0.4 }}
@@ -221,7 +250,7 @@ function CreateStory() {
               </Select>
             </Grid>
 
-            <Grid item xs={6}>
+            {/* <Grid item xs={6}>
               <InputLabel id="age-group-label">Age Group</InputLabel>
               <Select
                 labelId="age-group-label"
@@ -238,6 +267,38 @@ function CreateStory() {
                 <MenuItem value="13-17">13-17</MenuItem>
                 <MenuItem value="18+">18+</MenuItem>
               </Select>
+            </Grid> */}
+            <Grid item xs={6}>
+              <MKButton variant="gradient" color="info" onClick={openDropdown}>
+                {data.age_group ? data.age_group : "Age Group"}{" "}
+                <Icon sx={dropdownIconStyles}>expand_more</Icon>
+              </MKButton>
+              <Menu
+                anchorEl={dropdown}
+                open={Boolean(dropdown)}
+                onClose={closeDropdown}
+                id="age_group"
+                name="age_group"
+              >
+                <MenuItem value="0-2" name="age_group" onClick={handleAgeGroupChange}>
+                  0-2
+                </MenuItem>
+                <MenuItem value="3-5" name="age_group" onClick={handleAgeGroupChange}>
+                  3-5
+                </MenuItem>
+                <MenuItem value="6-8" name="age_group" onClick={handleAgeGroupChange}>
+                  6-8
+                </MenuItem>
+                <MenuItem value="9-12" name="age_group" onClick={handleAgeGroupChange}>
+                  9-12
+                </MenuItem>
+                <MenuItem value="13-17" name="age_group" onClick={handleAgeGroupChange}>
+                  13-17
+                </MenuItem>
+                <MenuItem value="18+" name="age_group" onClick={handleAgeGroupChange}>
+                  18+
+                </MenuItem>
+              </Menu>
             </Grid>
 
             <Grid item xs={6}>
