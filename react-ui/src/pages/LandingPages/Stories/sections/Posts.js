@@ -47,6 +47,15 @@ function Places() {
       });
   }, []);
 
+  // Function to format timestamp
+  const formatTimestamp = (timestamp) => {
+    const parts = timestamp.split("T"); // Split at the "T" character
+    if (parts.length > 0) {
+      return parts[0]; // Keep the part before "T"
+    }
+    return timestamp; // Return the original timestamp if "T" is not found
+  };
+
   return (
     <MKBox component="section" py={2}>
       <Container>
@@ -71,7 +80,7 @@ function Places() {
                       genre={{ color: "info", label: `${story.genre}` }}
                       chapters="20"
                       status={story.status}
-                      createdOn={story.timestamp}
+                      createdOn={formatTimestamp(story.timestamp)}
                       rating={story.rating}
                       action={{
                         type: "internal",
