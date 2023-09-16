@@ -28,15 +28,18 @@ import CreateChapter from "../CreateChapter/index";
 import StoryApi from "api/story";
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
+import CircularProgress from "@mui/material/CircularProgress"; // Add the CircularProgress component
 
 function StoriesShow() {
   const [data, setData] = useState({});
   const { id } = useParams();
+  const [loading, setLoading] = useState(true); // Add a loading state
 
   useEffect(() => {
     StoryApi.getOneStory(id)
       .then((response) => {
         setData(response.data);
+        setLoading(false); // Set loading to false when data is received
         console.log("Data received successfully:", response.data);
       })
       .catch((error) => {
@@ -230,71 +233,77 @@ function StoriesShow() {
           </MKTypography>
         </MKTypography>
         <Paper>
-          <TableContainer>
-            <Table>
-              <TableRow>
-                <TableCell
-                  sx={{
-                    fontWeight: "bold",
-                    fontSize: "16px",
-                  }}
-                  align="center"
-                >
-                  Chapter
-                </TableCell>
-                <TableCell
-                  sx={{
-                    fontWeight: "bold",
-                    fontSize: "16px",
-                  }}
-                  align="center"
-                >
-                  Title
-                </TableCell>
-                <TableCell
-                  sx={{
-                    fontWeight: "bold",
-                    fontSize: "16px",
-                  }}
-                  align="center"
-                >
-                  Author
-                </TableCell>
-                <TableCell
-                  sx={{
-                    fontWeight: "bold",
-                    fontSize: "16px",
-                  }}
-                  align="center"
-                >
-                  Merged On
-                </TableCell>
-              </TableRow>
+          {loading ? ( // Render the loading animation if loading is true
+            <CircularProgress />
+          ) : (
+            <TableContainer>
+              <Table>
+                <TableRow>
+                  <TableCell
+                    sx={{
+                      fontWeight: "bold",
+                      fontSize: "16px",
+                    }}
+                    align="center"
+                  >
+                    Chapter
+                  </TableCell>
+                  <TableCell
+                    sx={{
+                      fontWeight: "bold",
+                      fontSize: "16px",
+                    }}
+                    align="center"
+                  >
+                    Title
+                  </TableCell>
+                  <TableCell
+                    sx={{
+                      fontWeight: "bold",
+                      fontSize: "16px",
+                    }}
+                    align="center"
+                  >
+                    Author
+                  </TableCell>
+                  <TableCell
+                    sx={{
+                      fontWeight: "bold",
+                      fontSize: "16px",
+                    }}
+                    align="center"
+                  >
+                    Merged On
+                  </TableCell>
+                </TableRow>
 
-              <TableBody>
-                {data &&
-                  data.chapters &&
-                  data.story &&
-                  data.chapters.map((chapter, index) => (
-                    <TableRow key={index}>
-                      <TableCell align="center">{index + 1}</TableCell>
-                      <TableCell align="center">
-                        <Link to={`/stories/${chapter.title}/${chapter.id}`}>{chapter.title}</Link>
-                      </TableCell>
-                      <TableCell align="center">
-                        <Link to={`/authors/${chapter.author}`}>{chapter.userId}</Link>
-                      </TableCell>
-                      <TableCell align="center">{formatTimestamp(chapter.timestamp)}</TableCell>
+                <TableBody>
+                  {data &&
+                    data.chapters &&
+                    data.story &&
+                    data.chapters.map((chapter, index) => (
+                      <TableRow key={index}>
+                        <TableCell align="center">{index + 1}</TableCell>
+                        <TableCell align="center">
+                          <Link to={`/stories/${chapter.title}/${chapter.id}`}>
+                            {chapter.title}
+                          </Link>
+                        </TableCell>
+                        <TableCell align="center">
+                          <Link to={`/authors/${chapter.author}`}>{chapter.userId}</Link>
+                        </TableCell>
+                        <TableCell align="center">{formatTimestamp(chapter.timestamp)}</TableCell>
+                      </TableRow>
+                    ))}
+                  {emptyRows > 0 && (
+                    <TableRow style={{ height: 53 * emptyRows }}>
+                      <TableCell colSpan={4} />
                     </TableRow>
-                  ))}
-                {emptyRows > 0 && (
-                  <TableRow style={{ height: 53 * emptyRows }}>
-                    <TableCell colSpan={4} />
-                  </TableRow>
-                )}
-              </TableBody>
-            </Table>
-          </TableContainer>
+                  )}
+                </TableBody>
+              </Table>
+            </TableContainer>
+          )}
           <TablePagination
             rowsPerPageOptions={[5, 10, 25]}
             component="div"
