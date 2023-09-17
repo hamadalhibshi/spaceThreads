@@ -101,10 +101,10 @@ function ProfilePage() {
                 },
               })}
             >
-              Hamad Alhibshi
+              {user && user.token && user.username}
             </MKTypography>
             <MKTypography variant="body1" color="white" opacity={0.8} mt={1} mb={3}>
-            Where Your Space Journey Begins.
+              Where Your Space Journey Begins.
             </MKTypography>
           </Grid>
         </Container>
