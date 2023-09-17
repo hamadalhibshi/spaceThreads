@@ -690,3 +690,25 @@ def getUserData(request):
     except Exception as e:
         # Handle other exceptions if needed
         return JsonResponse({'error': str(e)}, status=500)
+
+
+# TESTED AND WORKS
+@api_view(['GET'])
+def getTopRatedStories(request):
+    try:
+        # Query the database to get the top 5 stories with the highest ratings
+        top_rated_stories = Story.objects.all().order_by('rating')[:5]
+
+        # Serialize the queryset of Story objects using StorySerializer
+        serializer = StorySerializer(top_rated_stories, many=True)
+
+        # Extract the serialized data
+        data = serializer.data
+
+        # Return the serialized data as a JSON response
+        return JsonResponse(data, safe=False)
+
+    except Exception as e:
+        # Handle any exceptions and return an error response as JSON
+        error_message = str(e)
+        return JsonResponse({'error': error_message}, status=400)
