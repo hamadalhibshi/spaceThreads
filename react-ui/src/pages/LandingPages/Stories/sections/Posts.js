@@ -38,7 +38,12 @@ function Places() {
   useEffect(() => {
     StoryApi.getStory()
       .then((response) => {
-        setData(response.data);
+        // Sort the data by createdOn in descending order
+        const sortedData = response.data.sort((a, b) => {
+          return new Date(b.timestamp) - new Date(a.timestamp);
+        });
+        setData(sortedData);
+
         setLoading(false); // Set loading to false when data is received
         console.log("Data received successfully:", response.data);
       })

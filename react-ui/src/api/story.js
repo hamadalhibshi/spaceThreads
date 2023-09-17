@@ -9,6 +9,8 @@ class StoryApi {
 
   static getOneStory = (id) => axios.get(`${baseURL}/storyDetails/${id}`);
 
+  static getTopRatedStories = (data) => axios.get(`${baseURL}/getTopRatedStories/`, data);
+
   static getUserData = (data) => axios.get(`${baseURL}/getUserData/`, data);
 
   static createComment = (data) => axios.post(`${baseURL}/createComment/`, data);

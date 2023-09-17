@@ -49,16 +49,16 @@ function StoryCard({ image, name, position, chapters, rating, status, createdOn 
             <MKTypography variant="body2" color="text">
               <Grid container spacing={2}>
                 <Grid item xs={6}>
-                  <span>Chapters {chapters}</span>
+                  <span>Chapters: {chapters}</span>
                 </Grid>
                 <Grid item xs={6}>
-                  <span>Rating {rating}</span>
+                  <span>Rating: {rating}</span>
                 </Grid>
                 <Grid item xs={6}>
-                  <span>Status {status}</span>
+                  <span>Status: {status}</span>
                 </Grid>
                 <Grid item xs={6}>
-                  <span>Created On {createdOn}</span>
+                  <span>{createdOn}</span>
                 </Grid>
               </Grid>
             </MKTypography>
