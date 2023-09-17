@@ -13,6 +13,8 @@ Coded by www.creative-tim.com
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 */
 
+import StoryApi from "api/story";
+import { useState, useEffect } from "react";
 // @mui material components
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
@@ -24,6 +26,7 @@ import MKTypography from "components/MKTypography";
 // Material Kit 2 React examples
 import HorizontalTeamCard from "examples/Cards/TeamCards/HorizontalTeamCard";
 import StoryCard from "examples/Cards/StoryCard";
+import CircularProgress from "@mui/material/CircularProgress"; // Add the CircularProgress component
 // Images
 import team1 from "assets/images/team-5.jpg";
 import team2 from "assets/images/bruce-mars.jpg";
@@ -31,6 +34,28 @@ import team3 from "assets/images/ivana-squares.jpg";
 import team4 from "assets/images/ivana-square.jpg";
 
 function Team() {
+  const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(true); // Add a loading state
+  useEffect(() => {
+    StoryApi.getTopRatedStories()
+      .then((response) => {
+        setData(response.data);
+        setLoading(false);
+        console.log("Top Rated Data received successfully:", response.data);
+      })
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+      });
+  }, []);
+
+  // Function to format timestamp
+  const formatTimestamp = (timestamp) => {
+    const parts = timestamp.split("T"); // Split at the "T" character
+    if (parts.length > 0) {
+      return parts[0]; // Keep the part before "T"
+    }
+    return timestamp; // Return the original timestamp if "T" is not found
+  };
   return (
     <MKBox
       component="section"
@@ -53,58 +78,27 @@ function Team() {
           </Grid>
         </Grid>
         <Grid container spacing={3}>
-          <Grid item xs={12} lg={6}>
-            <MKBox mb={1}>
-              <StoryCard
-                image={team1}
-                name="Danganronpa"
-                position={{ color: "info", label: "Crime | Thriller" }}
-                chapters="20"
-                status="Completed"
-                createdOn="9/7/1500"
-                rating="5"
-              />
-            </MKBox>
-          </Grid>
-          <Grid item xs={12} lg={6}>
-            <MKBox mb={1}>
-              <StoryCard
-                image={team2}
-                name="Solo Leveling"
-                position={{ color: "info", label: "Progression" }}
-                chapters="20"
-                status="Ongoing"
-                createdOn="9/7/2000"
-                rating="5"
-              />
-            </MKBox>
-          </Grid>
-          <Grid item xs={12} lg={6}>
-            <MKBox mb={{ xs: 1, lg: 0 }}>
-              <StoryCard
-                image={team3}
-                name="Stormlight Archive"
-                position={{ color: "info", label: "Fantasy | Coming of Age" }}
-                chapters="20"
-                status="Ongoing"
-                createdOn="12/12/2012"
-                rating="5"
-              />
-            </MKBox>
-          </Grid>
-          <Grid item xs={12} lg={6}>
-            <MKBox mb={{ xs: 1, lg: 0 }}>
-              <StoryCard
-                image={team4}
-                name="The Wheel of Time"
-                position={{ color: "info", label: "Fantasy | Politics" }}
-                chapters="20"
-                status="Ongoing"
-                createdOn="11/22/63"
-                rating="5"
-              />
-            </MKBox>
-          </Grid>
+          {loading ? ( // Render the loading animation if loading is true
+            <CircularProgress />
+          ) : (
+            data?.slice(1).map((story, index) => {
+              return (
+                <Grid item xs={12} lg={6} key={index}>
+                  <MKBox mb={1}>
+                    <StoryCard
+                      image={story?.image.replace("image/upload/", "")}
+                      name={story?.title}
+                      position={{ color: "info", label: story?.genre }}
+                      chapters="20"
+                      status={story?.status}
+                      createdOn={story ? formatTimestamp(story?.timestamp) : "Date"}
+                      rating={story?.rating}
+                    />
+                  </MKBox>
+                </Grid>
+              );
+            })
+          )}
         </Grid>
       </Container>
     </MKBox>
