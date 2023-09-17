@@ -31,6 +31,7 @@ import { useAuth } from "../../../../auth-context/auth.context";
 
 function Profile() {
   const { user } = useAuth();
+  const [data, setData] = useState();
   useEffect(() => {
     const id = user._id;
     const req = {
@@ -40,6 +41,7 @@ function Profile() {
     };
     console.log(`this is the req ====>`);
     console.log(req);
+    
     async function getEverything() {
       const stats = await StoryApi.getStats(req);
       console.log(`this is stats =====>`);
@@ -48,7 +50,9 @@ function Profile() {
       console.log("this is the req beofer the author details");
       console.log(req);
       const details = await StoryApi.authorUserDetails(req);
+      console.log(`these are the details ====>`)
       console.log(details);
+      setData(details)
     }
     getEverything();
   }, []);
@@ -65,22 +69,28 @@ function Profile() {
                 {/* <MKTypography variant="h3">Hamad Alhibshi</MKTypography> */}
               </MKBox>
               <Grid container spacing={3} mb={3} justifyContent="space-around">
+                {data && (
                 <Grid item>
                   <MKTypography component="span" variant="h3" fontWeight="bold">
-                    323&nbsp;
+                    {data.data.total_stories}
                   </MKTypography>
                   <MKTypography component="span" variant="h3" color="text">
-                    Stories
+                     Stories
                   </MKTypography>
                 </Grid>
+              )}
+
+              {data && (
                 <Grid item>
                   <MKTypography component="span" variant="h3" fontWeight="bold">
-                    323&nbsp;
+                    {data.data.total_approved_chapters}
                   </MKTypography>
                   <MKTypography component="span" variant="h3" color="text">
                     Chapters
                   </MKTypography>
                 </Grid>
+                )}
+
               </Grid>
               <MKTypography variant="body1" fontWeight="light" color="text">
                 Decisions: If you can&apos;t decide, the answer is no. If two equally difficult

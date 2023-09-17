@@ -31,7 +31,41 @@ import post2 from "assets/images/examples/testimonial-6-3.jpg";
 import post3 from "assets/images/examples/blog-9-4.jpg";
 import post4 from "assets/images/examples/blog2.jpg";
 
+import { useEffect, useState } from "react";
+import { useAuth } from "../../../../auth-context/auth.context";
+import StoryApi from "../../../../api/story";
+
+
+
 function Posts() {
+  const { user } = useAuth();
+  const [data, setData] = useState();
+
+  useEffect(() => {
+    const id = user._id;
+    const req = {
+      params: {
+        id: id,
+      },
+    };
+    console.log(`this is the req in posts====>`);
+    console.log(req);
+
+    async function getEverything() {
+      const stats = await StoryApi.getStats(req);
+      console.log(`this is stats =====>`);
+      const actualStats = stats.data;
+      console.log(actualStats);
+      console.log("this is the req before the author details");
+      console.log(req);
+      const details = await StoryApi.authorUserDetails(req);
+      console.log(`these are the details ====>`)
+      console.log(details);
+      setData(details)
+    }
+    getEverything();
+  }, []);
+
   return (
     <MKBox component="section" py={2}>
       <Container>
@@ -42,19 +76,30 @@ function Posts() {
         </Grid>
         <Grid container spacing={3}>
           <Grid item xs={12} sm={6} lg={3}>
-            <TransparentBlogCard
-              image={post1}
-              title="Rover raised $65 million"
-              description="Finding temporary housing for your dog should be as easy as renting an Airbnb. That’s the idea behind Rover ..."
-              action={{
-                type: "internal",
-                route: "/pages/blogs/author",
-                color: "info",
-                label: "read more",
-              }}
-            />
+            {data &&
+              data.data.stories_with_reviews.map((item, index) => {
+                const imageUrl = item.story.image.replace("image/upload/", "");
+
+                return (
+                  <TransparentBlogCard
+                    key={index}
+                    image={imageUrl}
+                    title={item.story.title}
+                    description="Finding temporary housing for your dog should be as easy as renting an Airbnb. That's the idea behind Rover ..."
+                    action={{
+                      type: "internal",
+                      route: "/pages/blogs/author",
+                      color: "info",
+                      label: "read more",
+                    }}
+                  />
+                );
+              })}
+
+
           </Grid>
-          <Grid item xs={12} sm={6} lg={3}>
+
+          {/* <Grid item xs={12} sm={6} lg={3}>
             <TransparentBlogCard
               image={post2}
               title="MateLabs machine learning"
@@ -91,7 +136,7 @@ function Posts() {
                 label: "read more",
               }}
             />
-          </Grid>
+          </Grid> */}
         </Grid>
       </Container>
     </MKBox>
