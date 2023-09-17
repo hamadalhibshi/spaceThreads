@@ -83,7 +83,18 @@ def storyDetails(request, story_id):
         serializer = StorySerializer(story)
 
         # Serialize the chapters
-        chapter_serializer = ChapterSerializer(chapters, many=True)
+        # chapter_serializer = ChapterSerializer(chapters, many=True)
+
+        # Serialize the chapters and include author usernames
+        chapter_enhanced_data = []
+
+        for chapter in chapters:
+            # Serialize the chapter instance with author's username
+            chapter_dictionary = ChapterSerializer(chapter).data
+            chapter_dictionary['username'] = chapter.userId.username
+            
+            # Append the serialized chapter data to the list
+            chapter_enhanced_data.append(chapter_dictionary)
 
         # Serialize the reviews
         review_serializer = ReviewSerializer(reviews, many=True)
@@ -94,7 +105,7 @@ def storyDetails(request, story_id):
         # Create a dictionary with story, chapters, reviews, comments, and replies data
         response_data = {
             'story': serializer.data,
-            'chapters': chapter_serializer.data,
+            'chapters': chapter_enhanced_data,
             'reviews': review_serializer.data,
         }
 
