@@ -55,6 +55,29 @@ function CreateStory() {
     authorId: user._id,
   });
 
+  //DROP DOWN STYLING
+  //DROP DOWN STYLING
+  const [genreDropdown, setGenreDropdown] = useState(null);
+  const [ageGroupDropdown, setAgeGroupDropdown] = useState(null);
+
+  const openGenreDropdown = ({ currentTarget }) => setGenreDropdown(currentTarget);
+  const closeGenreDropdown = () => setGenreDropdown(null);
+
+  const openAgeGroupDropdown = ({ currentTarget }) => setAgeGroupDropdown(currentTarget);
+  const closeAgeGroupDropdown = () => setAgeGroupDropdown(null);
+
+  // Styles
+  const iconStyles = {
+    ml: 1,
+    fontWeight: "bold",
+    transition: "transform 200ms ease-in-out",
+  };
+
+  const dropdownIconStyles = {
+    transform: genreDropdown ? "rotate(180deg)" : "rotate(0)",
+    ...iconStyles,
+  };
+
   const handleChange = (e) => {
     // Handle form input changes here
     const { name, value } = e.target;
@@ -65,10 +88,14 @@ function CreateStory() {
     console.log(data);
   };
 
+  const handleGenreChange = (e) => {
+    setData({ ...data, genre: e.target.getAttribute("value") });
+    closeGenreDropdown();
+  };
+
   const handleAgeGroupChange = (e) => {
-    setData({ ...data, [e.target.getAttribute("name")]: e.target.getAttribute("value") }); // Update selectedAgeGroup with the value attribute of the clicked MenuItem
-    closeDropdown(); // Close the menu after selection
-    console.log(data);
+    setData({ ...data, age_group: e.target.getAttribute("value") });
+    closeAgeGroupDropdown();
   };
 
   const handleSubmit = (e) => {
@@ -112,24 +139,6 @@ function CreateStory() {
       // setError("");
     }
   }
-
-  //DROP DOWN STYLING
-  const [dropdown, setDropdown] = useState(null);
-
-  const openDropdown = ({ currentTarget }) => setDropdown(currentTarget);
-  const closeDropdown = () => setDropdown(null);
-
-  // Styles
-  const iconStyles = {
-    ml: 1,
-    fontWeight: "bold",
-    transition: "transform 200ms ease-in-out",
-  };
-
-  const dropdownIconStyles = {
-    transform: dropdown ? "rotate(180deg)" : "rotate(0)",
-    ...iconStyles,
-  };
 
   return (
     <>
@@ -227,56 +236,61 @@ function CreateStory() {
             </Grid>
 
             <Grid item xs={6}>
-              <InputLabel id="genre-label">Genre</InputLabel>
-              <Select
-                labelId="genre-label"
+              <MKButton variant="gradient" color="info" onClick={openGenreDropdown}>
+                {data.genre ? data.genre : "Genre"} <Icon sx={dropdownIconStyles}>expand_more</Icon>
+              </MKButton>
+              <Menu
+                anchorEl={genreDropdown}
+                open={Boolean(genreDropdown)}
+                onClose={closeGenreDropdown}
                 id="genre"
                 name="genre"
-                defaultValue="fiction"
-                onChange={handleChange}
-                fullWidth
-                sx={{ height: 43, mt: 0.4 }}
               >
-                <MenuItem value="action">Thriller</MenuItem>
-                <MenuItem value="comedy">Comedy</MenuItem>
-                <MenuItem value="drama">Drama</MenuItem>
-                <MenuItem value="science-fiction">Science Fiction</MenuItem>
-                <MenuItem value="historical-fiction">Historical Fiction</MenuItem>
-                <MenuItem value="fantasy">Fantasy</MenuItem>
-                <MenuItem value="romance">Romance</MenuItem>
-                <MenuItem value="horror">Horror</MenuItem>
-                <MenuItem value="fiction">Fiction</MenuItem>
-                <MenuItem value="non-fiction">Non-fiction</MenuItem>
-              </Select>
+                <MenuItem value="Action" name="genre" onClick={handleGenreChange}>
+                  Action
+                </MenuItem>
+                <MenuItem value="Thriller" name="genre" onClick={handleGenreChange}>
+                  Thriller
+                </MenuItem>
+                <MenuItem value="Comedy" name="genre" onClick={handleGenreChange}>
+                  Comedy
+                </MenuItem>
+                <MenuItem value="Drama" name="genre" onClick={handleGenreChange}>
+                  Drama
+                </MenuItem>
+                <MenuItem value="Science-fiction" name="genre" onClick={handleGenreChange}>
+                  Science Fiction
+                </MenuItem>
+                <MenuItem value="Historical-fiction" name="genre" onClick={handleGenreChange}>
+                  Historical Fiction
+                </MenuItem>
+                <MenuItem value="Fantasy" name="genre" onClick={handleGenreChange}>
+                  Fantasy
+                </MenuItem>
+                <MenuItem value="Romance" name="genre" onClick={handleGenreChange}>
+                  Romance
+                </MenuItem>
+                <MenuItem value="Horror" name="genre" onClick={handleGenreChange}>
+                  Horror
+                </MenuItem>
+                <MenuItem value="Fiction" name="genre" onClick={handleGenreChange}>
+                  Fiction
+                </MenuItem>
+                <MenuItem value="Non-fiction" name="genre" onClick={handleGenreChange}>
+                  Non-fiction
+                </MenuItem>
+              </Menu>
             </Grid>
 
-            {/* <Grid item xs={6}>
-              <InputLabel id="age-group-label">Age Group</InputLabel>
-              <Select
-                labelId="age-group-label"
-                id="age_group"
-                name="age_group"
-                onChange={handleChange}
-                fullWidth
-                sx={{ height: 43, mt: 0.4 }}
-              >
-                <MenuItem value="0-2">0-2</MenuItem>
-                <MenuItem value="3-5">3-5</MenuItem>
-                <MenuItem value="6-8">6-8</MenuItem>
-                <MenuItem value="9-12">9-12</MenuItem>
-                <MenuItem value="13-17">13-17</MenuItem>
-                <MenuItem value="18+">18+</MenuItem>
-              </Select>
-            </Grid> */}
             <Grid item xs={6}>
-              <MKButton variant="gradient" color="info" onClick={openDropdown}>
+              <MKButton variant="gradient" color="info" onClick={openAgeGroupDropdown}>
                 {data.age_group ? data.age_group : "Age Group"}{" "}
                 <Icon sx={dropdownIconStyles}>expand_more</Icon>
               </MKButton>
               <Menu
-                anchorEl={dropdown}
-                open={Boolean(dropdown)}
-                onClose={closeDropdown}
+                anchorEl={ageGroupDropdown}
+                open={Boolean(ageGroupDropdown)}
+                onClose={closeAgeGroupDropdown}
                 id="age_group"
                 name="age_group"
               >
