@@ -70,7 +70,7 @@ function Team() {
         <Grid container>
           <Grid item xs={12} md={8} sx={{ mb: 6 }}>
             <MKTypography variant="h3" color="white">
-              Featured Stories
+              Popular Stories
             </MKTypography>
             <MKTypography variant="body2" color="white" opacity={0.8}>
               Traverse Across the Cosmos
