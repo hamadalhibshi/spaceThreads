@@ -26,5 +26,6 @@ urlpatterns = [
     path('changeToAuthor/', views.changeToAuthor, name='change_to_author'),
     path('getStats/', views.getStats, name='get_stats'),
     path('getUserData/', views.getUserData, name='get_user_data'),
-
+    path('getTopRatedStories/', views.getTopRatedStories, name='get_top_rated_stories'),
+    
 ]
