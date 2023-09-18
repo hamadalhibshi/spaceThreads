@@ -34,6 +34,7 @@ import post4 from "assets/images/examples/blog2.jpg";
 import { useEffect, useState } from "react";
 import { useAuth } from "../../../../auth-context/auth.context";
 import StoryApi from "../../../../api/story";
+import CircularProgress from "@mui/material/CircularProgress";
 
 
 
@@ -49,6 +50,8 @@ function truncateText(text, maxLength) {
 function Posts() {
   const { user } = useAuth();
   const [data, setData] = useState();
+  const [loading, setLoading] = useState(true);
+
 
   useEffect(() => {
     const id = user._id;
@@ -71,6 +74,7 @@ function Posts() {
       console.log(`these are the details ====>`)
       console.log(details);
       setData(details)
+      setLoading(false);
     }
     getEverything();
   }, []);
@@ -84,7 +88,10 @@ function Posts() {
           </MKTypography>
         </Grid>
         <Grid container spacing={3}>
-          {data &&
+          {loading ? (
+            <CircularProgress />
+          ) : (
+            data &&
             data.data.stories_with_reviews.map((item, index) => {
               const imageUrl = item.story.image.replace("image/upload/", "");
               const truncatedDescription = truncateText(item.story.prologue, 100);
@@ -96,14 +103,15 @@ function Posts() {
                     description={truncatedDescription}
                     action={{
                       type: "internal",
-                      route: "/pages/blogs/author",
+                      route: `/storyDetails/${item.story.id}`,
                       color: "info",
                       label: "read more",
                     }}
                   />
                 </Grid>
               );
-            })}
+            })
+          )}
         </Grid>
       </Container>
     </MKBox>
